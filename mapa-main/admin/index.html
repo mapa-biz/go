@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Login | Social Map</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .login-box { background: white; padding: 40px 30px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); width: 100%; max-width: 350px; text-align: center; }
+    .branding { color: #d32f2f; font-size: 24px; font-weight: 900; margin-bottom: 10px; letter-spacing: 1px; }
+    .subtitle { color: #666; font-size: 14px; margin-bottom: 30px; }
+    .input-group { margin-bottom: 20px; text-align: left; }
+    .input-group label { display: block; font-size: 13px; color: #555; margin-bottom: 5px; font-weight: bold; }
+    .input-group input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; box-sizing: border-box; outline: none; transition: 0.3s; }
+    .input-group input:focus { border-color: #d32f2f; }
+    .login-btn { background: #d32f2f; color: white; border: none; width: 100%; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+    .login-btn:hover { background: #b71c1c; }
+    .error-msg { color: red; font-size: 13px; margin-top: 15px; display: none; font-weight: bold; }
+    .loader { border: 3px solid #f3f3f3; border-top: 3px solid transparent; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; display: none; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <div class="branding">🔴 SOCIAL MAP</div>
+    <div class="subtitle">Staff Management Portal</div>
+
+    <div class="input-group">
+      <label>Staff ID (සේවක අංකය)</label>
+      <input type="text" id="staffId" placeholder="e.g. EMP001">
+    </div>
+
+    <div class="input-group">
+      <label>Password (මුරපදය)</label>
+      <input type="password" id="password" placeholder="••••••••">
+    </div>
+
+    <button class="login-btn" id="loginBtn" onclick="login()">
+      <span id="btnText">Login ඇතුළු වන්න</span>
+      <div id="loader" class="loader"></div>
+    </button>
+
+    <div id="errorMsg" class="error-msg"></div>
+  </div>
+
+  <script>
+    // 👇 ඔයාගේ Web App URL එක හරියටම මෙතනට දාන්න 👇
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzU8NQF6m62kbDwCr6ol48LEVl8-veggT_bR5Lue7sIrJWlgpiI7GzosU_PqZzzV0JP/exec";
+
+    function login() {
+      const staffId = document.getElementById('staffId').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorMsg = document.getElementById('errorMsg');
+      const btnText = document.getElementById('btnText');
+      const loader = document.getElementById('loader');
+
+      if(!staffId || !password) {
+        showError("කරුණාකර ID එක සහ මුරපදය ඇතුළත් කරන්න.", "red");
+        return;
+      }
+
+      // බොත්තම ලෝඩ් වෙන බව පෙන්වීම [UI State Update]
+      errorMsg.style.display = 'none';
+      btnText.style.display = 'none';
+      loader.style.display = 'inline-block';
+
+      // Apps Script එකට කතා කරලා මුරපදය හරිද බැලීම [API Call]
+      fetch(`${APPS_SCRIPT_URL}?action=login&staffId=${staffId}&password=${password}`)
+        .then(res => res.json())
+        .then(data => {
+          if(data.error) {
+            showError(data.error, "red");
+          } else if (data.success) {
+            // සේවකයාගේ විස්තර බ්‍රව්සරයේ මතක තබා ගැනීම [Session Storage]
+            sessionStorage.setItem('loggedInStaff', data.name);
+            sessionStorage.setItem('loggedInStaffId', data.staffId);
+            
+            showError(`සාර්ථකයි! Welcome ${data.name}...`, "green");
+            
+            // තත්පර 1කින් Admin Panel එකට යැවීම [Redirect]
+            setTimeout(() => {
+              window.location.href = "panel.html"; // මීළඟට අපි හදන පිටුව
+            }, 1000);
+          }
+        })
+        .catch(err => {
+          showError("System Error! අන්තර්ජාල සම්බන්ධතාවය පරීක්ෂා කරන්න.", "red");
+        });
+    }
+
+    function showError(msg, color) {
+      const errorMsg = document.getElementById('errorMsg');
+      const btnText = document.getElementById('btnText');
+      const loader = document.getElementById('loader');
+      
+      errorMsg.innerText = msg;
+      errorMsg.style.color = color;
+      errorMsg.style.display = 'block';
+      btnText.style.display = 'inline-block';
+      loader.style.display = 'none';
+    }
+  </script>
+</body>
+</html>
