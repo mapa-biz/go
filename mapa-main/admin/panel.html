@@ -44,8 +44,6 @@
     .order-filter-row { display:flex; gap:8px; flex-wrap:wrap; }
     .filter-chip { background:#f1f5f9; border:1px solid #e2e8f0; color:#475569; padding:6px 14px; border-radius:20px; cursor:pointer; font-size:12px; font-weight:600; }
     .filter-chip.active { background:#1e293b; color:white; border-color:#1e293b; }
-
-    /* ── THEME SELECTOR ── */
     .theme-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; }
     .theme-opt { border: 3px solid transparent; border-radius: 10px; overflow: hidden; cursor: pointer; transition: border-color 0.15s; }
     .theme-opt:hover { border-color: #999; }
@@ -55,8 +53,6 @@
     .theme-opt .th-logo { width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; margin-top: -12px; margin-bottom: 3px; }
     .theme-opt .th-btn { height: 7px; border-radius: 3px; margin-bottom: 3px; }
     .theme-opt .th-label { font-size: 11px; font-weight: 700; text-align: center; padding: 4px 2px 0; color: #555; }
-
-    /* theme colors */
     .topt-default .th-cover { background:#d32f2f; } .topt-default .th-body { background:#fff; } .topt-default .th-logo { background:#d32f2f; } .topt-default .th-btn { background:#25D366; }
     .topt-dark .th-cover { background:#0f0f0f; } .topt-dark .th-body { background:#1a1a1a; } .topt-dark .th-logo { background:#333; } .topt-dark .th-btn { background:#2d2d2d; }
     .topt-ocean .th-cover { background:#0077b6; } .topt-ocean .th-body { background:#f0f8ff; } .topt-ocean .th-logo { background:#0077b6; } .topt-ocean .th-btn { background:#0077b6; }
@@ -65,13 +61,52 @@
     .topt-minimal .th-cover { background:#f5f5f5; border-bottom:1px solid #ddd; } .topt-minimal .th-body { background:#fff; } .topt-minimal .th-logo { background:#222; } .topt-minimal .th-btn { background:#222; }
     .topt-tech .th-cover { background:#1a0533; } .topt-tech .th-body { background:#120228; } .topt-tech .th-logo { background:#7c3aed; } .topt-tech .th-btn { background:#7c3aed; }
     .topt-food .th-cover { background:#111; } .topt-food .th-body { background:#1a1a1a; } .topt-food .th-logo { background:#ff6b00; } .topt-food .th-btn { background:#ff6b00; }
-
-    /* ── EMAIL SECTION ── */
     .email-sub-row { display:flex; justify-content:space-between; align-items:center; padding:10px 12px; border-bottom:1px solid #eee; font-size:13px; }
     .email-sub-row:hover { background:#f9f9f9; }
     .email-sub-row .es-email { color:#1565c0; font-weight:600; }
-    .email-sub-row .es-date { color:#aaa; font-size:11px; }
     .email-count-badge { background:#e8f5e9; color:#2e7d32; padding:4px 12px; border-radius:20px; font-size:13px; font-weight:700; }
+
+    /* ══ PROMOTION SECTION STYLES (NEW) ══ */
+    .promo-section { background: linear-gradient(135deg, #1b2a4a 0%, #0d1b35 100%); border-radius: 12px; padding: 20px; margin-bottom: 20px; border: none; }
+    .promo-section h3 { color: #fff; margin: 0 0 5px 0; font-size: 18px; }
+    .promo-section .promo-subtitle { color: #94a3b8; font-size: 13px; margin: 0 0 18px 0; }
+    .promo-input-group { margin-bottom: 14px; }
+    .promo-input-group label { color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; display: block; }
+    .promo-input-group input, .promo-input-group textarea, .promo-input-group select { background: #1e3a5f; border: 1px solid #2d5080; color: #e2e8f0; border-radius: 6px; padding: 10px 12px; width: 100%; box-sizing: border-box; font-family: inherit; margin: 0; }
+    .promo-input-group input::placeholder, .promo-input-group textarea::placeholder { color: #4a6fa5; }
+    .promo-input-group input:focus, .promo-input-group textarea:focus { outline: none; border-color: #60a5fa; }
+    .promo-media-preview { background: #0d1b35; border: 1px solid #1e3a5f; border-radius: 8px; padding: 14px; margin-bottom: 14px; }
+    .promo-media-preview .media-row { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
+    .promo-media-preview .media-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .media-icon-img { background: #1e3a5f; color: #60a5fa; }
+    .media-icon-vid { background: #3b0d0d; color: #f87171; }
+    .media-icon-img3 { background: #1a2f1a; color: #86efac; }
+    .promo-media-preview .media-text { flex: 1; }
+    .promo-media-preview .media-label { font-size: 12px; color: #64748b; margin: 0 0 3px 0; }
+    .promo-media-preview .media-link { font-size: 13px; color: #60a5fa; word-break: break-all; margin: 0; text-decoration: none; }
+    .promo-media-preview .media-link.empty { color: #374151; font-style: italic; }
+    .promo-send-bar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 16px; }
+    .btn-send-promo { background: #d32f2f; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+    .btn-send-promo:hover { background: #b71c1c; }
+    .btn-send-promo:disabled { background: #555; cursor: not-allowed; }
+    .btn-sub-pdf { background: #1565c0; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+    .btn-sub-pdf:hover { background: #0d47a1; }
+    .promo-send-msg { font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; }
+    .promo-send-msg.success { background: #1a3a1a; color: #86efac; }
+    .promo-send-msg.error { background: #3b0d0d; color: #f87171; }
+    .promo-preview-box { background: #0a1628; border: 1px solid #1e3a5f; border-radius: 8px; padding: 16px; margin-top: 14px; }
+    .promo-preview-box .pv-label { color: #475569; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 10px 0; }
+    .promo-preview-box .pv-subject { color: #e2e8f0; font-size: 15px; font-weight: 600; margin: 0 0 8px 0; }
+    .promo-preview-box .pv-body { color: #94a3b8; font-size: 13px; line-height: 1.6; }
+    .promo-preview-box .pv-media-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .pv-chip { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 20px; }
+    .pv-chip-img { background: #1e3a5f; color: #60a5fa; }
+    .pv-chip-vid { background: #3b0d0d; color: #f87171; }
+    .pv-chip-img3 { background: #1a2f1a; color: #86efac; }
+    .subscriber-count-big { font-size: 28px; font-weight: 700; color: #fff; line-height: 1; }
+    .subscriber-count-label { font-size: 12px; color: #60a5fa; margin-top: 2px; }
+    .promo-stats-row { display: flex; gap: 12px; margin-bottom: 16px; }
+    .promo-stat { background: #0d1b35; border: 1px solid #1e3a5f; border-radius: 8px; padding: 12px 16px; flex: 1; text-align: center; }
   </style>
 </head>
 <body>
@@ -97,7 +132,6 @@
   </div>
 
   <div class="grid-2">
-
     <!-- CUSTOMER LIST -->
     <div class="card">
       <h3 style="margin-top:0;"><i class="fas fa-users"></i> Customers / Shops</h3>
@@ -165,14 +199,14 @@
       <div style="grid-column:1/-1;"><label><i class="fas fa-images"></i> Cover Image</label><input type="text" id="c_cover"></div>
     </div>
 
-    <!-- PROMOTIONS -->
+    <!-- PROMOTIONS SECTION (UPDATED) -->
     <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:15px;margin:15px 0;">
-      <h4 style="margin:0 0 12px 0;color:#1b5e20;"><i class="fas fa-bullhorn"></i> Promotions & Video</h4>
-      <div><label>Promo Video URL</label><input type="text" id="c_promoVideo" placeholder="https://youtu.be/..."></div>
+      <h4 style="margin:0 0 12px 0;color:#1b5e20;"><i class="fas fa-bullhorn"></i> Promotions & Video (Profile Page)</h4>
+      <div><label>Promo Video URL</label><input type="text" id="c_promoVideo" placeholder="https://youtu.be/..." oninput="syncPromoToSender()"></div>
       <div class="grid-3">
-        <div><label>Promo Image 1</label><input type="text" id="c_promoImg1"></div>
-        <div><label>Promo Image 2</label><input type="text" id="c_promoImg2"></div>
-        <div><label>Promo Image 3</label><input type="text" id="c_promoImg3"></div>
+        <div><label>Promo Image 1</label><input type="text" id="c_promoImg1" oninput="syncPromoToSender()"></div>
+        <div><label>Promo Image 2</label><input type="text" id="c_promoImg2" oninput="syncPromoToSender()"></div>
+        <div><label>Promo Image 3</label><input type="text" id="c_promoImg3" oninput="syncPromoToSender()"></div>
       </div>
     </div>
 
@@ -215,47 +249,155 @@
     <!-- THEME SELECTOR -->
     <div style="background:#fafafa;border:1px solid #e0e0e0;border-radius:8px;padding:15px;margin-bottom:15px;">
       <h4 style="margin:0 0 4px 0;color:#333;"><i class="fas fa-palette"></i> Profile Theme</h4>
-      <p style="font-size:12px;color:#888;margin:0 0 8px 0;">Theme එකක් click කළාම auto-select වෙනවා. Save කළාම apply වෙනවා.</p>
+      <p style="font-size:12px;color:#888;margin:0 0 8px 0;">Theme click කළාම auto-select. Save කළාම apply.</p>
       <input type="hidden" id="c_theme" value="">
       <div class="theme-grid" id="themeGrid">
-        <div class="theme-opt topt-default" onclick="selectTheme('default',this)">
-          <div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div>
-          <div class="th-label">Default Red</div>
-        </div>
-        <div class="theme-opt topt-dark" onclick="selectTheme('dark',this)">
-          <div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div>
-          <div class="th-label">Dark</div>
-        </div>
-        <div class="theme-opt topt-ocean" onclick="selectTheme('ocean',this)">
-          <div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div>
-          <div class="th-label">Ocean Blue</div>
-        </div>
-        <div class="theme-opt topt-forest" onclick="selectTheme('forest',this)">
-          <div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div>
-          <div class="th-label">Forest Green</div>
-        </div>
-        <div class="theme-opt topt-gold" onclick="selectTheme('gold',this)">
-          <div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div>
-          <div class="th-label">Gold Premium</div>
-        </div>
-        <div class="theme-opt topt-minimal" onclick="selectTheme('minimal',this)">
-          <div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div>
-          <div class="th-label">Minimal</div>
-        </div>
-        <div class="theme-opt topt-tech" onclick="selectTheme('tech',this)">
-          <div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div>
-          <div class="th-label">Tech Purple</div>
-        </div>
-        <div class="theme-opt topt-food" onclick="selectTheme('food',this)">
-          <div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div>
-          <div class="th-label">Food & Fire</div>
-        </div>
+        <div class="theme-opt topt-default" onclick="selectTheme('default',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Default Red</div></div>
+        <div class="theme-opt topt-dark" onclick="selectTheme('dark',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Dark</div></div>
+        <div class="theme-opt topt-ocean" onclick="selectTheme('ocean',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Ocean Blue</div></div>
+        <div class="theme-opt topt-forest" onclick="selectTheme('forest',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Forest Green</div></div>
+        <div class="theme-opt topt-gold" onclick="selectTheme('gold',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Gold Premium</div></div>
+        <div class="theme-opt topt-minimal" onclick="selectTheme('minimal',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Minimal</div></div>
+        <div class="theme-opt topt-tech" onclick="selectTheme('tech',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Tech Purple</div></div>
+        <div class="theme-opt topt-food" onclick="selectTheme('food',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Food & Fire</div></div>
       </div>
     </div>
 
     <div class="grid-2">
       <button class="btn-save" onclick="saveCustomerData()"><i class="fas fa-save"></i> Save / Update</button>
       <button class="btn-red btn-save" style="background:#d32f2f;" onclick="deleteCustomerFromForm()"><i class="fas fa-trash"></i> Delete</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- PROMOTION SENDER (NEW REDESIGNED SECTION) -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="promo-section">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:18px;">
+      <div>
+        <h3><i class="fas fa-paper-plane" style="color:#f87171;margin-right:8px;"></i>Promotion Email Sender</h3>
+        <p class="promo-subtitle">Select shop → add content → send to all subscribers instantly</p>
+      </div>
+      <div id="promoShopStats" style="display:none;" class="promo-stat" style="min-width:120px;">
+        <div class="subscriber-count-big" id="promoSubCount">0</div>
+        <div class="subscriber-count-label"><i class="fas fa-users"></i> Subscribers</div>
+      </div>
+    </div>
+
+    <!-- Shop selector & reply-to -->
+    <div class="grid-2" style="margin-bottom:14px;">
+      <div class="promo-input-group">
+        <label><i class="fas fa-store"></i> Shop Select</label>
+        <select id="promoShopSelect" onchange="onPromoShopChange()">
+          <option value="">-- Shop select කරන්න --</option>
+        </select>
+      </div>
+      <div class="promo-input-group">
+        <label><i class="fas fa-reply"></i> Reply-To Email</label>
+        <input type="email" id="promoReplyTo" placeholder="admin@mapabiz.com">
+      </div>
+    </div>
+
+    <!-- Subject -->
+    <div class="promo-input-group">
+      <label><i class="fas fa-heading"></i> Email Subject</label>
+      <input type="text" id="promoSubject" placeholder="e.g. Special Offer This Weekend! 🎉" oninput="updatePromoPreview()">
+    </div>
+
+    <!-- Message -->
+    <div class="promo-input-group">
+      <label><i class="fas fa-align-left"></i> Message (HTML supported)</label>
+      <textarea id="promoBody" rows="5" placeholder="Promotion message ලියන්න...&#10;&#10;Bold: <b>text</b>&#10;Link: <a href='...'>Click here</a>" oninput="updatePromoPreview()"></textarea>
+    </div>
+
+    <!-- Media links - pulled from promotion fields OR manual override -->
+    <div style="background:#0d1b35; border:1px solid #1e3a5f; border-radius:10px; padding:16px; margin-bottom:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h4 style="color:#94a3b8; margin:0; font-size:13px; text-transform:uppercase; letter-spacing:1px;"><i class="fas fa-photo-video" style="margin-right:6px;"></i> Media Attachments</h4>
+        <button onclick="loadFromPromoFields()" style="background:#1e3a5f; color:#60a5fa; border:1px solid #2d5080; padding:6px 12px; border-radius:5px; cursor:pointer; font-size:12px; font-weight:600;">
+          <i class="fas fa-sync-alt"></i> Load from Profile Fields
+        </button>
+      </div>
+
+      <!-- Live media preview cards -->
+      <div class="promo-media-preview">
+        <div class="media-row">
+          <div class="media-icon media-icon-vid"><i class="fab fa-youtube"></i></div>
+          <div class="media-text">
+            <p class="media-label">Promo Video URL</p>
+            <p class="media-link" id="pvVideoDisplay">— not set —</p>
+          </div>
+          <div class="promo-input-group" style="flex:1; margin:0;">
+            <input type="text" id="promoVideoUrl" placeholder="YouTube / mp4 link" oninput="updateMediaDisplay()" style="margin:0;">
+          </div>
+        </div>
+        <div class="media-row" style="margin-top:10px;">
+          <div class="media-icon media-icon-img"><i class="fas fa-image"></i></div>
+          <div class="media-text">
+            <p class="media-label">Image 1</p>
+            <p class="media-link" id="pvImg1Display">— not set —</p>
+          </div>
+          <div class="promo-input-group" style="flex:1; margin:0;">
+            <input type="text" id="promoImg1" placeholder="Direct image link" oninput="updateMediaDisplay()" style="margin:0;">
+          </div>
+        </div>
+        <div class="media-row" style="margin-top:10px;">
+          <div class="media-icon media-icon-img3"><i class="fas fa-images"></i></div>
+          <div class="media-text">
+            <p class="media-label">Image 2 & 3</p>
+            <p class="media-link" id="pvImg23Display">— not set —</p>
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; gap:6px;">
+            <input type="text" id="promoImg2" placeholder="Image 2 link" oninput="updateMediaDisplay()" style="margin:0; background:#1e3a5f; border:1px solid #2d5080; color:#e2e8f0; border-radius:6px; padding:8px 10px; width:100%; box-sizing:border-box;">
+            <input type="text" id="promoImg3" placeholder="Image 3 link" oninput="updateMediaDisplay()" style="margin:0; background:#1e3a5f; border:1px solid #2d5080; color:#e2e8f0; border-radius:6px; padding:8px 10px; width:100%; box-sizing:border-box;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview box -->
+    <div class="promo-preview-box">
+      <p class="pv-label"><i class="fas fa-eye"></i> Preview</p>
+      <p class="pv-subject" id="pvSubject">Subject preview...</p>
+      <div class="pv-body" id="pvBody">Message preview...</div>
+      <div class="pv-media-chips" id="pvChips"></div>
+    </div>
+
+    <!-- Action bar -->
+    <div class="promo-send-bar">
+      <button class="btn-send-promo" onclick="sendPromoEmail()" id="sendPromoBtn">
+        <i class="fas fa-paper-plane"></i> Send to All Subscribers
+      </button>
+      <button class="btn-sub-pdf" onclick="exportSubscribersPDF()">
+        <i class="fas fa-file-pdf"></i> Subscriber List PDF
+      </button>
+      <button class="btn btn-dark" onclick="exportSubscribersCSV()" style="padding:12px 16px;">
+        <i class="fas fa-file-csv"></i> CSV
+      </button>
+      <span id="promoSendMsg" class="promo-send-msg" style="display:none;"></span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- EMAIL SUBSCRIBERS VIEW (kept for reference/search) -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="card" style="border-left:5px solid #1565c0;">
+    <h3 style="margin-top:0;color:#1565c0;"><i class="fas fa-envelope-open-text"></i> Email Subscribers List</h3>
+    <div class="grid-2" style="max-width:700px;background:#e3f2fd;padding:15px;border-radius:10px;margin-bottom:16px;">
+      <div>
+        <label>Shop (හිස් නම් All)</label>
+        <select id="subShopFilter"><option value="ALL">All Shops</option></select>
+      </div>
+      <div style="display:flex;align-items:flex-end;gap:8px;">
+        <button class="btn btn-blue btn-save" style="margin:0;" onclick="loadSubscribers()"><i class="fas fa-sync"></i> Load</button>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <span id="subCountBadge" class="email-count-badge">0 subscribers</span>
+      <input type="text" id="subSearchInput" placeholder="Email සොයන්න..." oninput="filterSubscribers()" style="width:220px;margin:0;padding:8px 12px;font-size:13px;">
+    </div>
+    <div id="subscriberList" style="border:1px solid #eee;border-radius:8px;max-height:350px;overflow-y:auto;">
+      <div style="padding:20px;text-align:center;color:gray;">Shop select කරලා Load කරන්න.</div>
     </div>
   </div>
 
@@ -302,15 +444,13 @@
       <div style="display:flex;align-items:flex-end;"><button class="btn btn-dark btn-save" style="margin:0;" onclick="adminFetchProducts()">Load List</button></div>
     </div>
     <div id="adminAddProductArea" style="margin-top:20px;border:1px dashed #ccc;padding:15px;border-radius:10px;">
-      <h4 style="margin-top:0;">➕ නව Item එකතු කරන්න</h4>
+      <h4 style="margin-top:0;">➕ නව Item</h4>
       <div class="grid-2">
         <div><label>වර්ගය</label><select id="new_p_type"><option value="Product">🍽️ Product / Food</option><option value="Room">🛏️ Hotel Room</option><option value="Package">🎁 Special Package</option></select></div>
         <div><label>නම</label><input type="text" id="new_p_name"></div>
       </div>
-      <div class="grid-2">
-        <div><label>මිල (රු.)</label><input type="number" id="new_p_price"></div>
-      </div>
-      <div><label>Images</label><div class="grid-3"><input type="text" id="new_p_img1" placeholder="Image 1 Link"><input type="text" id="new_p_img2" placeholder="Image 2 Link"><input type="text" id="new_p_img3" placeholder="Image 3 Link"></div></div>
+      <div><label>මිල (රු.)</label><input type="number" id="new_p_price"></div>
+      <div><label>Images</label><div class="grid-3"><input type="text" id="new_p_img1" placeholder="Image 1"><input type="text" id="new_p_img2" placeholder="Image 2"><input type="text" id="new_p_img3" placeholder="Image 3"></div></div>
       <button class="btn-green btn-save" style="width:200px;padding:10px;" onclick="adminAddProduct()">Save Item</button>
     </div>
     <div id="adminProductsList" style="margin-top:20px;"></div>
@@ -333,87 +473,6 @@
       <button class="filter-chip" id="admin-chip-cancelled" onclick="adminFilterOrders('cancelled')">❌ Cancelled</button>
     </div>
     <div id="adminOrdersList" style="margin-top:15px;"></div>
-  </div>
-
-  <!-- ══ EMAIL SUBSCRIBERS ══ -->
-  <div class="card" style="border-left:5px solid #1565c0;">
-    <h3 style="margin-top:0;color:#1565c0;"><i class="fas fa-envelope-open-text"></i> Email Subscribers</h3>
-    <div class="grid-2" style="max-width:700px;background:#e3f2fd;padding:15px;border-radius:10px;margin-bottom:16px;">
-      <div>
-        <label>Shop ID (හිස් නම් All Shops)</label>
-        <select id="subShopFilter">
-          <option value="ALL">All Shops</option>
-        </select>
-      </div>
-      <div style="display:flex;align-items:flex-end;gap:8px;">
-        <button class="btn btn-blue btn-save" style="margin:0;" onclick="loadSubscribers()"><i class="fas fa-sync"></i> Load</button>
-        <button class="btn btn-dark btn-save" style="margin:0;" onclick="exportSubscribersPDF()"><i class="fas fa-file-pdf" style="color:#ff5252;"></i> PDF</button>
-        <button class="btn btn-green btn-save" style="margin:0;" onclick="exportSubscribersCSV()"><i class="fas fa-file-csv"></i> CSV</button>
-      </div>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-      <span id="subCountBadge" class="email-count-badge">0 subscribers</span>
-      <input type="text" id="subSearchInput" placeholder="Email සොයන්න..." oninput="filterSubscribers()" style="width:220px;margin:0;padding:8px 12px;font-size:13px;">
-    </div>
-    <div id="subscriberList" style="border:1px solid #eee;border-radius:8px;max-height:350px;overflow-y:auto;">
-      <div style="padding:20px;text-align:center;color:gray;">Shop select කරලා Load කරන්න.</div>
-    </div>
-  </div>
-
-  <!-- ══ BULK EMAIL SENDER ══ -->
-  <div class="card" style="border-left:5px solid #e65100;">
-    <h3 style="margin-top:0;color:#e65100;"><i class="fas fa-paper-plane"></i> Bulk Email / Promotion Sender</h3>
-    <p style="font-size:13px;color:gray;">Subscribe කරපු customers වලට promotion email එකක් send කරන්න. Image හෝ Video link attach කරන්නත් පුළුවන්.</p>
-
-    <div class="grid-2" style="background:#fff3e0;padding:15px;border-radius:10px;margin-bottom:16px;">
-      <div>
-        <label>Shop Select (Subscribers)</label>
-        <select id="emailShopSelect">
-          <option value="">-- Shop select කරන්න --</option>
-        </select>
-      </div>
-      <div>
-        <label>Reply-To Email (ඔබේ Email)</label>
-        <input type="email" id="emailReplyTo" placeholder="admin@mapabiz.com" autocomplete="off">
-      </div>
-    </div>
-
-    <div style="margin-bottom:12px;">
-      <label>Email Subject</label>
-      <input type="text" id="emailSubject" placeholder="e.g. Special Offer This Weekend! 🎉">
-    </div>
-
-    <div style="background:#f9f9f9;border:1px dashed #ccc;border-radius:8px;padding:14px;margin-bottom:12px;">
-      <h4 style="margin:0 0 10px 0;font-size:14px;color:#555;"><i class="fas fa-image"></i> Media Attach (optional)</h4>
-      <div class="grid-2">
-        <div>
-          <label>Image URL (direct link)</label>
-          <input type="text" id="emailImageUrl" placeholder="https://... (jpg/png)">
-        </div>
-        <div>
-          <label>Video URL (YouTube හෝ direct)</label>
-          <input type="text" id="emailVideoUrl" placeholder="https://youtu.be/... හෝ mp4 link">
-        </div>
-      </div>
-    </div>
-
-    <div style="margin-bottom:12px;">
-      <label>Email Message (HTML support)</label>
-      <textarea id="emailBody" rows="6" placeholder="ඔබේ promotion message ලියන්න...&#10;&#10;Bold: &lt;b&gt;text&lt;/b&gt;&#10;Link: &lt;a href='...'&gt;Click here&lt;/a&gt;"></textarea>
-    </div>
-
-    <div style="background:#f3f3f3;border-radius:8px;padding:12px;margin-bottom:14px;">
-      <div style="font-size:13px;color:#555;margin-bottom:8px;"><i class="fas fa-eye"></i> <strong>Preview</strong></div>
-      <div id="emailPreview" style="background:white;border:1px solid #ddd;border-radius:6px;padding:14px;font-size:14px;min-height:60px;color:#333;">
-        Message preview මෙතැනින් දිස්වේ...
-      </div>
-    </div>
-
-    <div style="display:flex;gap:10px;align-items:center;">
-      <button class="btn" style="background:#607d8b;" onclick="previewEmail()"><i class="fas fa-eye"></i> Preview</button>
-      <button class="btn btn-green" onclick="sendBulkEmail()" id="sendEmailBtn"><i class="fas fa-paper-plane"></i> Send to All Subscribers</button>
-      <span id="emailSendMsg" style="font-size:13px;font-weight:700;"></span>
-    </div>
   </div>
 
   <!-- FEEDBACK -->
@@ -444,7 +503,6 @@
   let currentSelectedId = "";
   let allSubscribersData = [];
 
-  // ══ INIT ══
   window.onload = function() {
     var staffName = sessionStorage.getItem('loggedInStaff');
     if (!staffName) { window.location.href = "index.html"; return; }
@@ -455,6 +513,7 @@
     if (savedScript) document.getElementById('sysScriptUrl').value = savedScript;
     loadAllCustomers();
     loadAnalytics();
+    updatePromoPreview();
   };
 
   function saveSystemUrls() {
@@ -481,7 +540,6 @@
     return '';
   }
 
-  // ══ THEME SELECTOR ══
   function selectTheme(name, el) {
     document.querySelectorAll('.theme-opt').forEach(function(o) { o.classList.remove('active'); });
     el.classList.add('active');
@@ -558,7 +616,7 @@
 
   function clearSearch() { document.getElementById('searchInput').value = ""; filterCustomers(); }
 
-  // ══ SELECT CUSTOMER ══
+  // ══ SELECT CUSTOMER (UPDATED - syncs promo section) ══
   function selectCustomer(shopId) {
     var customer = allCustomersData.find(function(c) { return getField(c,['ID','id','ShopID']) === shopId; });
     if (!customer) { alert("Data load error. Refresh."); return; }
@@ -588,10 +646,17 @@
     document.getElementById('c_image').value        = g(['ProfileImage','ProfileImg']);
     document.getElementById('c_cover').value        = g(['CoverImage','CoverImg']);
     document.getElementById('c_bank').value         = g(['BankDetails','Bank']);
-    document.getElementById('c_promoVideo').value   = g(['CustomPromoVideo','PromoVideo']);
-    document.getElementById('c_promoImg1').value    = g(['CustomPromoImg1','PromoImg1']);
-    document.getElementById('c_promoImg2').value    = g(['CustomPromoImg2','PromoImg2']);
-    document.getElementById('c_promoImg3').value    = g(['CustomPromoImg3','PromoImg3']);
+
+    var promoVid  = g(['CustomPromoVideo','PromoVideo']);
+    var promoImg1 = g(['CustomPromoImg1','PromoImg1']);
+    var promoImg2 = g(['CustomPromoImg2','PromoImg2']);
+    var promoImg3 = g(['CustomPromoImg3','PromoImg3']);
+
+    document.getElementById('c_promoVideo').value  = promoVid;
+    document.getElementById('c_promoImg1').value   = promoImg1;
+    document.getElementById('c_promoImg2').value   = promoImg2;
+    document.getElementById('c_promoImg3').value   = promoImg3;
+
     document.getElementById('c_clientPhone').value  = g(['ClientPhone','Phone']);
     document.getElementById('c_password').value     = g(['Password','password']);
     document.getElementById('c_expiryDate').value   = safeDate(g(['ExpiryDate','Expiry']));
@@ -614,6 +679,7 @@
     var theme = g(['Theme','theme','ThemeColor']);
     document.getElementById('c_theme').value = theme;
     applyThemeUI(theme);
+
     document.getElementById('formTitle').innerHTML = '<i class="fas fa-edit"></i> Editing: <span style="color:#d32f2f;">' + (name || shopId) + '</span>';
     document.getElementById('p_shop_id').value = shopId;
     document.getElementById('f_shop_id').value = shopId;
@@ -621,7 +687,16 @@
     document.getElementById('analyticsShopId').value = shopId;
     document.getElementById('qrShopSelect').value = shopId;
     document.getElementById('subShopFilter').value = shopId;
-    document.getElementById('emailShopSelect').value = shopId;
+
+    // ── AUTO-SYNC PROMOTION SENDER ──
+    document.getElementById('promoShopSelect').value = shopId;
+    document.getElementById('promoVideoUrl').value = promoVid;
+    document.getElementById('promoImg1').value = promoImg1;
+    document.getElementById('promoImg2').value = promoImg2;
+    document.getElementById('promoImg3').value = promoImg3;
+    updateMediaDisplay();
+    loadPromoSubscriberCount(shopId);
+
     adminFetchProducts();
     adminFetchFeedback();
     loadAnalytics();
@@ -647,40 +722,27 @@
     document.getElementById('customerFormCard').scrollIntoView({ behavior: 'smooth' });
   }
 
-  // ══ SAVE ══
   function saveCustomerData() {
     if (!APPS_SCRIPT_URL) { alert("Apps Script URL configure කරන්න."); return; }
     var id = document.getElementById('c_id').value.trim();
     if (!id) { alert("Shop ID අනිවාර්යයි."); return; }
     var payload = {
-      action: "saveCustomer",
-      staffId: sessionStorage.getItem('loggedInStaff'),
-      staffName: sessionStorage.getItem('loggedInStaff'),
+      action: "saveCustomer", staffId: sessionStorage.getItem('loggedInStaff'), staffName: sessionStorage.getItem('loggedInStaff'),
       customerData: {
-        ID: id, Type: document.getElementById('c_type').value,
-        BusinessName: document.getElementById('c_name').value,
+        ID: id, Type: document.getElementById('c_type').value, BusinessName: document.getElementById('c_name').value,
         WhatsApp: document.getElementById('c_wa').value, Maps: document.getElementById('c_maps').value,
         Facebook: document.getElementById('c_fb').value, Instagram: document.getElementById('c_ig').value,
         TikTok: document.getElementById('c_tiktok').value, Website: document.getElementById('c_web').value,
         Email: document.getElementById('c_email').value, MenuPDF: document.getElementById('c_menu').value,
-        Theme: document.getElementById('c_theme').value,
-        Status: document.getElementById('c_status').value,
-        LoyaltyStatus: document.getElementById('c_loyaltyStatus').value,
-        StoreStatus: document.getElementById('c_storeStatus').value,
-        InboxStatus: document.getElementById('c_inboxStatus').value,
-        OrdersStatus: document.getElementById('c_ordersStatus').value,
-        StampTarget: document.getElementById('c_stampTarget').value,
-        ClientPhone: document.getElementById('c_clientPhone').value,
-        Password: document.getElementById('c_password').value,
-        BankDetails: document.getElementById('c_bank').value,
-        GoogleReview: document.getElementById('c_review').value,
-        ProfileImage: document.getElementById('c_image').value,
-        CoverImage: document.getElementById('c_cover').value,
-        ExpiryDate: document.getElementById('c_expiryDate').value,
-        CustomPromoVideo: document.getElementById('c_promoVideo').value,
-        CustomPromoImg1: document.getElementById('c_promoImg1').value,
-        CustomPromoImg2: document.getElementById('c_promoImg2').value,
-        CustomPromoImg3: document.getElementById('c_promoImg3').value,
+        Theme: document.getElementById('c_theme').value, Status: document.getElementById('c_status').value,
+        LoyaltyStatus: document.getElementById('c_loyaltyStatus').value, StoreStatus: document.getElementById('c_storeStatus').value,
+        InboxStatus: document.getElementById('c_inboxStatus').value, OrdersStatus: document.getElementById('c_ordersStatus').value,
+        StampTarget: document.getElementById('c_stampTarget').value, ClientPhone: document.getElementById('c_clientPhone').value,
+        Password: document.getElementById('c_password').value, BankDetails: document.getElementById('c_bank').value,
+        GoogleReview: document.getElementById('c_review').value, ProfileImage: document.getElementById('c_image').value,
+        CoverImage: document.getElementById('c_cover').value, ExpiryDate: document.getElementById('c_expiryDate').value,
+        CustomPromoVideo: document.getElementById('c_promoVideo').value, CustomPromoImg1: document.getElementById('c_promoImg1').value,
+        CustomPromoImg2: document.getElementById('c_promoImg2').value, CustomPromoImg3: document.getElementById('c_promoImg3').value,
         CustomLink1Name: document.getElementById('c_cl1_name').value, CustomLink1URL: document.getElementById('c_cl1_url').value,
         CustomLink2Name: document.getElementById('c_cl2_name').value, CustomLink2URL: document.getElementById('c_cl2_url').value,
         CustomLink3Name: document.getElementById('c_cl3_name').value, CustomLink3URL: document.getElementById('c_cl3_url').value,
@@ -709,11 +771,11 @@
     var analyticsSelect = document.getElementById('analyticsShopId');
     var qrSelect = document.getElementById('qrShopSelect');
     var subFilter = document.getElementById('subShopFilter');
-    var emailSel = document.getElementById('emailShopSelect');
+    var promoSel = document.getElementById('promoShopSelect');
     analyticsSelect.innerHTML = '<option value="ALL">All Shops</option>';
     qrSelect.innerHTML = '<option value="">-- Select Shop --</option>';
     subFilter.innerHTML = '<option value="ALL">All Shops</option>';
-    emailSel.innerHTML = '<option value="">-- Shop select කරන්න --</option>';
+    promoSel.innerHTML = '<option value="">-- Shop select කරන්න --</option>';
     list.forEach(function(c) {
       var id = getField(c,['ID','id','ShopID']);
       var name = getField(c,['BusinessName','Name']);
@@ -721,7 +783,7 @@
       analyticsSelect.innerHTML += '<option value="' + id + '">' + label + '</option>';
       qrSelect.innerHTML += '<option value="' + id + '">' + label + '</option>';
       subFilter.innerHTML += '<option value="' + id + '">' + label + '</option>';
-      emailSel.innerHTML += '<option value="' + id + '">' + label + '</option>';
+      promoSel.innerHTML += '<option value="' + id + '">' + label + '</option>';
     });
   }
 
@@ -762,9 +824,7 @@
     var htmlContent = '<div style="padding:40px;font-family:Arial,sans-serif;background:#fff;color:#333;"><div style="text-align:center;border-bottom:2px solid #d32f2f;padding-bottom:20px;margin-bottom:30px;"><h1 style="color:#d32f2f;font-size:32px;margin:0;">' + shopName + '</h1><h3 style="color:#333;margin:10px 0 5px 0;">Analytics Report</h3><p style="color:#555;">' + dateText + '</p></div><div style="display:flex;justify-content:space-between;margin-bottom:40px;"><div style="flex:1;background:#e3f2fd;padding:25px;border-radius:10px;text-align:center;margin-right:15px;"><h2 style="color:#1976d2;font-size:36px;margin:0;">' + scans + '</h2><p style="color:#1565c0;font-weight:bold;">Total Scans</p></div><div style="flex:1;background:#e8f5e9;padding:25px;border-radius:10px;text-align:center;margin-left:15px;"><h2 style="color:#2e7d32;font-size:36px;margin:0;">' + emails + '</h2><p style="color:#1b5e20;font-weight:bold;">Email Subscribers</p></div></div><div style="background:#fff3e0;padding:20px;border-radius:10px;"><h3 style="color:#e65100;margin-top:0;">Scan Destinations</h3>' + linksHtml + '</div></div>';
     var opt = { margin:15, filename:'Analytics_' + shopName.replace(/[^a-zA-Z0-9]/g,'_') + '.pdf', image:{type:'jpeg',quality:0.98}, html2canvas:{scale:2}, jsPDF:{unit:'mm',format:'a4',orientation:'portrait'} };
     var btn = document.querySelector('#analyticsCard button');
-    var orig = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
-    btn.disabled = true;
+    var orig = btn.innerHTML; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...'; btn.disabled = true;
     html2pdf().set(opt).from(htmlContent).save().then(function() { btn.innerHTML = orig; btn.disabled = false; });
   }
 
@@ -789,6 +849,230 @@
 
   function copyLink(id) { var el = document.getElementById(id); el.select(); navigator.clipboard.writeText(el.value); alert("Copied!"); }
 
+  // ══ PROMOTION SENDER LOGIC (NEW) ══
+
+  function syncPromoToSender() {
+    document.getElementById('promoVideoUrl').value = document.getElementById('c_promoVideo').value;
+    document.getElementById('promoImg1').value = document.getElementById('c_promoImg1').value;
+    document.getElementById('promoImg2').value = document.getElementById('c_promoImg2').value;
+    document.getElementById('promoImg3').value = document.getElementById('c_promoImg3').value;
+    updateMediaDisplay();
+  }
+
+  function loadFromPromoFields() {
+    document.getElementById('promoVideoUrl').value = document.getElementById('c_promoVideo').value;
+    document.getElementById('promoImg1').value = document.getElementById('c_promoImg1').value;
+    document.getElementById('promoImg2').value = document.getElementById('c_promoImg2').value;
+    document.getElementById('promoImg3').value = document.getElementById('c_promoImg3').value;
+    updateMediaDisplay();
+  }
+
+  function updateMediaDisplay() {
+    var vid = document.getElementById('promoVideoUrl').value.trim();
+    var img1 = document.getElementById('promoImg1').value.trim();
+    var img2 = document.getElementById('promoImg2').value.trim();
+    var img3 = document.getElementById('promoImg3').value.trim();
+
+    var pvVid = document.getElementById('pvVideoDisplay');
+    var pvImg1 = document.getElementById('pvImg1Display');
+    var pvImg23 = document.getElementById('pvImg23Display');
+
+    pvVid.className = 'media-link' + (vid ? '' : ' empty');
+    pvVid.innerText = vid ? vid.substring(0,55) + (vid.length > 55 ? '...' : '') : '— not set —';
+
+    pvImg1.className = 'media-link' + (img1 ? '' : ' empty');
+    pvImg1.innerText = img1 ? img1.substring(0,55) + (img1.length > 55 ? '...' : '') : '— not set —';
+
+    var img23count = [img2, img3].filter(Boolean).length;
+    pvImg23.className = 'media-link' + (img23count > 0 ? '' : ' empty');
+    pvImg23.innerText = img23count > 0 ? img23count + ' image(s) set' : '— not set —';
+
+    updatePromoPreview();
+  }
+
+  function updatePromoPreview() {
+    var subject = document.getElementById('promoSubject').value || '(No subject)';
+    var body = document.getElementById('promoBody').value || '(Empty message)';
+    var vid = document.getElementById('promoVideoUrl') ? document.getElementById('promoVideoUrl').value.trim() : '';
+    var img1 = document.getElementById('promoImg1') ? document.getElementById('promoImg1').value.trim() : '';
+    var img2 = document.getElementById('promoImg2') ? document.getElementById('promoImg2').value.trim() : '';
+    var img3 = document.getElementById('promoImg3') ? document.getElementById('promoImg3').value.trim() : '';
+
+    document.getElementById('pvSubject').innerText = subject;
+    document.getElementById('pvBody').innerHTML = body;
+
+    var chips = '';
+    if (vid) chips += '<span class="pv-chip pv-chip-vid"><i class="fab fa-youtube"></i> Video attached</span>';
+    if (img1) chips += '<span class="pv-chip pv-chip-img"><i class="fas fa-image"></i> Image 1</span>';
+    if (img2) chips += '<span class="pv-chip pv-chip-img3"><i class="fas fa-image"></i> Image 2</span>';
+    if (img3) chips += '<span class="pv-chip pv-chip-img3"><i class="fas fa-image"></i> Image 3</span>';
+    document.getElementById('pvChips').innerHTML = chips;
+  }
+
+  function onPromoShopChange() {
+    var shopId = document.getElementById('promoShopSelect').value;
+    if (shopId) loadPromoSubscriberCount(shopId);
+    else { document.getElementById('promoShopStats').style.display = 'none'; }
+  }
+
+  function loadPromoSubscriberCount(shopId) {
+    if (!APPS_SCRIPT_URL || !shopId) return;
+    fetch(APPS_SCRIPT_URL + "?action=getSubscribers&shopId=" + shopId)
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (d.success) {
+          var count = (d.data || []).length;
+          document.getElementById('promoSubCount').innerText = count;
+          document.getElementById('promoShopStats').style.display = 'block';
+          allSubscribersData = d.data || [];
+        }
+      }).catch(function(){});
+  }
+
+  function sendPromoEmail() {
+    var shopId = document.getElementById('promoShopSelect').value;
+    if (!shopId) { alert("Shop select කරන්න."); return; }
+    var subject = document.getElementById('promoSubject').value.trim();
+    var body = document.getElementById('promoBody').value.trim();
+    var replyTo = document.getElementById('promoReplyTo').value.trim();
+    var vidUrl = document.getElementById('promoVideoUrl').value.trim();
+    var imgUrl1 = document.getElementById('promoImg1').value.trim();
+    var imgUrl2 = document.getElementById('promoImg2').value.trim();
+    var imgUrl3 = document.getElementById('promoImg3').value.trim();
+    if (!subject || !body) { alert("Subject සහ Message අනිවාර්යයි."); return; }
+
+    var mediaHtml = '';
+    if (imgUrl1) mediaHtml += '<div style="text-align:center;margin:18px 0;"><img src="' + imgUrl1 + '" style="max-width:100%;border-radius:8px;"></div>';
+    if (imgUrl2) mediaHtml += '<div style="text-align:center;margin:10px 0;"><img src="' + imgUrl2 + '" style="max-width:100%;border-radius:8px;"></div>';
+    if (imgUrl3) mediaHtml += '<div style="text-align:center;margin:10px 0;"><img src="' + imgUrl3 + '" style="max-width:100%;border-radius:8px;"></div>';
+    if (vidUrl) {
+      var yt = vidUrl.match(/(?:youtu\.be\/|[?&]v=|embed\/)([A-Za-z0-9_-]{11})/);
+      if (yt) {
+        mediaHtml += '<div style="text-align:center;margin:20px 0;"><a href="' + vidUrl + '" target="_blank" style="display:inline-block;background:#FF0000;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:16px;">&#9654; Watch Video on YouTube</a></div>';
+      } else {
+        mediaHtml += '<div style="text-align:center;margin:20px 0;"><a href="' + vidUrl + '" target="_blank" style="display:inline-block;background:#1565c0;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:16px;">&#9654; Watch Video</a></div>';
+      }
+    }
+
+    var finalHtml = '<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:30px;background:#fff;">' + mediaHtml + '<div style="font-size:15px;line-height:1.8;color:#333;">' + body + '</div><div style="margin-top:30px;padding-top:16px;border-top:1px solid #eee;font-size:12px;color:#aaa;text-align:center;">Powered by Mapa Solutions</div></div>';
+
+    var btn = document.getElementById('sendPromoBtn');
+    var msgEl = document.getElementById('promoSendMsg');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    msgEl.style.display = 'none';
+
+    fetch(APPS_SCRIPT_URL, { method:'POST', body: JSON.stringify({ action:'sendBulkEmails', shopId:shopId, clientEmail:replyTo, subject:subject, message:finalHtml }) })
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send to All Subscribers';
+        msgEl.style.display = 'inline-block';
+        if (d.success) { msgEl.className = 'promo-send-msg success'; msgEl.innerHTML = '&#10003; ' + (d.message || 'Sent successfully!'); }
+        else { msgEl.className = 'promo-send-msg error'; msgEl.innerHTML = '&#10007; ' + (d.error || 'Error occurred.'); }
+      })
+      .catch(function(){
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send to All Subscribers';
+        msgEl.style.display = 'inline-block';
+        msgEl.className = 'promo-send-msg error';
+        msgEl.innerHTML = '&#10007; Network error!';
+      });
+  }
+
+  // ══ SUBSCRIBERS ══
+  function loadSubscribers() {
+    if (!APPS_SCRIPT_URL) return;
+    var shopId = document.getElementById('subShopFilter').value;
+    document.getElementById('subscriberList').innerHTML = '<div style="padding:20px;text-align:center;color:gray;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+    fetch(APPS_SCRIPT_URL + "?action=getSubscribers&shopId=" + shopId)
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (d.success) { allSubscribersData = d.data || []; renderSubscribers(allSubscribersData); }
+        else { document.getElementById('subscriberList').innerHTML = '<div style="padding:20px;text-align:center;color:gray;">' + (d.error||'No data.') + '</div>'; }
+      })
+      .catch(function(){ document.getElementById('subscriberList').innerHTML = '<div style="padding:20px;text-align:center;color:red;">Network error.</div>'; });
+  }
+
+  function renderSubscribers(list) {
+    document.getElementById('subCountBadge').innerText = list.length + ' subscribers';
+    var container = document.getElementById('subscriberList');
+    if (list.length === 0) { container.innerHTML = '<div style="padding:20px;text-align:center;color:gray;">Subscribers නෑ.</div>'; return; }
+    var h = '';
+    list.forEach(function(s) {
+      var email = s.Email || s.email || '-';
+      var shopId = s.ShopID || s.shopId || '-';
+      var date = s.Date ? new Date(s.Date).toLocaleDateString() : '-';
+      h += '<div class="email-sub-row"><div><span class="es-email">' + email + '</span><span style="font-size:11px;color:#888;margin-left:10px;">Shop: ' + shopId + '</span></div><span class="es-date">' + date + '</span></div>';
+    });
+    container.innerHTML = h;
+  }
+
+  function filterSubscribers() {
+    var term = document.getElementById('subSearchInput').value.toLowerCase();
+    var filtered = term ? allSubscribersData.filter(function(s){ return (s.Email||'').toLowerCase().includes(term); }) : allSubscribersData;
+    renderSubscribers(filtered);
+  }
+
+  function exportSubscribersCSV() {
+    if (allSubscribersData.length === 0) { alert("Load subscribers first."); return; }
+    var rows = ['"ShopID","Email","Date"'];
+    allSubscribersData.forEach(function(s){
+      rows.push('"'+(s.ShopID||'')+'",' + '"'+(s.Email||'')+'",' + '"'+(s.Date?new Date(s.Date).toLocaleDateString():'')+'"');
+    });
+    var blob = new Blob([rows.join('\n')], {type:'text/csv;charset=utf-8;'});
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'subscribers_' + new Date().toISOString().slice(0,10) + '.csv'; a.click();
+  }
+
+  function exportSubscribersPDF() {
+    if (allSubscribersData.length === 0) {
+      var shopId = document.getElementById('promoShopSelect').value;
+      if (shopId && APPS_SCRIPT_URL) {
+        fetch(APPS_SCRIPT_URL + "?action=getSubscribers&shopId=" + shopId)
+          .then(function(r){ return r.json(); })
+          .then(function(d){
+            if (d.success && d.data && d.data.length > 0) { allSubscribersData = d.data; buildSubscriberPDF(); }
+            else { alert("Subscribers නෑ."); }
+          });
+        return;
+      }
+      alert("Subscriber list load කරන්න. (Promotion Sender section → Shop select → auto loads)");
+      return;
+    }
+    buildSubscriberPDF();
+  }
+
+  function buildSubscriberPDF() {
+    var shopSel = document.getElementById('promoShopSelect');
+    var shopName = shopSel && shopSel.selectedIndex >= 0 ? shopSel.options[shopSel.selectedIndex].text : 'All Shops';
+    var generatedDate = new Date().toLocaleDateString('en-GB', {year:'numeric', month:'long', day:'numeric'});
+    var rows = allSubscribersData.map(function(s, i){
+      return '<tr style="background:' + (i%2===0?'#f9f9f9':'white') + ';"><td style="padding:9px 14px;border-bottom:1px solid #eee;color:#888;font-size:13px;">'+(i+1)+'</td><td style="padding:9px 14px;border-bottom:1px solid #eee;color:#1565c0;font-weight:600;font-size:14px;">'+(s.Email||'-')+'</td><td style="padding:9px 14px;border-bottom:1px solid #eee;color:#555;font-size:13px;">'+(s.ShopID||'-')+'</td><td style="padding:9px 14px;border-bottom:1px solid #eee;color:#888;font-size:13px;">'+(s.Date?new Date(s.Date).toLocaleDateString():'-')+'</td></tr>';
+    }).join('');
+    var html = '<div style="padding:40px;font-family:Arial,sans-serif;background:#fff;">' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #d32f2f;padding-bottom:20px;margin-bottom:28px;">' +
+        '<div><h1 style="color:#d32f2f;margin:0;font-size:28px;">Email Subscribers</h1><h3 style="color:#333;margin:6px 0 2px 0;font-size:16px;">' + shopName + '</h3><p style="color:#888;margin:0;font-size:13px;">Generated: ' + generatedDate + '</p></div>' +
+        '<div style="background:#e3f2fd;padding:16px 24px;border-radius:10px;text-align:center;"><div style="font-size:36px;font-weight:700;color:#1976d2;line-height:1;">' + allSubscribersData.length + '</div><div style="font-size:13px;color:#1565c0;font-weight:600;margin-top:4px;">Total Subscribers</div></div>' +
+      '</div>' +
+      '<table style="width:100%;border-collapse:collapse;">' +
+        '<thead><tr style="background:#1565c0;color:white;">' +
+          '<th style="padding:10px 14px;text-align:left;font-size:13px;">#</th>' +
+          '<th style="padding:10px 14px;text-align:left;font-size:13px;">Email Address</th>' +
+          '<th style="padding:10px 14px;text-align:left;font-size:13px;">Shop ID</th>' +
+          '<th style="padding:10px 14px;text-align:left;font-size:13px;">Subscribed Date</th>' +
+        '</tr></thead>' +
+        '<tbody>' + rows + '</tbody>' +
+      '</table>' +
+      '<div style="margin-top:30px;text-align:center;font-size:12px;color:#aaa;border-top:1px solid #eee;padding-top:16px;">Mapa Solutions Admin Panel &bull; Confidential</div>' +
+      '</div>';
+    html2pdf().set({
+      margin: 15,
+      filename: 'Subscribers_' + shopName.replace(/[^a-zA-Z0-9]/g,'_') + '_' + new Date().toISOString().slice(0,10) + '.pdf',
+      html2canvas: { scale: 2 },
+      jsPDF: { unit:'mm', format:'a4', orientation:'portrait' }
+    }).from(html).save();
+  }
+
   // ══ PRODUCTS ══
   function adminFetchProducts() {
     if (!APPS_SCRIPT_URL) return;
@@ -803,10 +1087,7 @@
           d.data.forEach(function(p) {
             var pType = p.Type||"Product"; var pName = p.ProductName||p.Name||"නම නැත";
             var pId = p.ProductID||"No-ID"; var pPrice = p.Price||0;
-            var imgs = "";
-            [p.Image1||p.Img1, p.Image2||p.Img2, p.Image3||p.Img3].forEach(function(img) {
-              if (img) imgs += '<img src="' + img + '" style="width:45px;height:45px;object-fit:cover;border-radius:5px;border:1px solid #ddd;">';
-            });
+            var imgs = ""; [p.Image1||p.Img1, p.Image2||p.Img2, p.Image3||p.Img3].forEach(function(img) { if (img) imgs += '<img src="' + img + '" style="width:45px;height:45px;object-fit:cover;border-radius:5px;border:1px solid #ddd;">'; });
             var imgH = imgs ? '<div style="margin-top:8px;display:flex;gap:10px;">' + imgs + '</div>' : '';
             h += '<div class="product-row"><div class="grid-2"><div><span class="badge b-' + pType + '">' + pType + '</span><strong>' + pName + '</strong><br><small style="color:gray;">(ID: ' + pId + ')</small>' + imgH + '</div><div style="display:flex;align-items:center;gap:5px;justify-content:flex-end;"><span style="font-weight:bold;color:#777;">රු.</span><input type="number" id="ad_p_' + pId + '" value="' + pPrice + '" style="padding:8px;width:100px;margin:0;"><button class="btn btn-green" style="padding:8px 12px;" onclick="adminUpdatePrice(\'' + pId + '\')"><i class="fas fa-check"></i></button><button class="btn btn-red" style="padding:8px 12px;" onclick="adminDeleteProduct(\'' + pId + '\')"><i class="fas fa-trash-alt"></i></button></div></div></div>';
           });
@@ -848,11 +1129,8 @@
     fetch(APPS_SCRIPT_URL + "?action=getOrders&shopId=" + sid)
       .then(function(r){ return r.json(); })
       .then(function(d){
-        if (d.success) {
-          adminAllOrders = d.data||[];
-          document.getElementById('adminOrderFilters').style.display = adminAllOrders.length > 0 ? 'flex' : 'none';
-          adminRenderOrders();
-        } else { document.getElementById('adminOrdersList').innerHTML = '<p style="color:gray;padding:10px;">' + (d.error||'Error') + '</p>'; }
+        if (d.success) { adminAllOrders = d.data||[]; document.getElementById('adminOrderFilters').style.display = adminAllOrders.length > 0 ? 'flex' : 'none'; adminRenderOrders(); }
+        else { document.getElementById('adminOrdersList').innerHTML = '<p style="color:gray;padding:10px;">' + (d.error||'Error') + '</p>'; }
       });
   }
 
@@ -883,10 +1161,7 @@
     var sid = document.getElementById('o_shop_id').value.trim();
     fetch(APPS_SCRIPT_URL, { method:'POST', body: JSON.stringify({ action:'updateOrderStatus', shopId:sid, orderId:orderId, status:newStatus }) })
       .then(function(r){ return r.json(); })
-      .then(function(d){
-        if (d.success) { adminAllOrders.forEach(function(o){ if ((o.OrderID||'').toString()===orderId.toString()) o.Status=newStatus; }); adminRenderOrders(); }
-        else alert(d.error||"Error.");
-      });
+      .then(function(d){ if (d.success) { adminAllOrders.forEach(function(o){ if ((o.OrderID||'').toString()===orderId.toString()) o.Status=newStatus; }); adminRenderOrders(); } else alert(d.error||"Error."); });
   }
 
   function adminExportOrders() {
@@ -896,129 +1171,6 @@
     adminAllOrders.forEach(function(o){ rows.push(headers.map(function(h){ var v=(o[h]||'').toString().replace(/"/g,'""'); return '"'+v+'"'; }).join(',')); });
     var blob = new Blob([rows.join('\n')], {type:'text/csv;charset=utf-8;'});
     var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'orders_' + document.getElementById('o_shop_id').value + '.csv'; a.click();
-  }
-
-  // ══ EMAIL SUBSCRIBERS ══
-  function loadSubscribers() {
-    if (!APPS_SCRIPT_URL) return;
-    var shopId = document.getElementById('subShopFilter').value;
-    document.getElementById('subscriberList').innerHTML = '<div style="padding:20px;text-align:center;color:gray;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
-    fetch(APPS_SCRIPT_URL + "?action=getSubscribers&shopId=" + shopId)
-      .then(function(r){ return r.json(); })
-      .then(function(d){
-        if (d.success) {
-          allSubscribersData = d.data || [];
-          renderSubscribers(allSubscribersData);
-        } else {
-          document.getElementById('subscriberList').innerHTML = '<div style="padding:20px;text-align:center;color:gray;">' + (d.error||'No data.') + '</div>';
-        }
-      })
-      .catch(function(){ document.getElementById('subscriberList').innerHTML = '<div style="padding:20px;text-align:center;color:red;">Network error.</div>'; });
-  }
-
-  function renderSubscribers(list) {
-    document.getElementById('subCountBadge').innerText = list.length + ' subscribers';
-    var container = document.getElementById('subscriberList');
-    if (list.length === 0) { container.innerHTML = '<div style="padding:20px;text-align:center;color:gray;">Subscribers නෑ.</div>'; return; }
-    var h = '';
-    list.forEach(function(s) {
-      var email = s.Email || s.email || '-';
-      var shopId = s.ShopID || s.shopId || '-';
-      var date = s.Date ? new Date(s.Date).toLocaleDateString() : '-';
-      h += '<div class="email-sub-row"><div><span class="es-email">' + email + '</span><span style="font-size:11px;color:#888;margin-left:10px;">Shop: ' + shopId + '</span></div><span class="es-date">' + date + '</span></div>';
-    });
-    container.innerHTML = h;
-  }
-
-  function filterSubscribers() {
-    var term = document.getElementById('subSearchInput').value.toLowerCase();
-    var filtered = term ? allSubscribersData.filter(function(s){ return (s.Email||'').toLowerCase().includes(term); }) : allSubscribersData;
-    renderSubscribers(filtered);
-  }
-
-  function exportSubscribersCSV() {
-    if (allSubscribersData.length === 0) { alert("Load subscribers first."); return; }
-    var rows = ['"ShopID","Email","Date"'];
-    allSubscribersData.forEach(function(s){
-      rows.push('"'+(s.ShopID||'')+'",' + '"'+(s.Email||'')+'",' + '"'+(s.Date?new Date(s.Date).toLocaleDateString():'')+'"');
-    });
-    var blob = new Blob([rows.join('\n')], {type:'text/csv;charset=utf-8;'});
-    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'subscribers_' + new Date().toISOString().slice(0,10) + '.csv'; a.click();
-  }
-
-  function exportSubscribersPDF() {
-    if (allSubscribersData.length === 0) { alert("Load subscribers first."); return; }
-    var shopSel = document.getElementById('subShopFilter');
-    var shopName = shopSel.options[shopSel.selectedIndex].text;
-    var rows = allSubscribersData.map(function(s, i){
-      return '<tr style="background:' + (i%2===0?'#f9f9f9':'white') + ';"><td style="padding:8px 12px;border-bottom:1px solid #eee;">'+(i+1)+'</td><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#1565c0;font-weight:600;">'+(s.Email||'-')+'</td><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#888;">'+(s.ShopID||'-')+'</td><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#888;">'+(s.Date?new Date(s.Date).toLocaleDateString():'-')+'</td></tr>';
-    }).join('');
-    var html = '<div style="padding:40px;font-family:Arial,sans-serif;"><div style="text-align:center;border-bottom:2px solid #1565c0;padding-bottom:20px;margin-bottom:30px;"><h1 style="color:#1565c0;margin:0;">Email Subscribers</h1><h3 style="color:#333;margin:8px 0;">' + shopName + '</h3><p style="color:#888;">Generated: ' + new Date().toLocaleDateString() + '</p></div><div style="background:#e3f2fd;padding:15px;border-radius:8px;text-align:center;margin-bottom:25px;"><h2 style="color:#1976d2;margin:0;">' + allSubscribersData.length + '</h2><p style="color:#1565c0;margin:4px 0;font-weight:bold;">Total Subscribers</p></div><table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#1565c0;color:white;"><th style="padding:10px 12px;text-align:left;">#</th><th style="padding:10px 12px;text-align:left;">Email</th><th style="padding:10px 12px;text-align:left;">Shop ID</th><th style="padding:10px 12px;text-align:left;">Date</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
-    html2pdf().set({ margin:15, filename:'Subscribers_' + new Date().toISOString().slice(0,10) + '.pdf', html2canvas:{scale:2}, jsPDF:{unit:'mm',format:'a4',orientation:'portrait'} }).from(html).save();
-  }
-
-  // ══ BULK EMAIL SENDER ══
-  function previewEmail() {
-    var subject = document.getElementById('emailSubject').value;
-    var body = document.getElementById('emailBody').value;
-    var imgUrl = document.getElementById('emailImageUrl').value.trim();
-    var vidUrl = document.getElementById('emailVideoUrl').value.trim();
-    var mediaHtml = '';
-    if (imgUrl) mediaHtml += '<div style="text-align:center;margin:16px 0;"><img src="' + imgUrl + '" style="max-width:100%;border-radius:8px;" onerror="this.style.display=\'none\'"></div>';
-    if (vidUrl) {
-      var yt = vidUrl.match(/(?:youtu\.be\/|[?&]v=|embed\/)([A-Za-z0-9_-]{11})/);
-      if (yt) mediaHtml += '<div style="text-align:center;margin:16px 0;"><a href="' + vidUrl + '" target="_blank" style="display:inline-block;background:#FF0000;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:15px;">▶ Watch Video</a></div>';
-      else mediaHtml += '<div style="text-align:center;margin:16px 0;"><video controls style="max-width:100%;border-radius:8px;"><source src="' + vidUrl + '"></video></div>';
-    }
-    document.getElementById('emailPreview').innerHTML = '<strong style="font-size:16px;color:#333;">' + (subject||'(No subject)') + '</strong><hr style="border:none;border-top:1px solid #eee;margin:10px 0;">' + mediaHtml + (body||'(Empty message)');
-  }
-
-  function sendBulkEmail() {
-    var shopId = document.getElementById('emailShopSelect').value;
-    if (!shopId) { alert("Shop select කරන්න."); return; }
-    var subject = document.getElementById('emailSubject').value.trim();
-    var body = document.getElementById('emailBody').value.trim();
-    var replyTo = document.getElementById('emailReplyTo').value.trim();
-    var imgUrl = document.getElementById('emailImageUrl').value.trim();
-    var vidUrl = document.getElementById('emailVideoUrl').value.trim();
-    if (!subject || !body) { alert("Subject සහ Message අනිවාර්යයි."); return; }
-
-    // Build final HTML email body with media
-    var mediaHtml = '';
-    if (imgUrl) mediaHtml += '<div style="text-align:center;margin:20px 0;"><img src="' + imgUrl + '" style="max-width:100%;border-radius:8px;"></div>';
-    if (vidUrl) {
-      var yt = vidUrl.match(/(?:youtu\.be\/|[?&]v=|embed\/)([A-Za-z0-9_-]{11})/);
-      if (yt) mediaHtml += '<div style="text-align:center;margin:20px 0;"><a href="' + vidUrl + '" target="_blank" style="display:inline-block;background:#FF0000;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:16px;">▶ Watch Video on YouTube</a></div>';
-      else mediaHtml += '<div style="text-align:center;margin:20px 0;"><a href="' + vidUrl + '" target="_blank" style="display:inline-block;background:#1565c0;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:16px;">▶ Watch Video</a></div>';
-    }
-
-    var finalHtml = '<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:30px;background:#fff;">' + mediaHtml + '<div style="font-size:15px;line-height:1.8;color:#333;">' + body + '</div><div style="margin-top:30px;padding-top:16px;border-top:1px solid #eee;font-size:12px;color:#aaa;text-align:center;">Powered by Mapa Solutions</div></div>';
-
-    var btn = document.getElementById('sendEmailBtn');
-    var msgEl = document.getElementById('emailSendMsg');
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-    msgEl.innerText = '';
-
-    fetch(APPS_SCRIPT_URL, { method:'POST', body: JSON.stringify({ action:'sendBulkEmails', shopId:shopId, clientEmail:replyTo, subject:subject, message:finalHtml }) })
-      .then(function(r){ return r.json(); })
-      .then(function(d){
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send to All Subscribers';
-        if (d.success) {
-          msgEl.style.color = 'green';
-          msgEl.innerText = '✅ ' + (d.message || 'Sent!');
-        } else {
-          msgEl.style.color = 'red';
-          msgEl.innerText = '❌ ' + (d.error || 'Error occurred.');
-        }
-      })
-      .catch(function(){
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send to All Subscribers';
-        msgEl.style.color = 'red';
-        msgEl.innerText = '❌ Network error!';
-      });
   }
 
   // ══ FEEDBACK ══
