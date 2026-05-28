@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Profile | Social Map</title>
+  <title>Smart Profile | Mapa Solutions</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -108,6 +108,12 @@
     .msg-text { font-size: 13px; font-weight: 700; padding: 10px; border-radius: 8px; margin-top: 8px; }
     .msg-err { background: #ffebee; color: #c62828; }
     .msg-ok  { background: #e8f5e9; color: #2e7d32; }
+
+    /* ── POWERED BY BADGE ── */
+    .powered-badge { display: flex; align-items: center; justify-content: center; gap: 7px; padding: 14px 18px 20px; text-decoration: none; }
+    .powered-badge .pb-text { font-size: 11px; color: #bbb; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+    .powered-badge .pb-logo { display: flex; align-items: center; gap: 5px; background: #d32f2f; color: white; padding: 4px 10px 4px 6px; border-radius: 20px; font-size: 12px; font-weight: 800; }
+    .powered-badge .pb-logo i { font-size: 13px; }
   </style>
 </head>
 <body>
@@ -143,6 +149,15 @@
     <div id="promoVideoWrap" style="display:none;" class="promo-video-wrap"></div>
     <div id="promoImgGrid" style="display:none;" class="promo-img-grid"></div>
   </div>
+
+  <!-- POWERED BY MAPA SOLUTIONS BADGE -->
+  <a class="powered-badge" href="https://mapabiz.com" target="_blank">
+    <span class="pb-text">Powered by</span>
+    <span class="pb-logo">
+      <i class="fas fa-map-marked-alt"></i> Mapa Solutions
+    </span>
+  </a>
+
 </div>
 
 <!-- PRODUCTS MODAL -->
@@ -379,7 +394,7 @@
         }
 
         document.getElementById('bizName').innerText     = p.BusinessName || 'Welcome';
-        document.getElementById('bizType').innerText     = p.Type === 'redirect' ? 'Smart Redirect' : 'Smart Profile';
+        document.getElementById('bizType').innerText     = p.Type === 'redirect' ? 'Smart Redirect | Mapa Solutions' : 'Smart Profile | Mapa Solutions';
         document.getElementById('bankContent').innerText = p.BankDetails  || 'Bank details not available.';
 
         if (p.MenuPDF    && p.MenuPDF.trim())    menuLink     = p.MenuPDF;
@@ -685,10 +700,6 @@
         if (d.success) {
           if (d.requiresSetup) { document.getElementById('sPhone').value = ph; lSwitchView('lv-setup'); }
           else { drawCard(d.stamps, d.redeemed); lSwitchView('lv-card'); }
-        } else if (d.error === "No account found.") {
-          // New customer - redirect to setup screen
-          document.getElementById('sPhone').value = ph;
-          lSwitchView('lv-setup');
         } else showLMsg('lLoginMsg', d.error);
       });
   }
