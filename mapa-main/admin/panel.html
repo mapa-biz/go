@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard | Combined Panel - Mapa Solutions & Social Map</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f6f8; margin: 0; padding: 0; }
     .header { background: #d32f2f; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -21,13 +22,11 @@
     .btn-dark { background: #333; }
     .btn-save { background: #2e7d32; color: white; padding: 15px; border: none; border-radius: 5px; width: 100%; cursor: pointer; font-weight: bold; font-size: 16px; margin-top: 10px; }
 
-    /* ── SEARCH BOX ── */
     .search-wrap { margin-bottom: 12px; }
     .search-row { display: flex; gap: 8px; margin-bottom: 6px; }
     .search-row input { margin: 0; flex: 1; padding: 10px 12px; font-size: 13px; }
     .search-count { font-size: 12px; color: #888; padding: 0 2px; }
 
-    /* ── CUSTOMER LIST ── */
     .customer-list { max-height: 420px; overflow-y: auto; border: 1px solid #eee; border-radius: 5px; }
     .customer-item { padding: 12px 14px; border-bottom: 1px solid #eee; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.1s; }
     .customer-item:hover { background: #f9f9f9; }
@@ -45,11 +44,13 @@
     .b-Product { background: #ff9800; } .b-Room { background: #2196f3; } .b-Package { background: #9c27b0; }
     #msg { display:none; padding:10px; margin-bottom:10px; font-weight:bold; border-radius:5px; }
 
-    /* ── SELECTED SHOP BANNER ── */
-    #selectedShopBanner { display:none; background:#fff8e1; border:1px solid #ffe082; border-radius:8px; padding:10px 14px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; }
+    #selectedShopBanner { display:none; background:#fff8e1; border:1px solid #ffe082; border-radius:8px; padding:10px 14px; margin-bottom:12px; justify-content:space-between; align-items:center; }
     #selectedShopBanner .banner-name { font-weight:bold; color:#e65100; font-size:14px; }
     #selectedShopBanner .banner-id { font-size:12px; color:#888; margin-top:2px; }
     #selectedShopBanner button { background:#d32f2f; color:white; border:none; padding:6px 12px; border-radius:5px; cursor:pointer; font-size:12px; font-weight:bold; }
+    .order-filter-row { display:flex; gap:8px; flex-wrap:wrap; }
+    .filter-chip { background:#f1f5f9; border:1px solid #e2e8f0; color:#475569; padding:6px 14px; border-radius:20px; cursor:pointer; font-size:12px; font-weight:600; }
+    .filter-chip.active { background:#1e293b; color:white; border-color:#1e293b; }
   </style>
 </head>
 <body>
@@ -64,24 +65,29 @@
 
   <div class="container">
 
-    <!-- SYSTEM URL -->
     <div class="card" style="border-left: 5px solid #d32f2f;">
-      <h3 style="margin-top:0;"><i class="fas fa-cogs"></i> System URL Configuration</h3>
-      <p style="font-size: 13px; color: gray;">QR කේත නිවැරදිව ජනනය වීම සඳහා පද්ධතිය Host කර ඇති ප්‍රධාන ලින්ක් එක (Base URL) මෙහි ඇතුළත් කරන්න. (උදා: https://yourdomain.com/)</p>
-      <div style="display: flex; gap: 10px;">
-        <input type="url" id="sysBaseUrl" placeholder="https://..." value="">
-        <button class="btn btn-blue" style="white-space: nowrap;" onclick="saveBaseUrl()"><i class="fas fa-save"></i> Save URL</button>
+      <h3 style="margin-top:0;"><i class="fas fa-cogs"></i> System Configuration</h3>
+      <p style="font-size: 13px; color: gray;">Base URL එක සහ Apps Script URL එක මෙතැනින් යාවත්කාලීන කරන්න.</p>
+      
+      <div class="grid-2">
+        <div>
+          <label>Frontend Base URL (Host කර ඇති ප්‍රධාන ලින්ක් එක)</label>
+          <input type="url" id="sysBaseUrl" placeholder="උදා: https://yourdomain.com/" value="">
+        </div>
+        <div>
+          <label>Google Apps Script URL (Database Link)</label>
+          <input type="url" id="sysScriptUrl" placeholder="https://script.google.com/macros/s/.../exec" value="">
+        </div>
       </div>
+      <button class="btn btn-blue" onclick="saveSystemUrls()"><i class="fas fa-save"></i> Save Configuration</button>
     </div>
 
     <div class="grid-2">
 
-      <!-- ══ CUSTOMER LIST CARD ══ -->
       <div class="card">
         <h3 style="margin-top:0;"><i class="fas fa-users"></i> Customers / Shops</h3>
 
-        <!-- SELECTED BANNER -->
-        <div id="selectedShopBanner" style="display:none;">
+        <div id="selectedShopBanner">
           <div>
             <div class="banner-name" id="bannerName">—</div>
             <div class="banner-id"  id="bannerId">ID: —</div>
@@ -89,7 +95,6 @@
           <button onclick="clearSelection()"><i class="fas fa-times"></i> Clear</button>
         </div>
 
-        <!-- SEARCH -->
         <div class="search-wrap">
           <div class="search-row">
             <input type="text" id="searchInput" placeholder="ID, Name හෝ Phone සොයන්න..." oninput="filterCustomers()">
@@ -99,27 +104,43 @@
           <div class="search-count" id="searchCount"></div>
         </div>
 
-        <!-- LIST -->
         <div class="customer-list" id="customerList">
           <div style="padding: 20px; text-align: center; color: gray;"><i class="fas fa-spinner fa-spin"></i> Loading customers...</div>
         </div>
 
-        <!-- ADD NEW BUTTON -->
         <button class="btn btn-green" style="width:100%;margin-top:12px;" onclick="newCustomerForm()">
           <i class="fas fa-plus"></i> නව Shop / Customer එකතු කරන්න
         </button>
       </div>
 
-      <!-- ANALYTICS -->
-      <div class="card">
+      <div class="card" id="analyticsCard">
         <h3 style="margin-top:0;"><i class="fas fa-chart-pie"></i> Global / Shop Analytics</h3>
-        <select id="analyticsShopId" onchange="loadAnalytics()">
-          <option value="ALL">All Shops (Global)</option>
-        </select>
-        <div class="grid-2" style="margin-top: 15px;">
+        
+        <div class="grid-3" style="margin-bottom: 15px;">
+          <div>
+            <label style="font-size:11px;">Shop තෝරන්න</label>
+            <select id="analyticsShopId" onchange="loadAnalytics()">
+              <option value="ALL">All Shops (Global)</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px;">ආරම්භක දිනය</label>
+            <input type="date" id="statStartDate" onchange="loadAnalytics()">
+          </div>
+          <div>
+            <label style="font-size:11px;">අවසාන දිනය</label>
+            <input type="date" id="statEndDate" onchange="loadAnalytics()">
+          </div>
+        </div>
+
+        <button class="btn btn-dark" style="margin-bottom:15px; width:100%;" onclick="downloadPDF()">
+          <i class="fas fa-file-pdf" style="color:#ff5252;"></i> Download PDF Report
+        </button>
+
+        <div class="grid-2" style="margin-top: 5px;">
           <div class="stat-box">
             <h2 id="a_scans">0</h2>
-            <small>Total Scans</small>
+            <small>Total Scans / Actions</small>
           </div>
           <div class="stat-box" style="background: #e8f5e9;">
             <h2 id="a_emails" style="color: #2e7d32;">0</h2>
@@ -135,7 +156,6 @@
       </div>
     </div>
 
-    <!-- ══ CUSTOMER EDIT FORM ══ -->
     <div class="card" id="customerFormCard">
       <h3 style="margin-top:0;" id="formTitle"><i class="fas fa-edit"></i> Customer / Shop Detailed Setup</h3>
       <div id="msg"></div>
@@ -160,14 +180,29 @@
         <div style="grid-column: 1 / -1;"><label><i class="fas fa-images"></i> Cover Image (Background)</label><input type="text" id="c_cover" placeholder="Image Direct Link"></div>
       </div>
 
-      <!-- PROMOTIONS SECTION -->
-      <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:15px;margin-bottom:15px;">
+      <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:15px;margin-bottom:15px;margin-top:15px;">
         <h4 style="margin:0 0 12px 0;color:#1b5e20;"><i class="fas fa-bullhorn"></i> Promotions & Video (Client App)</h4>
         <div><label><i class="fab fa-youtube"></i> Promo Video URL (YouTube හෝ Direct)</label><input type="text" id="c_promoVideo" placeholder="https://youtu.be/... හෝ direct mp4 link"></div>
         <div class="grid-3">
           <div><label><i class="fas fa-image"></i> Promo Image 1</label><input type="text" id="c_promoImg1" placeholder="Direct image link"></div>
           <div><label><i class="fas fa-image"></i> Promo Image 2</label><input type="text" id="c_promoImg2" placeholder="Direct image link"></div>
           <div><label><i class="fas fa-image"></i> Promo Image 3</label><input type="text" id="c_promoImg3" placeholder="Direct image link"></div>
+        </div>
+      </div>
+
+      <div style="background:#f3e5f5;border:1px solid #ce93d8;border-radius:8px;padding:15px;margin-bottom:15px;">
+        <h4 style="margin:0 0 12px 0;color:#6a1b9a;"><i class="fas fa-link"></i> Custom Links (අමතර ලින්ක් 5)</h4>
+        <div class="grid-2">
+          <div><label>Link 1 Name</label><input type="text" id="c_cl1_name" placeholder="උදා: Order Now"></div>
+          <div><label>Link 1 URL</label><input type="text" id="c_cl1_url" placeholder="https://..."></div>
+          <div><label>Link 2 Name</label><input type="text" id="c_cl2_name"></div>
+          <div><label>Link 2 URL</label><input type="text" id="c_cl2_url"></div>
+          <div><label>Link 3 Name</label><input type="text" id="c_cl3_name"></div>
+          <div><label>Link 3 URL</label><input type="text" id="c_cl3_url"></div>
+          <div><label>Link 4 Name</label><input type="text" id="c_cl4_name"></div>
+          <div><label>Link 4 URL</label><input type="text" id="c_cl4_url"></div>
+          <div><label>Link 5 Name</label><input type="text" id="c_cl5_name"></div>
+          <div><label>Link 5 URL</label><input type="text" id="c_cl5_url"></div>
         </div>
       </div>
 
@@ -205,10 +240,9 @@
       </div>
     </div>
 
-    <!-- QR GENERATOR -->
     <div class="card">
       <h3 style="margin-top:0;"><i class="fas fa-qrcode"></i> High Quality QR Generator</h3>
-      <p style="font-size: 13px; color: gray;">අදාළ කඩහිමියා තෝරා ඔවුන්ගේ QRs සහ Links ලබාගන්න. (System URL එක Save කර තිබීම අනිවාර්යයි).</p>
+      <p style="font-size: 13px; color: gray;">අදාළ කඩහිමියා තෝරා ඔවුන්ගේ QRs සහ Links ලබාගන්න.</p>
       <select id="qrShopSelect" onchange="generateQRs()">
         <option value="">-- Select a Shop to Generate QRs --</option>
       </select>
@@ -246,7 +280,6 @@
       </div>
     </div>
 
-    <!-- PRODUCTS -->
     <div class="card" style="flex: 100%;">
       <h3 style="margin-top:0; color:#d32f2f;"><i class="fas fa-box-open"></i> Manage Products, Rooms & Packages</h3>
       <p style="font-size:13px; color:gray;">භාණ්ඩ, කාමර හෝ පැකේජ කළමනාකරණය සඳහා Shop ID එක ඇතුළත් කර Load බොත්තම ඔබන්න.</p>
@@ -269,7 +302,25 @@
       <div id="adminProductsList" style="margin-top:20px;"></div>
     </div>
 
-    <!-- FEEDBACK -->
+    <!-- ══ ORDERS MANAGEMENT ══ -->
+    <div class="card" style="flex: 100%; margin-top: 10px;">
+      <h3 style="margin-top:0; color:#e65100;"><i class="fas fa-shopping-bag"></i> Orders Management</h3>
+      <div class="grid-2" style="max-width:600px; background:#fff3e0; padding:15px; border-radius:10px;">
+        <div><label>Shop ID</label><input type="text" id="o_shop_id" placeholder="Shop ID ඇතුළත් කරන්න"></div>
+        <div style="display:flex; align-items:flex-end; gap:8px;">
+          <button class="btn btn-green btn-save" style="margin:0; background:#e65100;" onclick="adminFetchOrders()"><i class="fas fa-sync"></i> Load Orders</button>
+          <button class="btn btn-save" style="margin:0; background:#1565c0;" onclick="adminExportOrders()"><i class="fas fa-download"></i> Export CSV</button>
+        </div>
+      </div>
+      <div class="order-filter-row" id="adminOrderFilters" style="margin-top:12px; display:none;">
+        <button class="filter-chip active" id="admin-chip-all"       onclick="adminFilterOrders('all')">All</button>
+        <button class="filter-chip"        id="admin-chip-pending"   onclick="adminFilterOrders('pending')">⏳ Pending</button>
+        <button class="filter-chip"        id="admin-chip-confirmed" onclick="adminFilterOrders('confirmed')">✅ Confirmed</button>
+        <button class="filter-chip"        id="admin-chip-cancelled" onclick="adminFilterOrders('cancelled')">❌ Cancelled</button>
+      </div>
+      <div id="adminOrdersList" style="margin-top:15px;"></div>
+    </div>
+
     <div class="card" style="flex: 100%; margin-top: 10px;">
       <h3 style="margin-top:0; color:#607d8b;"><i class="fas fa-comment-alt"></i> Customer Feedbacks & Suggestions</h3>
       <div class="grid-2" style="max-width: 600px; background:#e0f7fa; padding:15px; border-radius:10px;">
@@ -279,10 +330,21 @@
       <div id="adminFeedbackList" style="margin-top:20px;"></div>
     </div>
 
-  </div><!-- /container -->
+    <!-- ══ DATA BACKUP & RECOVERY ══ -->
+    <div class="card" style="flex: 100%; margin-top: 10px; border-left: 5px solid #7b1fa2;">
+      <h3 style="margin-top:0; color:#7b1fa2;"><i class="fas fa-database"></i> Data Backup & Recovery</h3>
+      <p style="color:gray;font-size:13px;">⚠️ Client විසින් data delete කළොත් ඔබට recover කළ නොහැක. නමුත් Admin panel එකෙන් regular backups ගන්න පුළුවන්. Customers, Products, Feedback data CSV ලෙස download කරගන්න.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
+        <button class="btn" style="background:#7b1fa2;color:white;" onclick="exportCustomers()"><i class="fas fa-users"></i> Export All Customers</button>
+        <button class="btn" style="background:#1565c0;color:white;" onclick="exportAllFeedback()"><i class="fas fa-comment-alt"></i> Export All Feedback</button>
+      </div>
+      <div id="backupMsg" style="margin-top:10px;font-size:13px;color:green;"></div>
+    </div>
+
+  </div>
 
   <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbypkGrqUplBglUGWWwVID4tFh824do7anUHX7KqiyCl1OT3E7dO3gf2E9lYUcuWy5nu/exec";
+    let APPS_SCRIPT_URL = localStorage.getItem('sysScriptUrl') || "https://script.google.com/macros/s/AKfycbzbH_bZzGRsrS_gzRAin7F3voc999Jlwqq5UYO-8wLQMjUeXyjSpSSDhPAFaKT5bzJx/exec";
     let allCustomersData = [];
     let currentSelectedId = "";
 
@@ -291,19 +353,32 @@
       var staffName = sessionStorage.getItem('loggedInStaff');
       if (!staffName) { window.location.href = "index.html"; return; }
       document.getElementById('staffNameDisplay').innerText = "Logged in as: " + staffName;
+      
       var savedBase = localStorage.getItem('sysBaseUrl');
       if (savedBase) document.getElementById('sysBaseUrl').value = savedBase;
+      
+      var savedScript = localStorage.getItem('sysScriptUrl');
+      if (savedScript) document.getElementById('sysScriptUrl').value = savedScript;
+
       loadAllCustomers();
       loadAnalytics();
     };
 
-    function saveBaseUrl() {
-      var url = document.getElementById('sysBaseUrl').value.trim();
-      if (!url.endsWith('/')) url += '/';
-      localStorage.setItem('sysBaseUrl', url);
-      document.getElementById('sysBaseUrl').value = url;
-      alert("Base URL Saved! Now you can generate accurate QRs.");
+    function saveSystemUrls() {
+      var baseUrl = document.getElementById('sysBaseUrl').value.trim();
+      var scriptUrl = document.getElementById('sysScriptUrl').value.trim();
+      
+      if (baseUrl && !baseUrl.endsWith('/')) baseUrl += '/';
+      
+      localStorage.setItem('sysBaseUrl', baseUrl);
+      localStorage.setItem('sysScriptUrl', scriptUrl);
+      
+      document.getElementById('sysBaseUrl').value = baseUrl;
+      if(scriptUrl) APPS_SCRIPT_URL = scriptUrl;
+      
+      alert("System Configuration Saved Successfully!");
       generateQRs();
+      loadAllCustomers(); 
     }
 
     function logout() {
@@ -311,8 +386,20 @@
       window.location.href = "index.html";
     }
 
+    function getField(obj, keys) {
+      if (!obj) return '';
+      for (var i = 0; i < keys.length; i++) {
+        var k = keys[i];
+        if (obj[k] !== undefined && obj[k] !== null && obj[k] !== '') {
+          return obj[k].toString();
+        }
+      }
+      return '';
+    }
+
     // ══ LOAD ALL CUSTOMERS ══
     function loadAllCustomers() {
+      if (!APPS_SCRIPT_URL) return;
       var container = document.getElementById('customerList');
       container.innerHTML = '<div style="padding: 20px; text-align: center; color: gray;"><i class="fas fa-spinner fa-spin"></i> Loading customers...</div>';
       fetch(APPS_SCRIPT_URL + "?action=getAll")
@@ -326,6 +413,9 @@
           } else {
             container.innerHTML = '<div style="padding: 20px; text-align: center; color: red;">Failed to load customers.</div>';
           }
+        })
+        .catch(function(err) {
+          container.innerHTML = '<div style="padding: 20px; text-align: center; color: red;">Network error. Please check Apps Script URL.</div>';
         });
     }
 
@@ -334,23 +424,30 @@
       var container = document.getElementById('customerList');
       container.innerHTML = "";
       if (list.length === 0) {
-        container.innerHTML = '<div style="padding: 20px; text-align: center; color: gray;">Results නෑ.</div>';
+        container.innerHTML = '<div style="padding: 20px; text-align: center; color: gray;">Results නැත.</div>';
         return;
       }
       list.forEach(function(c) {
-        var isSelected = currentSelectedId === c.ID;
-        var statusBg  = c.Status === 'Active' ? '#e8f5e9' : '#ffebee';
-        var statusClr = c.Status === 'Active' ? 'green' : 'red';
-        var loyBg = c.LoyaltyStatus === 'Active' ? '#2e7d32' : '#999';
+        var id   = getField(c, ['ID','id','ShopID','Shop ID','shopId']);
+        var name = getField(c, ['BusinessName','Business Name','businessName','Name','name','ShopName']);
+        var ph   = getField(c, ['ClientPhone','Client Phone','Phone','phone','clientPhone']);
+        var stat = getField(c, ['Status','status']) || 'Active';
+        var loy  = getField(c, ['LoyaltyStatus','Loyalty Status','loyaltyStatus','Loyalty']) || 'Inactive';
+
+        var isSelected = currentSelectedId === id;
+        var statusBg  = stat === 'Active' ? '#e8f5e9' : '#ffebee';
+        var statusClr = stat === 'Active' ? 'green' : 'red';
+        var loyBg = loy === 'Active' ? '#2e7d32' : '#999';
+
         container.innerHTML +=
-          '<div class="customer-item' + (isSelected ? ' selected' : '') + '" id="citem_' + c.ID + '" onclick="selectCustomer(\'' + c.ID + '\')">' +
+          '<div class="customer-item' + (isSelected ? ' selected' : '') + '" id="citem_' + id + '" onclick="selectCustomer(\'' + id + '\')">' +
             '<div>' +
-              '<strong>' + (c.BusinessName || 'No Name') + '</strong><br>' +
-              '<small style="color:gray;">ID: ' + c.ID + ' | Ph: ' + (c.ClientPhone || 'N/A') + '</small>' +
+              '<strong>' + (name || 'No Name') + '</strong><br>' +
+              '<small style="color:gray;">ID: ' + id + ' | Ph: ' + (ph || 'N/A') + '</small>' +
             '</div>' +
             '<div style="text-align:right;">' +
-              '<span class="badge" style="background:' + statusBg + ';color:' + statusClr + ';">' + (c.Status || 'Active') + '</span><br>' +
-              '<span class="badge" style="background:' + loyBg + ';font-size:10px;margin-top:4px;display:inline-block;">Loyalty: ' + (c.LoyaltyStatus || 'Inactive') + '</span>' +
+              '<span class="badge" style="background:' + statusBg + ';color:' + statusClr + ';">' + stat + '</span><br>' +
+              '<span class="badge" style="background:' + loyBg + ';font-size:10px;margin-top:4px;display:inline-block;">Loyalty: ' + loy + '</span>' +
             '</div>' +
           '</div>';
       });
@@ -360,9 +457,10 @@
     function filterCustomers() {
       var term = document.getElementById('searchInput').value.toLowerCase().trim();
       var filtered = term === "" ? allCustomersData : allCustomersData.filter(function(c) {
-        return (c.ID && c.ID.toLowerCase().includes(term)) ||
-               (c.BusinessName && c.BusinessName.toLowerCase().includes(term)) ||
-               (c.ClientPhone && c.ClientPhone.toString().includes(term));
+        var id   = getField(c, ['ID','id','ShopID','Shop ID']).toLowerCase();
+        var name = getField(c, ['BusinessName','Business Name','Name']).toLowerCase();
+        var ph   = getField(c, ['ClientPhone','Client Phone','Phone']).toLowerCase();
+        return id.includes(term) || name.includes(term) || ph.includes(term);
       });
       renderCustomerList(filtered);
       updateSearchCount(filtered.length, allCustomersData.length);
@@ -383,74 +481,95 @@
 
     // ══ SELECT CUSTOMER ══
     function selectCustomer(shopId) {
-      var customer = allCustomersData.find(function(c) { return c.ID === shopId; });
-      if (!customer) return;
+      var customer = allCustomersData.find(function(c) {
+        var id = getField(c, ['ID','id','ShopID','Shop ID','shopId']);
+        return id === shopId;
+      });
+
+      if (!customer) {
+        alert("Customer data load වුනේ නෑ. Refresh කරලා try කරන්න.");
+        return;
+      }
 
       currentSelectedId = shopId;
-
-      // Update banner
+      var name = getField(customer, ['BusinessName','Business Name','businessName','Name','name','ShopName']);
+      
       document.getElementById('selectedShopBanner').style.display = 'flex';
-      document.getElementById('bannerName').innerText = customer.BusinessName || 'No Name';
-      document.getElementById('bannerId').innerText = 'ID: ' + customer.ID;
+      document.getElementById('bannerName').innerText = name || 'No Name';
+      document.getElementById('bannerId').innerText = 'ID: ' + shopId;
 
-      // Re-render list to show highlight
       var term = document.getElementById('searchInput').value.trim().toLowerCase();
       var list = term ? allCustomersData.filter(function(c) {
-        return (c.ID && c.ID.toLowerCase().includes(term)) ||
-               (c.BusinessName && c.BusinessName.toLowerCase().includes(term)) ||
-               (c.ClientPhone && c.ClientPhone.toString().includes(term));
+        var id2   = getField(c, ['ID','id','ShopID','Shop ID']).toLowerCase();
+        var name2 = getField(c, ['BusinessName','Business Name','Name']).toLowerCase();
+        var ph2   = getField(c, ['ClientPhone','Client Phone','Phone']).toLowerCase();
+        return id2.includes(term) || name2.includes(term) || ph2.includes(term);
       }) : allCustomersData;
       renderCustomerList(list);
 
-      // Fill form
-      var safe = function(s) { return s ? s.toString() : ''; };
+      var g = function(keys) { return getField(customer, keys); };
       var safeDate = function(dt) {
         if (!dt) return '';
-        try { var d = new Date(dt); return isNaN(d) ? '' : d.toISOString().split('T')[0]; } catch(e) { return ''; }
+        try {
+          var d = new Date(dt);
+          return isNaN(d.getTime()) ? '' : d.toISOString().split('T')[0];
+        } catch(e) { return ''; }
       };
-      document.getElementById('c_id').value            = safe(customer.ID);
-      document.getElementById('c_type').value          = customer.Type || 'profile';
-      document.getElementById('c_name').value          = safe(customer.BusinessName);
-      document.getElementById('c_wa').value            = safe(customer.WhatsApp);
-      document.getElementById('c_maps').value          = safe(customer.Maps);
-      document.getElementById('c_fb').value            = safe(customer.Facebook);
-      document.getElementById('c_ig').value            = safe(customer.Instagram);
-      document.getElementById('c_tiktok').value        = safe(customer.TikTok);
-      document.getElementById('c_web').value           = safe(customer.Website);
-      document.getElementById('c_email').value         = safe(customer.Email);
-      document.getElementById('c_menu').value          = safe(customer.MenuPDF);
-      document.getElementById('c_review').value        = safe(customer.GoogleReview);
-      document.getElementById('c_image').value         = safe(customer.ProfileImage);
-      document.getElementById('c_cover').value         = safe(customer.CoverImage);
-      document.getElementById('c_bank').value          = safe(customer.BankDetails);
-      document.getElementById('c_promoVideo').value    = safe(customer.CustomPromoVideo);
-      document.getElementById('c_promoImg1').value     = safe(customer.CustomPromoImg1);
-      document.getElementById('c_promoImg2').value     = safe(customer.CustomPromoImg2);
-      document.getElementById('c_promoImg3').value     = safe(customer.CustomPromoImg3);
-      document.getElementById('c_loyaltyStatus').value = customer.LoyaltyStatus || 'Inactive';
-      document.getElementById('c_storeStatus').value   = customer.StoreStatus || 'Active';
-      document.getElementById('c_inboxStatus').value   = customer.InboxStatus || 'Active';
-      document.getElementById('c_stampTarget').value   = customer.StampTarget || 10;
-      document.getElementById('c_clientPhone').value   = safe(customer.ClientPhone);
-      document.getElementById('c_password').value      = safe(customer.Password);
-      document.getElementById('c_expiryDate').value    = safeDate(customer.ExpiryDate);
-      document.getElementById('c_status').value        = customer.Status || 'Active';
-      document.getElementById('c_theme').value         = safe(customer.ThemeColor);
-      document.getElementById('formTitle').innerHTML   = '<i class="fas fa-edit"></i> Editing: <span style="color:#d32f2f;">' + (customer.BusinessName || customer.ID) + '</span>';
 
-      // Load related data
-      document.getElementById('p_shop_id').value = safe(customer.ID);
-      document.getElementById('f_shop_id').value = safe(customer.ID);
+      document.getElementById('c_id').value           = g(['ID','id','ShopID','Shop ID','shopId']);
+      document.getElementById('c_type').value         = g(['Type','type']) || 'profile';
+      document.getElementById('c_name').value         = g(['BusinessName','Business Name','businessName','Name','name','ShopName']);
+      document.getElementById('c_wa').value           = g(['WhatsApp','whatsapp','Whatsapp','WhatsAppNumber','wa']);
+      document.getElementById('c_maps').value         = g(['Maps','maps','GoogleMaps','Google Maps','MapsLink']);
+      document.getElementById('c_fb').value           = g(['Facebook','facebook','FB','fb','FacebookURL']);
+      document.getElementById('c_ig').value           = g(['Instagram','instagram','IG','ig','InstagramURL']);
+      document.getElementById('c_tiktok').value       = g(['TikTok','tiktok','Tiktok','TikTokURL']);
+      document.getElementById('c_web').value          = g(['Website','website','Web','web','WebsiteURL']);
+      document.getElementById('c_email').value        = g(['Email','email','EmailAddress']);
+      document.getElementById('c_menu').value         = g(['MenuPDF','Menu PDF','menuPDF','MenuLink','Menu Link','menu']);
+      document.getElementById('c_review').value       = g(['GoogleReview','Google Review','googleReview','ReviewLink','Review Link']);
+      document.getElementById('c_image').value        = g(['ProfileImage','Profile Image','profileImage','ProfileImg','ProfilePhoto','Logo']);
+      document.getElementById('c_cover').value        = g(['CoverImage','Cover Image','coverImage','CoverImg','Cover','Banner']);
+      document.getElementById('c_bank').value         = g(['BankDetails','Bank Details','bankDetails','BankInfo','Bank']);
+      document.getElementById('c_promoVideo').value   = g(['CustomPromoVideo','PromoVideo','Promo Video','promoVideo','PromoVideoURL']);
+      document.getElementById('c_promoImg1').value    = g(['CustomPromoImg1','PromoImg1','PromoImage1','promoImg1']);
+      document.getElementById('c_promoImg2').value    = g(['CustomPromoImg2','PromoImg2','PromoImage2','promoImg2']);
+      document.getElementById('c_promoImg3').value    = g(['CustomPromoImg3','PromoImg3','PromoImage3','promoImg3']);
+      document.getElementById('c_theme').value        = g(['ThemeColor','Theme Color','themeColor','Theme','theme']);
+      document.getElementById('c_clientPhone').value  = g(['ClientPhone','Client Phone','clientPhone','Phone','phone']);
+      document.getElementById('c_password').value     = g(['Password','password','Pass','pass']);
+      document.getElementById('c_expiryDate').value   = safeDate(g(['ExpiryDate','Expiry Date','expiryDate','Expiry','expiry']));
+      document.getElementById('c_status').value       = g(['Status','status']) || 'Active';
+
+      document.getElementById('c_cl1_name').value = g(['CustomLink1Name']);
+      document.getElementById('c_cl1_url').value  = g(['CustomLink1URL']);
+      document.getElementById('c_cl2_name').value = g(['CustomLink2Name']);
+      document.getElementById('c_cl2_url').value  = g(['CustomLink2URL']);
+      document.getElementById('c_cl3_name').value = g(['CustomLink3Name']);
+      document.getElementById('c_cl3_url').value  = g(['CustomLink3URL']);
+      document.getElementById('c_cl4_name').value = g(['CustomLink4Name']);
+      document.getElementById('c_cl4_url').value  = g(['CustomLink4URL']);
+      document.getElementById('c_cl5_name').value = g(['CustomLink5Name']);
+      document.getElementById('c_cl5_url').value  = g(['CustomLink5URL']);
+
+      document.getElementById('c_loyaltyStatus').value = g(['LoyaltyStatus','Loyalty Status','loyaltyStatus','Loyalty']) || 'Inactive';
+      document.getElementById('c_storeStatus').value   = g(['StoreStatus','Store Status','storeStatus','Store']) || 'Active';
+      document.getElementById('c_inboxStatus').value   = g(['InboxStatus','Inbox Status','inboxStatus','Inbox']) || 'Active';
+      document.getElementById('c_stampTarget').value   = g(['StampTarget','Stamp Target','stampTarget','Stamps']) || '10';
+
+      document.getElementById('formTitle').innerHTML = '<i class="fas fa-edit"></i> Editing: <span style="color:#d32f2f;">' + (name || shopId) + '</span>';
+      
+      document.getElementById('p_shop_id').value = shopId;
+      document.getElementById('f_shop_id').value = shopId;
+      document.getElementById('o_shop_id').value = shopId;
       adminFetchProducts();
       adminFetchFeedback();
 
-      // Dropdowns
       document.getElementById('analyticsShopId').value = shopId;
       document.getElementById('qrShopSelect').value    = shopId;
       loadAnalytics();
       generateQRs();
 
-      // Scroll to form
       document.getElementById('customerFormCard').scrollIntoView({ behavior: 'smooth' });
     }
 
@@ -468,7 +587,10 @@
       var fields = ['c_id','c_name','c_wa','c_maps','c_fb','c_ig','c_tiktok','c_web','c_email',
                     'c_menu','c_review','c_image','c_cover','c_bank','c_theme',
                     'c_promoVideo','c_promoImg1','c_promoImg2','c_promoImg3',
-                    'c_clientPhone','c_password','c_expiryDate'];
+                    'c_clientPhone','c_password','c_expiryDate',
+                    'c_cl1_name','c_cl1_url','c_cl2_name','c_cl2_url',
+                    'c_cl3_name','c_cl3_url','c_cl4_name','c_cl4_url',
+                    'c_cl5_name','c_cl5_url'];
       fields.forEach(function(f) { var el = document.getElementById(f); if(el) el.value = ''; });
       document.getElementById('c_type').value = 'profile';
       document.getElementById('c_loyaltyStatus').value = 'Inactive';
@@ -481,8 +603,10 @@
 
     // ══ SAVE ══
     function saveCustomerData() {
-      var id = document.getElementById('c_id').value;
+      if (!APPS_SCRIPT_URL) { alert("Apps Script URL එක Settings වල ඇතුළත් කර Save කරන්න."); return; }
+      var id = document.getElementById('c_id').value.trim();
       if (!id) { alert("සැලකිය යුතුයි: Shop ID එක අනිවාර්යයි."); return; }
+      
       var payload = {
         action: "saveCustomer",
         staffId: sessionStorage.getItem('loggedInStaff'),
@@ -515,11 +639,22 @@
           CustomPromoVideo: document.getElementById('c_promoVideo').value,
           CustomPromoImg1:  document.getElementById('c_promoImg1').value,
           CustomPromoImg2:  document.getElementById('c_promoImg2').value,
-          CustomPromoImg3:  document.getElementById('c_promoImg3').value
+          CustomPromoImg3:  document.getElementById('c_promoImg3').value,
+          CustomLink1Name:  document.getElementById('c_cl1_name').value,
+          CustomLink1URL:   document.getElementById('c_cl1_url').value,
+          CustomLink2Name:  document.getElementById('c_cl2_name').value,
+          CustomLink2URL:   document.getElementById('c_cl2_url').value,
+          CustomLink3Name:  document.getElementById('c_cl3_name').value,
+          CustomLink3URL:   document.getElementById('c_cl3_url').value,
+          CustomLink4Name:  document.getElementById('c_cl4_name').value,
+          CustomLink4URL:   document.getElementById('c_cl4_url').value,
+          CustomLink5Name:  document.getElementById('c_cl5_name').value,
+          CustomLink5URL:   document.getElementById('c_cl5_url').value
         }
       };
       var msg = document.getElementById('msg');
       msg.style.display = 'block'; msg.style.background = '#e3f2fd'; msg.innerHTML = "Processing...";
+      
       fetch(APPS_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) })
         .then(function(res) { return res.json(); })
         .then(function(d) {
@@ -527,17 +662,20 @@
           loadAllCustomers();
           msg.style.display = 'none';
         })
-        .catch(function() { alert("Error saving data."); msg.style.display = 'none'; });
+        .catch(function() { alert("Error saving data. Connection problem."); msg.style.display = 'none'; });
     }
 
     // ══ DELETE ══
     function deleteCustomerFromForm() {
-      var id = document.getElementById('c_id').value;
+      var id = document.getElementById('c_id').value.trim();
       if (!id) return;
       if (!confirm("ඔබ සහතිකද? ID " + id + " සහිත පාරිභෝගිකයා සදහටම මැකීමට අවශ්‍යද?")) return;
-      fetch(APPS_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "deleteCustomer", id: id, staffId: sessionStorage.getItem('loggedInStaff'), staffName: sessionStorage.getItem('loggedInStaff') }) })
+      fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({ action: "deleteCustomer", id: id, staffId: sessionStorage.getItem('loggedInStaff'), staffName: sessionStorage.getItem('loggedInStaff') })
+      })
         .then(function(res) { return res.json(); })
-        .then(function(d) { alert(d.message); currentSelectedId = ""; loadAllCustomers(); });
+        .then(function(d) { alert(d.message); currentSelectedId = ""; loadAllCustomers(); newCustomerForm(); });
     }
 
     // ══ DROPDOWNS ══
@@ -547,16 +685,26 @@
       analyticsSelect.innerHTML = '<option value="ALL">All Shops (Global)</option>';
       qrSelect.innerHTML = '<option value="">-- Select a Shop to Generate QRs --</option>';
       list.forEach(function(c) {
-        var label = (c.BusinessName || 'No Name') + ' (' + c.ID + ')';
-        analyticsSelect.innerHTML += '<option value="' + c.ID + '">' + label + '</option>';
-        qrSelect.innerHTML += '<option value="' + c.ID + '">' + label + '</option>';
+        var id   = getField(c, ['ID','id','ShopID','Shop ID','shopId']);
+        var name = getField(c, ['BusinessName','Business Name','businessName','Name','name','ShopName']);
+        var label = (name || 'No Name') + ' (' + id + ')';
+        analyticsSelect.innerHTML += '<option value="' + id + '">' + label + '</option>';
+        qrSelect.innerHTML += '<option value="' + id + '">' + label + '</option>';
       });
     }
 
-    // ══ ANALYTICS ══
+    // ══ ANALYTICS & PDF DOWNLOAD ══
     function loadAnalytics() {
+      if (!APPS_SCRIPT_URL) return;
       var shopId = document.getElementById('analyticsShopId').value;
-      fetch(APPS_SCRIPT_URL + "?action=getClientStats&shopId=" + shopId)
+      var start = document.getElementById('statStartDate').value;
+      var end = document.getElementById('statEndDate').value;
+
+      var url = APPS_SCRIPT_URL + "?action=getClientStats&shopId=" + shopId;
+      if (start) url += "&start=" + start;
+      if (end) url += "&end=" + end;
+
+      fetch(url)
         .then(function(res) { return res.json(); })
         .then(function(data) {
           if (data.success) {
@@ -568,13 +716,80 @@
               for (var dest in data.linkStats) {
                 var showName = dest;
                 if (dest.includes("wa.me") || dest.includes("whatsapp")) showName = "<i class='fab fa-whatsapp' style='color:#25D366;'></i> WhatsApp Direct";
-                linkContainer.innerHTML += '<div class="link-stat-row"><span>' + showName + '</span><strong>' + data.linkStats[dest] + ' Scans</strong></div>';
+                linkContainer.innerHTML += '<div class="link-stat-row"><span>' + showName + '</span><strong>' + data.linkStats[dest] + ' Scans / Clicks</strong></div>';
               }
             } else {
-              linkContainer.innerHTML = '<div style="font-size:13px; color:gray;">No scan destinations recorded yet.</div>';
+              linkContainer.innerHTML = '<div style="font-size:13px; color:gray;">No scan/click destinations recorded for this period.</div>';
             }
           }
-        });
+        })
+        .catch(function() {});
+    }
+
+    // ══ අලුත් PDF Download කේතය (හිස් PDF එකක් නොපැමිණීම සඳහා) ══
+    function downloadPDF() {
+      var shopSelect = document.getElementById('analyticsShopId');
+      var shopName = shopSelect.options[shopSelect.selectedIndex].text;
+      
+      var start = document.getElementById('statStartDate').value;
+      var end = document.getElementById('statEndDate').value;
+      
+      // Date Range අකුරු සැකසීම
+      var dateText = (start || end) 
+        ? "<p style='margin: 5px 0; color: #555; font-size: 14px;'>Date Range: " + (start || 'All time') + "  &rarr;  " + (end || 'All time') + "</p>"
+        : "<p style='margin: 5px 0; color: #555; font-size: 14px;'>Date Range: All Time</p>";
+
+      var scans = document.getElementById('a_scans').innerText;
+      var emails = document.getElementById('a_emails').innerText;
+      var linksHtml = document.getElementById('linkStatsContainer').innerHTML;
+
+      // PDF එකට යවන අලුත් HTML අකෘතිය (String Format)
+      var htmlContent = `
+        <div style="padding: 40px; font-family: Arial, sans-serif; background: #ffffff; color: #333;">
+            <div style="text-align: center; border-bottom: 2px solid #d32f2f; padding-bottom: 20px; margin-bottom: 30px;">
+              <h1 style="color: #d32f2f; font-size: 32px; margin: 0;">${shopName}</h1>
+              <h3 style="color: #333; margin: 10px 0 5px 0;">Performance & Analytics Report</h3>
+              ${dateText}
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 40px;">
+              <div style="flex: 1; background: #e3f2fd; padding: 25px; border-radius: 10px; text-align: center; margin-right: 15px; border: 1px solid #90caf9;">
+                <h2 style="color: #1976d2; font-size: 36px; margin: 0;">${scans}</h2>
+                <p style="color: #1565c0; font-weight: bold; margin: 5px 0 0 0;">Total Scans / Actions</p>
+              </div>
+              <div style="flex: 1; background: #e8f5e9; padding: 25px; border-radius: 10px; text-align: center; margin-left: 15px; border: 1px solid #a5d6a7;">
+                <h2 style="color: #2e7d32; font-size: 36px; margin: 0;">${emails}</h2>
+                <p style="color: #1b5e20; font-weight: bold; margin: 5px 0 0 0;">Email Subscribers</p>
+              </div>
+            </div>
+            <div style="background: #fff3e0; padding: 20px; border-radius: 10px; border: 1px solid #ffb74d;">
+              <h3 style="color: #e65100; margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid #ffe0b2; padding-bottom: 10px;">
+                Scan Destinations (Link Analytics)
+              </h3>
+              <div style="font-size: 15px; line-height: 1.8;">
+                ${linksHtml}
+              </div>
+            </div>
+        </div>
+      `;
+
+      var opt = {
+        margin:       15,
+        filename:     'Analytics_Report_' + shopName.replace(/[^a-zA-Z0-9]/g, '_') + '.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      var btn = document.querySelector('#analyticsCard button');
+      var originalBtnHtml = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating Report...';
+      btn.disabled = true;
+
+      // කෙලින්ම htmlContent එක (String එක) යැවීම
+      html2pdf().set(opt).from(htmlContent).save().then(function() {
+        btn.innerHTML = originalBtnHtml;
+        btn.disabled = false;
+      });
     }
 
     // ══ QR GENERATION ══
@@ -605,8 +820,9 @@
 
     // ══ PRODUCTS ══
     function adminFetchProducts() {
-      var sid = document.getElementById('p_shop_id').value;
-      if (!sid) { alert("කරුණාකර Shop ID එක ඇතුළත් කරන්න."); return; }
+      if (!APPS_SCRIPT_URL) return;
+      var sid = document.getElementById('p_shop_id').value.trim();
+      if (!sid) return;
       document.getElementById('adminProductsList').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
       fetch(APPS_SCRIPT_URL + "?action=getProducts&shopId=" + sid)
         .then(function(res) { return res.json(); })
@@ -615,11 +831,11 @@
           if (d.success && d.data && d.data.length > 0) {
             d.data.forEach(function(p) {
               var pType  = p.Type || "Product";
-              var pName  = p.ProductName || p['Product Name'] || "නම නැත";
+              var pName  = p.ProductName || p['Product Name'] || p.name || p.Name || "නම නැත"; 
               var pId    = p.ProductID || p['Product ID'] || "No-ID";
               var pPrice = p.Price || p['Product Price'] || 0;
               var imgs = "";
-              [p.Image1 || p.img1, p.Image2 || p.img2, p.Image3 || p.img3].forEach(function(img) {
+              [p.Image1 || p.img1 || p.Img1, p.Image2 || p.img2 || p.Img2, p.Image3 || p.img3 || p.Img3].forEach(function(img) {
                 if (img) imgs += '<img src="' + img + '" style="width:45px;height:45px;object-fit:cover;border-radius:5px;border:1px solid #ddd;">';
               });
               var imgHtml = imgs ? '<div style="margin-top:8px;display:flex;gap:10px;">' + imgs + '</div>' : '';
@@ -633,11 +849,19 @@
     }
 
     function adminAddProduct() {
-      var sid = document.getElementById('p_shop_id').value;
-      var name = document.getElementById('new_p_name').value;
-      var price = document.getElementById('new_p_price').value;
+      if (!APPS_SCRIPT_URL) return;
+      var sid = document.getElementById('p_shop_id').value.trim();
+      var name = document.getElementById('new_p_name').value.trim();
+      var price = document.getElementById('new_p_price').value.trim();
       if (!sid || !name || !price) { alert("කරුණාකර Shop ID, නම සහ මිල අනිවාර්යයෙන් ඇතුළත් කරන්න."); return; }
-      fetch(APPS_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "addProduct", shopId: sid, type: document.getElementById('new_p_type').value, name: name, price: price, img1: document.getElementById('new_p_img1').value, img2: document.getElementById('new_p_img2').value, img3: document.getElementById('new_p_img3').value }) })
+      fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          action: "addProduct", shopId: sid, type: document.getElementById('new_p_type').value,
+          name: name, price: price, img1: document.getElementById('new_p_img1').value,
+          img2: document.getElementById('new_p_img2').value, img3: document.getElementById('new_p_img3').value
+        })
+      })
         .then(function(res) { return res.json(); })
         .then(function(d) {
           alert(d.message); adminFetchProducts();
@@ -646,23 +870,125 @@
     }
 
     function adminUpdatePrice(pid) {
-      var sid = document.getElementById('p_shop_id').value;
+      if (!APPS_SCRIPT_URL) return;
+      var sid = document.getElementById('p_shop_id').value.trim();
       var price = document.getElementById('ad_p_' + pid).value;
       fetch(APPS_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "updatePrice", shopId: sid, productId: pid, price: price }) })
         .then(function(res) { return res.json(); }).then(function(d) { alert(d.message); });
     }
 
     function adminDeleteProduct(pid) {
-      var sid = document.getElementById('p_shop_id').value;
+      if (!APPS_SCRIPT_URL) return;
+      var sid = document.getElementById('p_shop_id').value.trim();
       if (!confirm("Are you sure you want to delete this product?")) return;
       fetch(APPS_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "deleteProduct", shopId: sid, productId: pid }) })
         .then(function(res) { return res.json(); }).then(function(d) { alert(d.message); adminFetchProducts(); });
     }
 
+    // ══ ORDERS MANAGEMENT (ADMIN) ══
+    var adminAllOrders = [];
+    var adminOrderFilter = 'all';
+
+    function adminFetchOrders() {
+      if (!APPS_SCRIPT_URL) return;
+      var sid = document.getElementById('o_shop_id').value.trim();
+      if (!sid) { alert("Shop ID ඇතුළත් කරන්න."); return; }
+      document.getElementById('adminOrdersList').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+      fetch(APPS_SCRIPT_URL + "?action=getOrders&shopId=" + sid)
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          if (d.success) {
+            adminAllOrders = d.data || [];
+            document.getElementById('adminOrderFilters').style.display = adminAllOrders.length > 0 ? 'flex' : 'none';
+            adminRenderOrders();
+          } else {
+            document.getElementById('adminOrdersList').innerHTML = '<p style="color:gray;padding:10px;">Orders load කරන්න බැරිඋනා: ' + (d.error || '') + '</p>';
+          }
+        })
+        .catch(function() { document.getElementById('adminOrdersList').innerHTML = '<p style="color:red;padding:10px;">Network error!</p>'; });
+    }
+
+    function adminFilterOrders(status) {
+      adminOrderFilter = status;
+      document.querySelectorAll('.filter-chip').forEach(function(c) { c.classList.remove('active'); });
+      document.getElementById('admin-chip-' + status).classList.add('active');
+      adminRenderOrders();
+    }
+
+    function adminRenderOrders() {
+      var filtered = adminAllOrders.filter(function(o) {
+        if (adminOrderFilter === 'all') return true;
+        return (o.Status || 'pending').toLowerCase() === adminOrderFilter;
+      });
+      filtered.sort(function(a,b) { return new Date(b.Date||0) - new Date(a.Date||0); });
+      var list = document.getElementById('adminOrdersList');
+      if (filtered.length === 0) {
+        list.innerHTML = '<div style="padding:15px;color:gray;text-align:center;">Orders නෑ.</div>'; return;
+      }
+      var h = '';
+      filtered.forEach(function(o) {
+        var status = (o.Status || 'pending').toLowerCase();
+        var borderColor = status === 'pending' ? '#f59e0b' : status === 'confirmed' ? '#22c55e' : '#ef4444';
+        var statusHtml = status === 'pending'
+          ? '<span style="background:#fff7ed;color:#c2410c;padding:3px 8px;border-radius:12px;font-size:12px;font-weight:700;">⏳ Pending</span>'
+          : status === 'confirmed'
+          ? '<span style="background:#f0fdf4;color:#166534;padding:3px 8px;border-radius:12px;font-size:12px;font-weight:700;">✅ Confirmed</span>'
+          : '<span style="background:#fef2f2;color:#991b1b;padding:3px 8px;border-radius:12px;font-size:12px;font-weight:700;">❌ Cancelled</span>';
+        var actionBtns = '';
+        if (status === 'pending') {
+          actionBtns = '<div style="display:flex;gap:8px;margin-top:10px;">' +
+            '<button class="btn btn-green" style="padding:6px 14px;font-size:13px;" onclick="adminUpdateOrderStatus(\'' + o.OrderID + '\', \'confirmed\')">✅ Confirm</button>' +
+            '<button class="btn btn-red"   style="padding:6px 14px;font-size:13px;" onclick="adminUpdateOrderStatus(\'' + o.OrderID + '\', \'cancelled\')">❌ Cancel</button>' +
+            '</div>';
+        }
+        h += '<div style="background:white;border-left:4px solid ' + borderColor + ';border-radius:8px;padding:14px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,0.08);">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">' +
+            '<span style="font-weight:700;color:#374151;">🧾 #' + (o.OrderID||'-') + '</span>' + statusHtml +
+          '</div>' +
+          '<div style="font-size:14px;color:#374151;margin-bottom:6px;">' + (o.Items||'-') + '</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#e65100;">Rs. ' + parseFloat(o.Total||0).toLocaleString() + '</div>' +
+          '<div style="font-size:12px;color:#6b7280;margin-top:6px;">👤 ' + (o.CustomerName||'Unknown') + ' | 📞 ' + (o.Phone||'-') + '<br>' +
+            '📦 ' + (o.OrderType||'-') + (o.TableNote ? ' — ' + o.TableNote : '') + ' | 🕐 ' + (o.Date ? new Date(o.Date).toLocaleString() : '-') + '</div>' +
+          actionBtns + '</div>';
+      });
+      list.innerHTML = h;
+    }
+
+    function adminUpdateOrderStatus(orderId, newStatus) {
+      if (!APPS_SCRIPT_URL) return;
+      var sid = document.getElementById('o_shop_id').value.trim();
+      fetch(APPS_SCRIPT_URL, { method:'POST', body: JSON.stringify({ action:'updateOrderStatus', shopId:sid, orderId:orderId, status:newStatus }) })
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          if (d.success) {
+            adminAllOrders.forEach(function(o) { if ((o.OrderID||'').toString() === orderId.toString()) o.Status = newStatus; });
+            adminRenderOrders();
+          } else alert(d.error || "Error.");
+        }).catch(function() { alert("Network error!"); });
+    }
+
+    function adminExportOrders() {
+      if (adminAllOrders.length === 0) { alert("先ず orders load කරන්න."); return; }
+      var headers = ['OrderID','ShopID','Date','CustomerName','Phone','Items','Total','OrderType','TableNote','Status'];
+      var rows = [headers.join(',')];
+      adminAllOrders.forEach(function(o) {
+        rows.push(headers.map(function(h) {
+          var v = (o[h] || '').toString().replace(/"/g, '""');
+          return '"' + v + '"';
+        }).join(','));
+      });
+      var blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = 'orders_' + document.getElementById('o_shop_id').value + '_' + new Date().toISOString().slice(0,10) + '.csv';
+      a.click(); URL.revokeObjectURL(url);
+    }
+
     // ══ FEEDBACK ══
     function adminFetchFeedback() {
-      var sid = document.getElementById('f_shop_id').value;
-      if (!sid) { alert("කරුණාකර Shop ID එක ඇතුළත් කරන්න."); return; }
+      if (!APPS_SCRIPT_URL) return;
+      var sid = document.getElementById('f_shop_id').value.trim();
+      if (!sid) return;
       document.getElementById('adminFeedbackList').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
       fetch(APPS_SCRIPT_URL + "?action=getFeedback&shopId=" + sid)
         .then(function(res) { return res.json(); })
@@ -679,6 +1005,46 @@
           }
           document.getElementById('adminFeedbackList').innerHTML = h;
         });
+    }
+
+    // ══ DATA EXPORT / BACKUP ══
+    function csvDownload(filename, headers, rows) {
+      var lines = [headers.join(',')];
+      rows.forEach(function(row) {
+        lines.push(headers.map(function(h) {
+          var v = (row[h] !== undefined ? row[h] : '').toString().replace(/"/g, '""');
+          return '"' + v + '"';
+        }).join(','));
+      });
+      var blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a'); a.href = url; a.download = filename; a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function exportCustomers() {
+      if (!allCustomersData || allCustomersData.length === 0) {
+        alert("先ず Customer list load කරන්න (Refresh button)."); return;
+      }
+      var headers = Object.keys(allCustomersData[0]);
+      csvDownload('customers_backup_' + new Date().toISOString().slice(0,10) + '.csv', headers, allCustomersData);
+      document.getElementById('backupMsg').innerText = '✅ Customers backup download වුණා! (' + allCustomersData.length + ' records)';
+    }
+
+    function exportAllFeedback() {
+      if (!APPS_SCRIPT_URL) { alert("Apps Script URL configure කරන්න."); return; }
+      document.getElementById('backupMsg').innerText = '⏳ All feedback loading...';
+      fetch(APPS_SCRIPT_URL + "?action=getFeedback&shopId=ALL")
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          if (d.success && d.data && d.data.length > 0) {
+            var headers = ['ShopID','Date','CustomerName','Phone','Message','ImageURL'];
+            csvDownload('feedback_backup_' + new Date().toISOString().slice(0,10) + '.csv', headers, d.data);
+            document.getElementById('backupMsg').innerText = '✅ Feedback backup download වුණා! (' + d.data.length + ' records)';
+          } else {
+            document.getElementById('backupMsg').innerText = 'Feedback data නෑ.';
+          }
+        }).catch(function() { document.getElementById('backupMsg').innerText = '❌ Network error!'; });
     }
   </script>
 </body>
