@@ -403,7 +403,6 @@
         buildButtons(p);
         if (p.StoreStatus === 'Active') loadProducts();
         loadPromos(p);
-        setTimeout(function() { setupPromoObserver(); }, 800);
       })
       .catch(function() {
         document.getElementById('loader').innerHTML = "<h2 style='color:red;text-align:center;padding:20px;'>Connection Error</h2>";
@@ -481,7 +480,7 @@
   function loadPromos(p) {
     var hasVideo = p.CustomPromoVideo && p.CustomPromoVideo.trim();
     var imgs = [p.CustomPromoImg1, p.CustomPromoImg2, p.CustomPromoImg3].filter(function(x){ return x && x.trim(); });
-    if (!hasVideo && imgs.length === 0) return;
+    if (!hasVideo && imgs.length === 0) return; // promo නැත්නම් — popup කිසිසේත් නෑ
     document.getElementById('promoSection').style.display = 'block';
     if (hasVideo) {
       var vw  = document.getElementById('promoVideoWrap');
@@ -499,14 +498,14 @@
         grid.innerHTML += '<div class="promo-img-item" onclick="openLb(\'' + img + '\')"><img src="' + img + '" loading="lazy"></div>';
       });
     }
+    // promo confirm වූ පස්සේ පමණක් popup timer start කරනවා
+    setupPromoObserver();
   }
 
   // ════════════════════════════════════════════
   // EMAIL POPUP
   // ════════════════════════════════════════════
   function setupPromoObserver() {
-    var promo = document.getElementById('promoSection');
-    if (!promo || promo.style.display === 'none') return;
     setTimeout(function() {
       checkAndShowPopup();
     }, 10000);
