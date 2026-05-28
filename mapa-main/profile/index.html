@@ -127,7 +127,7 @@
     <div style="font-size:38px;color:#e65100;margin-bottom:8px;"><i class="fas fa-gift"></i></div>
     <h3 style="margin-bottom:6px;color:#e65100;">Special Offers!</h3>
     <p style="font-size:13px;color:#777;margin-bottom:14px;line-height:1.5;">සතිපතා special discounts සහ promotions ඔබගේ email ට ලැබෙන්නට subscribe කරන්න.</p>
-    <input type="email" id="subEmail" class="inp" placeholder="Your email address" style="text-align:center;">
+    <input type="email" id="subEmail" class="inp" placeholder="Your email address" autocomplete="off" autocorrect="off" autocapitalize="off" style="text-align:center;">
     <button class="btn-place" style="background:#e65100;" onclick="registerEmail()">Subscribe Now</button>
     <button style="background:none;border:none;color:#aaa;margin-top:12px;cursor:pointer;font-size:13px;" onclick="closeEp()">Later</button>
   </div>
@@ -507,11 +507,9 @@
   function setupPromoObserver() {
     var promo = document.getElementById('promoSection');
     if (!promo || promo.style.display === 'none') return;
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function(entries) {
-        if (entries[0].isIntersecting && !promoObserved) { promoObserved = true; checkAndShowPopup(); }
-      }, { threshold: 0.1 }).observe(promo);
-    }
+    setTimeout(function() {
+      checkAndShowPopup();
+    }, 10000);
   }
   function checkAndShowPopup() {
     if (localStorage.getItem('subscribed_' + shopId)) return;
