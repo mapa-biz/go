@@ -14,16 +14,16 @@
     .cover-div {
       width: 100%; height: 160px;
       background: #d32f2f;
-      background-size: cover !important;
-      background-position: center !important;
-      background-repeat: no-repeat !important;
       position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
     }
-    /* cover image via <img> tag for max browser compatibility */
     .cover-div .cover-img {
-      position: absolute; inset: 0;
+      position: absolute;
+      top: 0; left: 0;
       width: 100%; height: 100%;
       object-fit: cover;
+      object-position: center;
       display: block;
     }
 
@@ -508,15 +508,22 @@
         document.getElementById('loader').style.display   = 'none';
         document.getElementById('mainWrap').style.display = 'block';
 
+        // DEBUG — remove after confirming fix (check browser F12 Console)
+        console.log('[MapaProfile] Raw data keys:', Object.keys(p));
+        console.log('[MapaProfile] Theme value:', p.Theme, '| theme:', p.theme);
+        console.log('[MapaProfile] CoverImage:', p.CoverImage, '| CoverImg:', p.CoverImg);
+
         // FIX: apply theme FIRST (sets bg colors)
         // FIX: normalize — check both 'Theme' and 'theme' column names
         var themeName = (p.Theme || p.theme || '').toString().trim().toLowerCase();
         applyTheme(themeName);
+        console.log('[MapaProfile] applyTheme called with:', themeName);
 
         // FIX: cover image applied via <img> tag after theme sets bg color
         // Supports: direct URL, Google Drive share link, lh3 link
         var coverUrl = p.CoverImage || p.CoverImg || p.coverImage || p.coverImg || '';
         applyCoverImage(coverUrl);
+        console.log('[MapaProfile] applyCoverImage called with:', coverUrl);
 
         // Logo
         var lw = document.getElementById('logoWrap');
