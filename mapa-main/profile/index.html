@@ -294,4 +294,619 @@
       </div>
       <input type="text" id="orderName"  class="inp" placeholder="Your Name">
       <input type="tel"  id="orderPhone" class="inp" placeholder="Phone (07XXXXXXXX)" maxlength="10">
-      <button class="btn-place" id="placeBtn" onclick
+      <button class="btn-place" id="placeBtn" onclick="placeOrder()">Place Order Now</button>
+      <div id="orderMsg" style="display:none;" class="msg-text"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ════════════════════════════════════════════
+  // CONFIG
+  // ════════════════════════════════════════════
+  var API       = "https://script.google.com/macros/s/AKfycbzm1PUscMJdzuwq3LECRw0dsRQmUFAlU0fI3DKola5qqYJA45C5oP70MDYAkzLOmD06/exec";
+  var shopId    = new URLSearchParams(window.location.search).get('id');
+  var autoTable = new URLSearchParams(window.location.search).get('table');
+  var cart = {}, orderType = 'Dine-In', stampsTarget = 10;
+  var productsData = [], menuLink = "", viewMode = 'gv';
+
+  // ════════════════════════════════════════════
+  // PLATFORM DETECTION
+  // ════════════════════════════════════════════
+  var PLATFORMS = [
+    { m:['wa.me','whatsapp.com'],            cls:'abtn-wa',          icon:'fab fa-whatsapp'         },
+    { m:['facebook.com','fb.com','fb.me'],     cls:'abtn-fb',          icon:'fab fa-facebook-f'       },
+    { m:['instagram.com'],                     cls:'abtn-ig',          icon:'fab fa-instagram'        },
+    { m:['tiktok.com'],                        cls:'abtn-tiktok',      icon:'fab fa-tiktok'           },
+    { m:['maps.google','goo.gl/maps','maps.app.goo'], cls:'abtn-maps', icon:'fas fa-map-marker-alt'   },
+    { m:['youtube.com','youtu.be'],            cls:'abtn-youtube',     icon:'fab fa-youtube'          },
+    { m:['tripadvisor.com'],                   cls:'abtn-tripadvisor', icon:'svg-tripadvisor'         },
+    { m:['booking.com'],                       cls:'abtn-booking',     icon:'fas fa-bed'              },
+    { m:['airbnb.com'],                        cls:'abtn-airbnb',      icon:'fab fa-airbnb'           },
+    { m:['linkedin.com'],                      cls:'abtn-linkedin',    icon:'fab fa-linkedin'         },
+    { m:['twitter.com','x.com'],               cls:'abtn-twitter',     icon:'fab fa-x-twitter'        },
+    { m:['snapchat.com'],                      cls:'abtn-snapchat',    icon:'fab fa-snapchat'         },
+    { m:['pinterest.com'],                     cls:'abtn-pinterest',   icon:'fab fa-pinterest'        }
+  ];
+
+  function detectPlatform(url) {
+    if (!url) return null;
+    var l = url.toLowerCase();
+    for (var i = 0; i < PLATFORMS.length; i++)
+      for (var j = 0; j < PLATFORMS[i].m.length; j++)
+        if (l.indexOf(PLATFORMS[i].m[j]) !== -1) return PLATFORMS[i];
+    return null;
+  }
+
+  function getFaviconUrl(url) {
+    try {
+      var u = url.trim();
+      if (!u.startsWith('http')) u = 'https://' + u;
+      return 'https://www.google.com/s2/favicons?sz=64&domain=' + new URL(u).hostname;
+    } catch(e) { return ''; }
+  }
+
+  // ════════════════════════════════════════════
+  // CLICK TRACKING
+  // ════════════════════════════════════════════
+  function trackClick(destination) {
+    var bName  = document.getElementById('bizName').innerText || "Unknown";
+    var device = /Mobi|Android/i.test(navigator.userAgent) ? "Mobile Web" : "Desktop Web";
+    fetch(API, { method:'POST', body: JSON.stringify({ action:'logClick', shopId:shopId, businessName:bName, device:device, destination:destination }) }).catch(function(){});
+  }
+
+  // ════════════════════════════════════════════
+  // INIT
+  // ════════════════════════════════════════════
+  window.onload = function() {
+    if (!shopId) {
+      document.getElementById('loader').innerHTML = "<h2 style='color:red;padding:20px;text-align:center;'>Invalid QR Code</h2>";
+      return;
+    }
+    if (autoTable) {
+      document.getElementById('fixedTable').style.display    = 'block';
+      document.getElementById('fixedTableTxt').innerText     = autoTable;
+      document.getElementById('tableInput').style.display    = 'none';
+    }
+    loadProfile();
+  };
+
+  // ════════════════════════════════════════════
+  // THEME SYSTEM
+  // FIX: applyTheme now also updates modal title colors to match theme
+  // ════════════════════════════════════════════
+  var THEMES = {
+    'default': {
+      cover: '#d32f2f', body: '#ffffff', text: '#222222', sub: '#888888',
+      logo: '#d32f2f', logoText: '#ffffff',
+      divider: '#f4f6f8', powered: '#d32f2f'
+    },
+    'dark': {
+      cover: '#0f0f0f', body: '#1a1a1a', text: '#f0f0f0', sub: '#888888',
+      logo: '#333333', logoText: '#ffffff',
+      divider: '#111111', powered: '#444444'
+    },
+    'ocean': {
+      cover: '#0077b6', body: '#f0f8ff', text: '#023e8a', sub: '#0096c7',
+      logo: '#0077b6', logoText: '#ffffff',
+      divider: '#e0f0ff', powered: '#0077b6'
+    },
+    'forest': {
+      cover: '#2d6a4f', body: '#f8fff6', text: '#1b4332', sub: '#52b788',
+      logo: '#2d6a4f', logoText: '#ffffff',
+      divider: '#e8f5e1', powered: '#2d6a4f'
+    },
+    'gold': {
+      cover: '#7c5c00', body: '#fffbf0', text: '#5c4000', sub: '#c9a227',
+      logo: '#c9a227', logoText: '#ffffff',
+      divider: '#fff8e1', powered: '#c9a227'
+    },
+    'minimal': {
+      cover: '#f5f5f5', body: '#ffffff', text: '#111111', sub: '#999999',
+      logo: '#222222', logoText: '#ffffff',
+      divider: '#f0f0f0', powered: '#222222'
+    },
+    'tech': {
+      cover: '#1a0533', body: '#120228', text: '#e2d9f3', sub: '#9d72ff',
+      logo: '#7c3aed', logoText: '#ffffff',
+      divider: '#1e0a3a', powered: '#7c3aed'
+    },
+    'food': {
+      cover: '#111111', body: '#1a1a1a', text: '#ffffff', sub: '#ff8c00',
+      logo: '#ff6b00', logoText: '#ffffff',
+      divider: '#0f0f0f', powered: '#ff6b00'
+    }
+  };
+
+  function applyTheme(name) {
+    // FIX: normalize to lowercase and trim so "Ocean", " dark", "FOOD" all work
+    var key = (name || '').toString().trim().toLowerCase();
+    var t   = THEMES[key] || THEMES['default'];
+
+    var wrap     = document.getElementById('mainWrap');
+    var coverDiv = document.getElementById('coverDiv');
+    var logoInit = document.getElementById('logoInit');
+
+    // body background + text
+    wrap.style.background = t.body;
+    document.getElementById('bizName').style.color = t.text;
+    document.getElementById('bizType').style.color = t.sub;
+
+    // cover background color (will sit behind cover-img if image present)
+    coverDiv.style.backgroundColor = t.cover;
+
+    // logo init bg
+    if (logoInit) { logoInit.style.background = t.logo; logoInit.style.color = t.logoText; }
+
+    // dividers
+    document.querySelectorAll('.divider').forEach(function(d) { d.style.background = t.divider; });
+
+    // powered badge
+    var pb = document.querySelector('.pb-logo');
+    if (pb) pb.style.background = t.powered;
+
+    // page background
+    var darkThemes = ['dark','tech','food'];
+    document.body.style.background = darkThemes.indexOf(key) !== -1 ? '#0a0a0a' : '#f4f6f8';
+
+    window._currentTheme = t;
+  }
+
+  // ════════════════════════════════════════════
+  // COVER IMAGE HELPER
+  // FIX: converts Google Drive /view links → direct image links
+  //      uses <img> tag (not backgroundImage) for reliable loading
+  // ════════════════════════════════════════════
+  function sanitizeCoverUrl(url) {
+    if (!url || !url.trim()) return '';
+    url = url.trim();
+
+    // Google Drive /view or /edit → direct image embed
+    // e.g. https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+    //  → https://lh3.googleusercontent.com/d/FILE_ID  (most reliable)
+    var driveMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if (driveMatch) {
+      return 'https://lh3.googleusercontent.com/d/' + driveMatch[1];
+    }
+
+    // Google Drive uc?id=... → keep as is (direct download link)
+    // Already a direct link — return as is
+    return url;
+  }
+
+  function applyCoverImage(url) {
+    var img = document.getElementById('coverImg');
+    var sanitized = sanitizeCoverUrl(url);
+    if (!sanitized) { img.style.display = 'none'; return; }
+    img.src = sanitized;
+    img.style.display = 'block';
+    // Fallback: if img fails, hide it (cover-div background color shows)
+    img.onerror = function() { img.style.display = 'none'; };
+  }
+
+  // ════════════════════════════════════════════
+  // LOAD PROFILE
+  // ════════════════════════════════════════════
+  function loadProfile() {
+    fetch(API + "?action=profile&id=" + shopId)
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (!d.success || !d.data) {
+          document.getElementById('loader').innerHTML = "<h2 style='color:red;text-align:center;padding:20px;'>Profile not found</h2>";
+          return;
+        }
+        var p = d.data;
+        document.getElementById('loader').style.display   = 'none';
+        document.getElementById('mainWrap').style.display = 'block';
+
+        // DEBUG — remove after confirming fix (check browser F12 Console)
+        console.log('[MapaProfile] Raw data keys:', Object.keys(p));
+        console.log('[MapaProfile] Theme value:', p.Theme, '| theme:', p.theme);
+        console.log('[MapaProfile] CoverImage:', p.CoverImage, '| CoverImg:', p.CoverImg);
+
+        // FIX: apply theme FIRST (sets bg colors)
+        // FIX: normalize — check both 'Theme' and 'theme' column names
+        var themeName = (p.Theme || p.theme || '').toString().trim().toLowerCase();
+        applyTheme(themeName);
+        console.log('[MapaProfile] applyTheme called with:', themeName);
+
+        // FIX: cover image applied via <img> tag after theme sets bg color
+        // Supports: direct URL, Google Drive share link, lh3 link
+        var coverUrl = p.CoverImage || p.CoverImg || p.coverImage || p.coverImg || '';
+        applyCoverImage(coverUrl);
+        console.log('[MapaProfile] applyCoverImage called with:', coverUrl);
+
+        // Logo
+        var lw = document.getElementById('logoWrap');
+        var logoUrl = p.ProfileImage || p.profileImage || '';
+        var bizInitial = (p.BusinessName || '?').charAt(0).toUpperCase();
+        if (logoUrl && logoUrl.trim()) {
+          lw.innerHTML = "<img src='" + sanitizeCoverUrl(logoUrl) + "' alt='' onerror=\"this.style.display='none';document.getElementById('logoInit').style.display='flex';\">";
+          document.getElementById('logoInit') && (document.getElementById('logoInit').innerText = bizInitial);
+        } else {
+          document.getElementById('logoInit').innerText = bizInitial;
+        }
+
+        document.getElementById('bizName').innerText     = p.BusinessName || 'Welcome';
+        document.getElementById('bizType').innerText     = p.Type === 'redirect' ? 'Smart Redirect | Mapa Solutions' : 'Smart Profile | Mapa Solutions';
+        document.getElementById('bankContent').innerText = p.BankDetails  || 'Bank details not available.';
+
+        if (p.MenuPDF && p.MenuPDF.trim())   menuLink     = p.MenuPDF;
+        if (p.StampTarget)                   stampsTarget = parseInt(p.StampTarget) || 10;
+
+        // Re-apply theme colors AFTER text is set (some browsers need this)
+        applyTheme(themeName);
+
+        buildButtons(p);
+        if (p.StoreStatus === 'Active') loadProducts();
+        loadPromos(p);
+      })
+      .catch(function(err) {
+        console.error('Profile load error:', err);
+        document.getElementById('loader').innerHTML = "<h2 style='color:red;text-align:center;padding:20px;'>Connection Error</h2>";
+      });
+  }
+
+  // ════════════════════════════════════════════
+  // BUILD ACTION BUTTONS
+  // ════════════════════════════════════════════
+  function buildButtons(p) {
+    var sec = document.getElementById('btnsSection');
+    sec.innerHTML = '';
+
+    var SVG_ICONS = {
+      'svg-tripadvisor': '<svg style="width:22px;height:22px;min-width:22px;fill:currentColor;" viewBox="0 0 24 24"><path d="M12.006 4.295c-2.67 0-5.338.784-7.645 2.352H1l1.804 1.96a5.38 5.38 0 0 0-.7 2.662 5.397 5.397 0 0 0 5.397 5.396 5.372 5.372 0 0 0 3.547-1.336l.952 1.03.952-1.03a5.374 5.374 0 0 0 3.548 1.336 5.397 5.397 0 0 0 5.397-5.396 5.38 5.38 0 0 0-.7-2.661L23 6.647h-3.36c-2.307-1.568-4.975-2.352-7.634-2.352zm-4.505 3.79a3.58 3.58 0 1 1 0 7.16 3.58 3.58 0 0 1 0-7.16zm9.01 0a3.58 3.58 0 1 1 0 7.16 3.58 3.58 0 0 1 0-7.16zm-9.01 1.426a2.154 2.154 0 1 0 0 4.308 2.154 2.154 0 0 0 0-4.308zm9.01 0a2.154 2.154 0 1 0 0 4.308 2.154 2.154 0 0 0 0-4.308zm-9.01 1.07a1.084 1.084 0 1 1 0 2.168 1.084 1.084 0 0 1 0-2.168zm9.01 0a1.084 1.084 0 1 1 0 2.168 1.084 1.084 0 0 1 0-2.168z"/></svg>'
+    };
+
+    function ic(cls) {
+      return (cls.indexOf('svg-') === 0 && SVG_ICONS[cls]) ? SVG_ICONS[cls] : "<i class='" + cls + "'></i>";
+    }
+
+    function addBtn(cls, iconHtml, label, href, onclickFn) {
+      var el;
+      if (href) {
+        el = document.createElement('a');
+        el.href = href; el.target = '_blank';
+        el.className = 'abtn ' + cls;
+        el.onclick = function() { trackClick(label); };
+      } else {
+        el = document.createElement('button');
+        el.className = 'abtn ' + cls;
+        el.onclick = onclickFn;
+      }
+      el.innerHTML = iconHtml + "<span>" + label + "</span>";
+      sec.appendChild(el);
+    }
+
+    if (p.StoreStatus   === 'Active') addBtn('abtn-products', ic('fas fa-box-open'),     'Our Services & Products', '', function(){ openModal('prodModal'); });
+    if (p.InboxStatus   === 'Active') addBtn('abtn-feedback', ic('fas fa-comment-dots'), 'Feedback & Suggestions',  '', function(){ openModal('fbModal');  });
+    if (p.LoyaltyStatus === 'Active') addBtn('abtn-loyalty',  ic('fas fa-gift'),         'My Loyalty Card',         '', function(){ openLoyalty();         });
+    if (p.GoogleReview  && p.GoogleReview.trim())
+      addBtn('abtn-review', "<i class='fab fa-google' style='color:#fbbc04'></i>", 'Rate Us on Google', p.GoogleReview, null);
+    if (p.BankDetails   && p.BankDetails.trim())
+      addBtn('abtn-bank', ic('fas fa-university'), 'Bank Details', '', function(){ openModal('bankModal'); });
+    if (p.WhatsApp  && p.WhatsApp.trim())   addBtn('abtn-wa',     ic('fab fa-whatsapp'),       'WhatsApp',    p.WhatsApp,  null);
+    if (p.Maps      && p.Maps.trim())       addBtn('abtn-maps',   ic('fas fa-map-marker-alt'), 'Google Maps', p.Maps,      null);
+    if (p.Facebook  && p.Facebook.trim())   addBtn('abtn-fb',     ic('fab fa-facebook-f'),     'Facebook',    p.Facebook,  null);
+    if (p.Instagram && p.Instagram.trim())  addBtn('abtn-ig',     ic('fab fa-instagram'),      'Instagram',   p.Instagram, null);
+    if (p.TikTok    && p.TikTok.trim())     addBtn('abtn-tiktok', ic('fab fa-tiktok'),         'TikTok',      p.TikTok,    null);
+    if (p.Website   && p.Website.trim())    addBtn('abtn-web',    ic('fas fa-globe'),          'Website',     p.Website,   null);
+    if (p.Email     && p.Email.trim())      addBtn('abtn-email',  ic('fas fa-envelope'),       'Email Us',    'mailto:' + p.Email, null);
+    if (p.MenuPDF   && p.MenuPDF.trim())    addBtn('abtn-menu',   ic('fas fa-file-pdf'),       'View Menu',   '', function(){ openMenuModal(); });
+
+    for (var n = 1; n <= 5; n++) {
+      var url   = p['CustomLink' + n + 'URL'];
+      var label = p['CustomLink' + n + 'Name'];
+      if (!url || !url.trim()) continue;
+      label = (label && label.trim()) ? label.trim() : 'Visit Link';
+      var plt = detectPlatform(url);
+      if (plt) {
+        addBtn(plt.cls, ic(plt.icon), label, url, null);
+      } else {
+        var fav = getFaviconUrl(url);
+        var imgHtml = fav
+          ? "<img class='btn-favicon' src='" + fav + "' onerror=\"this.style.display='none'\" alt=''>"
+          : ic('fas fa-link');
+        addBtn('abtn-custom', imgHtml, label, url, null);
+      }
+    }
+  }
+
+  // ════════════════════════════════════════════
+  // PROMOTIONS
+  // ════════════════════════════════════════════
+  function loadPromos(p) {
+    var hasVideo = p.CustomPromoVideo && p.CustomPromoVideo.trim();
+    var imgs = [p.CustomPromoImg1, p.CustomPromoImg2, p.CustomPromoImg3].filter(function(x){ return x && x.trim(); });
+    if (!hasVideo && imgs.length === 0) return;
+    document.getElementById('promoSection').style.display = 'block';
+    if (hasVideo) {
+      var vw  = document.getElementById('promoVideoWrap');
+      var url = p.CustomPromoVideo.trim();
+      var yt  = url.match(/(?:youtu\.be\/|[?&]v=|embed\/)([A-Za-z0-9_-]{11})/);
+      vw.style.display = 'block';
+      vw.innerHTML = yt
+        ? '<iframe width="100%" height="215" src="https://www.youtube.com/embed/' + yt[1] + '?rel=0" frameborder="0" allowfullscreen></iframe>'
+        : '<video controls playsinline style="width:100%;max-height:220px;"><source src="' + url + '"></video>';
+    }
+    if (imgs.length > 0) {
+      var grid = document.getElementById('promoImgGrid');
+      grid.style.display = 'grid';
+      imgs.forEach(function(img) {
+        grid.innerHTML += '<div class="promo-img-item" onclick="openLb(\'' + img + '\')"><img src="' + img + '" loading="lazy"></div>';
+      });
+    }
+    setupPromoObserver();
+  }
+
+  // ════════════════════════════════════════════
+  // EMAIL POPUP
+  // ════════════════════════════════════════════
+  function setupPromoObserver() {
+    setTimeout(function() { checkAndShowPopup(); }, 10000);
+  }
+  function checkAndShowPopup() {
+    if (localStorage.getItem('subscribed_' + shopId)) return;
+    if (sessionStorage.getItem('epClosed_' + shopId)) return;
+    document.getElementById('ep').style.display = 'flex';
+  }
+  function closeEp() {
+    sessionStorage.setItem('epClosed_' + shopId, '1');
+    document.getElementById('ep').style.display = 'none';
+  }
+  function registerEmail() {
+    var email = document.getElementById('subEmail').value.trim();
+    if (!email || !email.includes('@')) { alert("නිවැරදි email ලිපිනය ඇතුළත් කරන්න."); return; }
+    fetch(API, { method:'POST', body: JSON.stringify({ action:'subscribeEmail', shopId:shopId, email:email }) })
+      .then(function(r){ return r.json(); })
+      .then(function(){ localStorage.setItem('subscribed_' + shopId, '1'); alert("Subscribe කළා! ස්තූතියි."); closeEp(); });
+  }
+
+  // ════════════════════════════════════════════
+  // PRODUCTS
+  // ════════════════════════════════════════════
+  function loadProducts() {
+    fetch(API + "?action=getProducts&shopId=" + shopId)
+      .then(function(r){ return r.json(); })
+      .then(function(d){ if (d.success && d.data) { productsData = d.data; renderProds(); } });
+  }
+  function setView(mode) {
+    viewMode = mode;
+    document.getElementById('lvBtn').className = 'vtbtn' + (mode === 'lv' ? ' on' : '');
+    document.getElementById('gvBtn').className = 'vtbtn' + (mode === 'gv' ? ' on' : '');
+    renderProds();
+  }
+  function renderProds() {
+    var c = document.getElementById('prodContainer');
+    c.className = viewMode;
+    if (productsData.length === 0) { c.innerHTML = '<p style="color:gray;padding:20px;text-align:center;">No items yet.</p>'; return; }
+    c.innerHTML = '';
+    productsData.forEach(function(p) {
+      var nm     = p.ProductName || p.Name || 'Item';
+      var price  = parseFloat(p.Price || 0);
+      var pid    = p.ProductID || Math.random().toString(36).substr(2, 5);
+      var img    = p.Image1 || p.Img1 || '';
+      var typ    = p.Type  || 'Product';
+      var safeNm = nm.replace(/'/g, "\\'").replace(/"/g, '"');
+      var imgHtml    = img ? "<img class='pimg' src='" + img + "' onerror=\"this.style.display='none'\" alt=''>" : '';
+      var addBtnHtml = "<button class='btn-add' onclick='addToCart(\"" + pid + "\",\"" + safeNm + "\"," + price + ")'><i class='fas fa-plus'></i> Add</button>";
+      c.innerHTML += "<div class='pc'>" + imgHtml + "<div class='pi'><div class='ptyp'>" + typ + "</div><div class='pname'>" + nm + "</div><div class='pprice'>රු. " + price.toFixed(2) + "</div>" + addBtnHtml + "</div></div>";
+    });
+  }
+
+  // ════════════════════════════════════════════
+  // CART
+  // ════════════════════════════════════════════
+  function addToCart(id, name, price) {
+    if (cart[id]) cart[id].qty++;
+    else cart[id] = { name: name, price: price, qty: 1 };
+    updateCartUI();
+  }
+  function changeQty(id, d) {
+    if (cart[id]) { cart[id].qty += d; if (cart[id].qty <= 0) delete cart[id]; updateCartUI(); }
+  }
+  function updateCartUI() {
+    var qty = 0, total = 0, html = '';
+    for (var id in cart) {
+      qty   += cart[id].qty;
+      total += cart[id].price * cart[id].qty;
+      html  += "<div class='cart-item'>" +
+                 "<div style='flex:1;text-align:left;'><b>" + cart[id].name + "</b><br>" +
+                 "<span style='color:#d32f2f;'>රු. " + (cart[id].price * cart[id].qty).toFixed(2) + "</span></div>" +
+                 "<div class='qty-ctrl'>" +
+                   "<button class='qty-btn' onclick='changeQty(\"" + id + "\",-1)'>−</button>" +
+                   "<b>" + cart[id].qty + "</b>" +
+                   "<button class='qty-btn' onclick='changeQty(\"" + id + "\",1)'>+</button>" +
+                 "</div></div>";
+    }
+    document.getElementById('cartItems').innerHTML  = html;
+    document.getElementById('cartTotal').innerText  = "රු. " + total.toFixed(2);
+    document.getElementById('cartCount').innerText  = qty;
+    var cb = document.getElementById('cartBtn');
+    cb.style.display = qty > 0 ? 'flex' : 'none';
+    if (qty === 0) closeModal('cartModal');
+  }
+  function setOrderType(t) {
+    orderType = t;
+    document.getElementById('btnDI').className = 'ot-btn' + (t === 'Dine-In' ? ' on' : '');
+    document.getElementById('btnTA').className = 'ot-btn' + (t === 'Takeaway' ? ' on' : '');
+    document.getElementById('tableArea').style.display = t === 'Dine-In' ? 'block' : 'none';
+  }
+
+  // ════════════════════════════════════════════
+  // PLACE ORDER
+  // ════════════════════════════════════════════
+  function placeOrder() {
+    var msgEl    = document.getElementById('orderMsg');
+    var itemsArr = [], total = 0;
+    for (var id in cart) {
+      itemsArr.push({ name: cart[id].name, qty: cart[id].qty, price: cart[id].price });
+      total += cart[id].price * cart[id].qty;
+    }
+    if (itemsArr.length === 0) return;
+
+    var customerName = document.getElementById('orderName').value.trim();
+    if (!customerName) {
+      msgEl.innerHTML = "කරුණාකර ඔබගේ නම ඇතුළත් කරන්න.";
+      msgEl.className = 'msg-text msg-err';
+      msgEl.style.display = 'block';
+      return;
+    }
+
+    var tableNote = '';
+    if (orderType === 'Dine-In') {
+      tableNote = autoTable || document.getElementById('tableInput').value.trim() || 'Not Specified';
+    }
+
+    msgEl.innerHTML = "Processing...";
+    msgEl.className = 'msg-text';
+    msgEl.style.display = 'block';
+    document.getElementById('placeBtn').disabled = true;
+
+    var payload = {
+      action:    'placeOrder',
+      shopId:    shopId,
+      name:      customerName,
+      phone:     document.getElementById('orderPhone').value.trim(),
+      items:     itemsArr,
+      total:     total,
+      orderType: orderType,
+      tableNote: tableNote
+    };
+
+    fetch(API, { method: 'POST', body: JSON.stringify(payload) })
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        document.getElementById('placeBtn').disabled = false;
+        if (d.success) {
+          cart = {}; updateCartUI();
+          msgEl.innerHTML     = "✅ Order placed! #" + (d.orderId || '');
+          msgEl.className     = 'msg-text msg-ok';
+          msgEl.style.display = 'block';
+          document.getElementById('orderName').value  = '';
+          document.getElementById('orderPhone').value = '';
+          document.getElementById('tableInput').value = '';
+          setTimeout(function() { closeModal('cartModal'); msgEl.style.display = 'none'; }, 3000);
+        } else {
+          msgEl.innerHTML = d.error || "Error occurred. Please try again.";
+          msgEl.className = 'msg-text msg-err';
+          msgEl.style.display = 'block';
+        }
+      })
+      .catch(function() {
+        document.getElementById('placeBtn').disabled = false;
+        msgEl.innerHTML = "Network error! Please try again.";
+        msgEl.className = 'msg-text msg-err';
+        msgEl.style.display = 'block';
+      });
+  }
+
+  // ════════════════════════════════════════════
+  // LOYALTY
+  // ════════════════════════════════════════════
+  function openLoyalty() { lSwitchView('lv-login'); openModal('loyModal'); }
+  function lSwitchView(v) {
+    ['lv-login','lv-setup','lv-forgot','lv-card'].forEach(function(x) {
+      document.getElementById(x).style.display = x === v ? 'block' : 'none';
+    });
+  }
+  function checkLoyalty() {
+    var ph = document.getElementById('lPhone').value, pin = document.getElementById('lPin').value;
+    if (ph.length !== 10) { showLMsg('lLoginMsg', "10-digit phone number enter කරන්න"); return; }
+    document.getElementById('lCheckBtn').innerText = 'Checking...';
+    fetch(API, { method:'POST', body: JSON.stringify({ action:'loyaltyGet', shopId:shopId, phone:ph, pin:pin }) })
+      .then(function(r){ return r.json(); })
+      .then(function(d) {
+        document.getElementById('lCheckBtn').innerText = 'Check My Card';
+        if (d.success) {
+          if (d.requiresSetup) { document.getElementById('sPhone').value = ph; lSwitchView('lv-setup'); }
+          else { drawCard(d.stamps, d.redeemed); lSwitchView('lv-card'); }
+        } else showLMsg('lLoginMsg', d.error);
+      });
+  }
+  function setupLoyalty() {
+    var ph = document.getElementById('sPhone').value, pin = document.getElementById('sPin').value, yr = document.getElementById('sYear').value;
+    if (ph.length !== 10 || pin.length !== 4 || yr.length !== 4) { showLMsg('lSetupMsg', "Details නිවැරදිව enter කරන්න"); return; }
+    document.getElementById('lSetupBtn').innerText = 'Saving...';
+    fetch(API, { method:'POST', body: JSON.stringify({ action:'loyaltySetup', shopId:shopId, phone:ph, pin:pin, birthYear:yr }) })
+      .then(function(r){ return r.json(); })
+      .then(function(d) {
+        document.getElementById('lSetupBtn').innerText = 'Create Account';
+        if (d.success) { document.getElementById('lPhone').value = ph; lSwitchView('lv-login'); alert("Account created!"); }
+        else showLMsg('lSetupMsg', d.error);
+      });
+  }
+  function resetPin() {
+    var ph = document.getElementById('fLPhone').value, yr = document.getElementById('fYear').value, np = document.getElementById('fNewPin').value;
+    if (ph.length !== 10 || yr.length !== 4 || np.length !== 4) { showLMsg('lForgotMsg', "Details නිවැරදිව enter කරන්න"); return; }
+    fetch(API, { method:'POST', body: JSON.stringify({ action:'loyaltyResetPinSelf', shopId:shopId, phone:ph, birthYear:yr, newPin:np }) })
+      .then(function(r){ return r.json(); })
+      .then(function(d) {
+        if (d.success) { lSwitchView('lv-login'); alert("PIN reset successful!"); }
+        else showLMsg('lForgotMsg', d.error);
+      });
+  }
+  function drawCard(stamps, redeemed) {
+    document.getElementById('stampText').innerText = "You have " + stamps + " stamps!";
+    var grid = document.getElementById('stampGrid'); grid.innerHTML = '';
+    for (var i = 1; i <= stampsTarget; i++)
+      grid.innerHTML += "<div class='sc" + (i <= stamps ? ' on' : '') + "'>" + (i <= stamps ? "<i class='fas fa-gift'></i>" : i) + "</div>";
+    document.getElementById('targetMsg').innerHTML =
+      "Collect " + stampsTarget + " stamps for a reward!<br>" +
+      "<span style='background:#e8f5e9;color:#2e7d32;padding:4px 10px;border-radius:6px;font-weight:700;'>🏆 Total Redeemed: " + (redeemed || 0) + "</span>";
+  }
+  function showLMsg(id, txt) { var el = document.getElementById(id); el.innerText = txt; el.style.display = 'block'; }
+
+  // ════════════════════════════════════════════
+  // FEEDBACK
+  // ════════════════════════════════════════════
+  function submitFeedback() {
+    var nm  = document.getElementById('fbName').value;
+    var ph  = document.getElementById('fbPhone').value;
+    var msg = document.getElementById('fbMsg').value;
+    var fi  = document.getElementById('fbFile');
+    if (!nm || !msg) { alert("Name and message are required."); return; }
+    document.getElementById('fbSubmitBtn').innerText = 'Uploading...';
+    var payload = { action:'submitFeedback', shopId:shopId, name:nm, phone:ph, message:msg };
+    if (fi.files.length > 0) {
+      var reader = new FileReader();
+      reader.onload = function(e) { payload.imageBase64 = e.target.result.split(',')[1]; payload.mimeType = fi.files[0].type; sendFb(payload); };
+      reader.readAsDataURL(fi.files[0]);
+    } else {
+      sendFb(payload);
+    }
+  }
+  function sendFb(payload) {
+    fetch(API, { method:'POST', body: JSON.stringify(payload) })
+      .then(function(r){ return r.json(); })
+      .then(function(d) {
+        alert(d.message);
+        document.getElementById('fbSubmitBtn').innerText = 'Submit Feedback';
+        document.getElementById('fbName').value  = '';
+        document.getElementById('fbMsg').value   = '';
+        document.getElementById('fbFile').value  = '';
+        closeModal('fbModal');
+      });
+  }
+
+  // ════════════════════════════════════════════
+  // MENU
+  // ════════════════════════════════════════════
+  function openMenuModal() {
+    var url = menuLink;
+    if (url.includes("drive.google.com") && url.includes("/view")) url = url.replace(/\/view.*$/, "/preview");
+    document.getElementById('menuIframe').src = url;
+    openModal('menuModal');
+  }
+  function closeMenuModal() { document.getElementById('menuIframe').src = ''; closeModal('menuModal'); }
+
+  // ════════════════════════════════════════════
+  // HELPERS
+  // ════════════════════════════════════════════
+  function openModal(id)  { document.getElementById(id).style.display = 'flex'; }
+  function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+  function openLb(src)    { document.getElementById('lbImg').src = src; document.getElementById('lb').classList.add('open'); }
+  function closeLb()      { document.getElementById('lb').classList.remove('open'); }
+</script>
+</body>
+</html>
