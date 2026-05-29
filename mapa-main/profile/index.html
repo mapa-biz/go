@@ -293,7 +293,7 @@
   // ════════════════════════════════════════════
   // CONFIG
   // ════════════════════════════════════════════
-  var API       = "https://script.google.com/macros/s/AKfycbzm1PUscMJdzuwq3LECRw0dsRQmUFAlU0fI3DKola5qqYJA45C5oP70MDYAkzLOmD06/exec";
+  var API       = "https://script.google.com/macros/s/AKfycbzbH_bZzGRsrS_gzRAin7F3voc999Jlwqq5UYO-8wLQMjUeXyjSpSSDhPAFaKT5bzJx/exec";
   var shopId    = new URLSearchParams(window.location.search).get('id');
   var autoTable = new URLSearchParams(window.location.search).get('table');
   var cart = {}, orderType = 'Dine-In', stampsTarget = 10;
@@ -362,6 +362,84 @@
   };
 
   // ════════════════════════════════════════════
+  // THEME SYSTEM
+  // ════════════════════════════════════════════
+  var THEMES = {
+    'default': {
+      cover: '#d32f2f', body: '#ffffff', text: '#222222', sub: '#888888',
+      logo: '#d32f2f', logoText: '#ffffff', btn1: '#25D366', btn2: '#1877F2', btn3: '#d32f2f',
+      divider: '#f4f6f8', powered: '#d32f2f'
+    },
+    'dark': {
+      cover: '#0f0f0f', body: '#1a1a1a', text: '#f0f0f0', sub: '#666666',
+      logo: '#333333', logoText: '#ffffff', btn1: '#2d2d2d', btn2: '#252525', btn3: '#3a3a3a',
+      divider: '#111111', powered: '#444444'
+    },
+    'ocean': {
+      cover: '#0077b6', body: '#f0f8ff', text: '#023e8a', sub: '#0096c7',
+      logo: '#0077b6', logoText: '#ffffff', btn1: '#0077b6', btn2: '#00b4d8', btn3: '#023e8a',
+      divider: '#e0f0ff', powered: '#0077b6'
+    },
+    'forest': {
+      cover: '#2d6a4f', body: '#f8fff6', text: '#1b4332', sub: '#52b788',
+      logo: '#2d6a4f', logoText: '#ffffff', btn1: '#2d6a4f', btn2: '#52b788', btn3: '#1b4332',
+      divider: '#e8f5e1', powered: '#2d6a4f'
+    },
+    'gold': {
+      cover: '#7c5c00', body: '#fffbf0', text: '#5c4000', sub: '#c9a227',
+      logo: '#c9a227', logoText: '#ffffff', btn1: '#c9a227', btn2: '#a07800', btn3: '#7c5c00',
+      divider: '#fff8e1', powered: '#c9a227'
+    },
+    'minimal': {
+      cover: '#f5f5f5', body: '#ffffff', text: '#111111', sub: '#999999',
+      logo: '#222222', logoText: '#ffffff', btn1: '#222222', btn2: '#555555', btn3: '#888888',
+      divider: '#f0f0f0', powered: '#222222'
+    },
+    'tech': {
+      cover: '#1a0533', body: '#120228', text: '#e2d9f3', sub: '#7c3aed',
+      logo: '#7c3aed', logoText: '#ffffff', btn1: '#7c3aed', btn2: '#5b21b6', btn3: '#4c1d95',
+      divider: '#1e0a3a', powered: '#7c3aed'
+    },
+    'food': {
+      cover: '#111111', body: '#1a1a1a', text: '#ffffff', sub: '#ff6b00',
+      logo: '#ff6b00', logoText: '#ffffff', btn1: '#ff6b00', btn2: '#e55a00', btn3: '#cc4e00',
+      divider: '#0f0f0f', powered: '#ff6b00'
+    }
+  };
+
+  function applyTheme(name) {
+    var t = THEMES[name] || THEMES['default'];
+    var wrap = document.getElementById('mainWrap');
+    var cover = document.getElementById('coverDiv');
+    var logoInit = document.getElementById('logoInit');
+
+    // body background + text
+    wrap.style.background = t.body;
+    document.getElementById('bizName').style.color = t.text;
+    document.getElementById('bizType').style.color = t.sub;
+
+    // cover color (image may override later)
+    cover.style.background = t.cover;
+
+    // logo init bg
+    if (logoInit) { logoInit.style.background = t.logo; logoInit.style.color = t.logoText; }
+
+    // divider
+    var dividers = document.querySelectorAll('.divider');
+    dividers.forEach(function(d) { d.style.background = t.divider; });
+
+    // powered badge
+    var pb = document.querySelector('.pb-logo');
+    if (pb) pb.style.background = t.powered;
+
+    // page background (behind card on desktop)
+    document.body.style.background = name === 'dark' || name === 'tech' || name === 'food' ? '#0a0a0a' : '#f4f6f8';
+
+    // store theme for button overrides if needed
+    window._currentTheme = t;
+  }
+
+  // ════════════════════════════════════════════
   // LOAD PROFILE
   // ════════════════════════════════════════════
   function loadProfile() {
@@ -376,9 +454,11 @@
         document.getElementById('loader').style.display  = 'none';
         document.getElementById('mainWrap').style.display = 'block';
 
-        // Cover
+        // Theme apply (Theme column: default/dark/ocean/forest/gold/minimal/tech/food)
+        applyTheme(p.Theme || p.theme || '');
+
+        // Cover image overrides theme cover if set
         var cd = document.getElementById('coverDiv');
-        if (p.ThemeColor && p.ThemeColor.trim()) cd.style.background = p.ThemeColor;
         if (p.CoverImage  && p.CoverImage.trim()) {
           cd.style.backgroundImage    = "url('" + p.CoverImage + "')";
           cd.style.backgroundSize     = 'cover';
@@ -399,6 +479,9 @@
 
         if (p.MenuPDF    && p.MenuPDF.trim())    menuLink     = p.MenuPDF;
         if (p.StampTarget)                        stampsTarget = parseInt(p.StampTarget) || 10;
+
+        // Re-apply theme after text content set (so color overrides apply)
+        applyTheme(p.Theme || p.theme || '');
 
         buildButtons(p);
         if (p.StoreStatus === 'Active') loadProducts();
