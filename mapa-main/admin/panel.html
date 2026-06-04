@@ -267,10 +267,8 @@
 </head>
 <body>
 
-<!-- SIDEBAR OVERLAY -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
-<!-- HEADER -->
 <div class="header">
   <div class="header-left">
     <button class="mob-menu-btn" onclick="toggleSidebar()">&#9776;</button>
@@ -281,10 +279,11 @@
     <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
   </div>
 </div>
-
+<div id="warningBanner" style="display:none;background:#fde2e2;color:#991b1b;padding:12px 16px;font-size:13px;font-weight:700;text-align:center;border-bottom:2px solid #f8c1c1;">
+  Warning: Configure your Apps Script URL in Config first, otherwise admin data will not load.
+</div>
 <div class="shell">
 
-  <!-- SIDEBAR -->
   <nav class="sidebar" id="mainSidebar">
     <div class="sidebar-nav">
       <div class="nav-item active" onclick="showTab('overview')" id="nav-overview"><i class="fas fa-chart-pie"></i> Overview</div>
@@ -301,10 +300,8 @@
     </div>
   </nav>
 
-  <!-- MAIN -->
   <div class="main">
 
-    <!-- ══ OVERVIEW ══ -->
     <div class="tab-panel active" id="tab-overview">
       <div class="g4" style="margin-bottom:14px;">
         <div class="stat-card"><div class="stat-icon" style="background:#fef2f2;color:#c62828;"><i class="fas fa-eye"></i></div><div><div class="stat-val" id="ov_scans">—</div><div class="stat-lbl">Total Scans</div></div></div>
@@ -337,7 +334,6 @@
       </div>
     </div>
 
-    <!-- ══ CUSTOMERS ══ -->
     <div class="tab-panel" id="tab-customers">
       <div class="g2">
         <div class="card">
@@ -424,9 +420,9 @@
 
           <div style="background:#fafafa;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin-bottom:10px;">
             <div style="font-size:12px;font-weight:700;color:#475569;margin-bottom:6px;"><i class="fas fa-palette"></i> Profile Theme</div>
-            <input type="hidden" id="c_theme" value="">
+            <input type="hidden" id="c_theme" value="default">
             <div class="theme-grid" id="themeGrid">
-              <div class="theme-opt topt-default" onclick="selectTheme('default',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Default</div></div>
+              <div class="theme-opt topt-default active" onclick="selectTheme('default',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Default</div></div>
               <div class="theme-opt topt-dark" onclick="selectTheme('dark',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Dark</div></div>
               <div class="theme-opt topt-ocean" onclick="selectTheme('ocean',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Ocean</div></div>
               <div class="theme-opt topt-forest" onclick="selectTheme('forest',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Forest</div></div>
@@ -445,7 +441,6 @@
       </div>
     </div>
 
-    <!-- ══ EMAIL MARKETING ══ -->
     <div class="tab-panel" id="tab-email">
       <div class="promo-section">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
@@ -464,6 +459,11 @@
         </div>
         <div class="promo-input-group"><label><i class="fas fa-heading"></i> Subject</label><input type="text" id="promoSubject" placeholder="Special Offer! 🎉" oninput="updatePromoPreview()"></div>
         <div class="promo-input-group"><label><i class="fas fa-align-left"></i> Message</label><textarea id="promoBody" rows="4" placeholder="Promotion message..." oninput="updatePromoPreview()"></textarea></div>
+
+        <div class="promo-input-group" style="background:#1e3a5f; padding:10px; border-radius:6px; border:1px solid #2d5080; display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" id="promoAwsSes" style="width:auto; margin:0; cursor:pointer;">
+          <label for="promoAwsSes" style="color:#e2e8f0; font-size:12px; margin:0; text-transform:none; letter-spacing:normal; cursor:pointer;"><i class="fab fa-aws" style="color:#ff9900;"></i> AWS SES හරහා යවන්න (High Deliverability)</label>
+        </div>
 
         <div style="background:#0d1b35;border:1px solid #1e3a5f;border-radius:8px;padding:12px;margin-bottom:12px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
@@ -521,7 +521,6 @@
       </div>
     </div>
 
-    <!-- ══ PRODUCTS ══ -->
     <div class="tab-panel" id="tab-products">
       <div class="card">
         <div class="card-title"><i class="fas fa-box-open"></i> Products, Rooms & Packages</div>
@@ -547,7 +546,6 @@
       </div>
     </div>
 
-    <!-- ══ ORDERS ══ -->
     <div class="tab-panel" id="tab-orders">
       <div class="card">
         <div class="card-title"><i class="fas fa-shopping-bag" style="color:#e65100;"></i> Orders Management</div>
@@ -566,7 +564,6 @@
       </div>
     </div>
 
-    <!-- ══ FEEDBACK ══ -->
     <div class="tab-panel" id="tab-feedback">
       <div class="card">
         <div class="card-title"><i class="fas fa-comment-alt" style="color:#607d8b;"></i> Customer Feedbacks</div>
@@ -578,7 +575,6 @@
       </div>
     </div>
 
-    <!-- ══ QR ══ -->
     <div class="tab-panel" id="tab-qr">
       <div class="card">
         <div class="card-title"><i class="fas fa-qrcode"></i> QR Generator</div>
@@ -591,7 +587,6 @@
       </div>
     </div>
 
-    <!-- ══ BACKUP ══ -->
     <div class="tab-panel" id="tab-backup">
       <div class="card">
         <div class="card-title"><i class="fas fa-database" style="color:#7b1fa2;"></i> Data Backup</div>
@@ -603,7 +598,6 @@
       </div>
     </div>
 
-    <!-- ══ CONFIG ══ -->
     <div class="tab-panel" id="tab-config">
       <div class="card">
         <div class="card-title"><i class="fas fa-cogs"></i> System Configuration</div>
@@ -615,10 +609,7 @@
       </div>
     </div>
 
-  </div><!-- /main -->
-</div><!-- /shell -->
-
-<script>
+  </div></div><script>
   let APPS_SCRIPT_URL = localStorage.getItem('sysScriptUrl') || "https://script.google.com/macros/s/AKfycbzm1PUscMJdzuwq3LECRw0dsRQmUFAlU0fI3DKola5qqYJA45C5oP70MDYAkzLOmD06/exec";
   let allCustomersData = [], currentSelectedId = "", allSubscribersData = [];
 
@@ -649,6 +640,7 @@
     if (savedBase) document.getElementById('sysBaseUrl').value = savedBase;
     var savedScript = localStorage.getItem('sysScriptUrl');
     if (savedScript) document.getElementById('sysScriptUrl').value = savedScript;
+    checkAppScriptUrl();
     loadAllCustomers();
     loadAnalytics();
     updatePromoPreview();
@@ -661,13 +653,44 @@
     localStorage.setItem('sysBaseUrl', baseUrl);
     localStorage.setItem('sysScriptUrl', scriptUrl);
     document.getElementById('sysBaseUrl').value = baseUrl;
+    document.getElementById('sysScriptUrl').value = scriptUrl;
     if (scriptUrl) APPS_SCRIPT_URL = scriptUrl;
+    checkAppScriptUrl();
     alert("Saved!");
     generateQRs();
     loadAllCustomers();
   }
 
   function logout() { sessionStorage.clear(); window.location.href = "index.html"; }
+
+  function showAppScriptWarning(message) {
+    var el = document.getElementById('warningBanner');
+    if (!el) return;
+    el.innerText = message || 'Warning: Configure your Apps Script URL in Config first, otherwise admin data will not load.';
+    el.style.display = 'block';
+  }
+
+  function hideAppScriptWarning() {
+    var el = document.getElementById('warningBanner');
+    if (!el) return;
+    el.style.display = 'none';
+  }
+
+  function checkAppScriptUrl() {
+    var url = document.getElementById('sysScriptUrl').value.trim();
+    if (!url) {
+      showAppScriptWarning('Using the built-in Apps Script demo endpoint. Save your own Apps Script URL in Config to load your own live admin data.');
+      APPS_SCRIPT_URL = localStorage.getItem('sysScriptUrl') || APPS_SCRIPT_URL;
+      return true;
+    }
+    if (url.indexOf('AKfycbzm1PUscMJdzuwq3LECRw0dsRQmUFAlU0fI3DKola5qqYJA45C5oP70MDYAkzLOmD06/exec') !== -1) {
+      showAppScriptWarning('Please set your own Google Apps Script URL in Config to use your live data.');
+      return false;
+    }
+    APPS_SCRIPT_URL = url;
+    hideAppScriptWarning();
+    return true;
+  }
 
   function getField(obj,keys){if(!obj)return '';for(var i=0;i<keys.length;i++){var k=keys[i];if(obj[k]!==undefined&&obj[k]!==null&&obj[k]!=='')return obj[k].toString();}return '';}
   function selectTheme(name,el){document.querySelectorAll('.theme-opt').forEach(function(o){o.classList.remove('active');});el.classList.add('active');document.getElementById('c_theme').value=name;}
@@ -735,7 +758,8 @@
     document.getElementById('c_loyaltyStatus').value=g(['LoyaltyStatus'])||'Inactive';
     document.getElementById('c_storeStatus').value=g(['StoreStatus'])||'Active';
     document.getElementById('c_inboxStatus').value=g(['InboxStatus'])||'Active';
-    document.getElementById('c_ordersStatus').value=g(['OrdersStatus'])||'Active';
+    // ✅ Check for both OrdersStatus and OrderStatus backend keys just in case.
+    document.getElementById('c_ordersStatus').value=g(['OrdersStatus','OrderStatus'])||'Active';
     document.getElementById('c_stampTarget').value=g(['StampTarget'])||'10';
     var theme=g(['Theme','theme','ThemeColor']);document.getElementById('c_theme').value=theme;applyThemeUI(theme);
     document.getElementById('formTitle').innerHTML='<i class="fas fa-edit"></i> Editing: <span style="color:#c62828;">'+(name||shopId)+'</span>';
@@ -752,13 +776,55 @@
     currentSelectedId='';document.getElementById('formTitle').innerHTML='<i class="fas fa-plus-circle"></i> New Shop';
     ['c_id','c_name','c_wa','c_maps','c_fb','c_ig','c_tiktok','c_web','c_email','c_menu','c_review','c_image','c_cover','c_bank','c_theme','c_promoVideo','c_promoImg1','c_promoImg2','c_promoImg3','c_clientPhone','c_password','c_expiryDate','c_cl1_name','c_cl1_url','c_cl2_name','c_cl2_url','c_cl3_name','c_cl3_url','c_cl4_name','c_cl4_url','c_cl5_name','c_cl5_url'].forEach(function(f){var el=document.getElementById(f);if(el)el.value='';});
     document.getElementById('c_type').value='profile';document.getElementById('c_loyaltyStatus').value='Inactive';document.getElementById('c_storeStatus').value='Active';document.getElementById('c_inboxStatus').value='Active';document.getElementById('c_ordersStatus').value='Active';document.getElementById('c_stampTarget').value='10';document.getElementById('c_status').value='Active';
-    document.querySelectorAll('.theme-opt').forEach(function(o){o.classList.remove('active');});
+    document.getElementById('c_theme').value='default'; 
+    applyThemeUI('default'); 
   }
 
   function saveCustomerData(){
     if(!APPS_SCRIPT_URL){alert("Apps Script URL configure කරන්න.");return;}
     var id=document.getElementById('c_id').value.trim();if(!id){alert("Shop ID අනිවාර්යයි.");return;}
-    var payload={action:"saveCustomer",staffId:sessionStorage.getItem('loggedInStaff'),staffName:sessionStorage.getItem('loggedInStaff'),customerData:{ID:id,Type:document.getElementById('c_type').value,BusinessName:document.getElementById('c_name').value,WhatsApp:document.getElementById('c_wa').value,Maps:document.getElementById('c_maps').value,Facebook:document.getElementById('c_fb').value,Instagram:document.getElementById('c_ig').value,TikTok:document.getElementById('c_tiktok').value,Website:document.getElementById('c_web').value,Email:document.getElementById('c_email').value,MenuPDF:document.getElementById('c_menu').value,Theme:document.getElementById('c_theme').value,Status:document.getElementById('c_status').value,LoyaltyStatus:document.getElementById('c_loyaltyStatus').value,StoreStatus:document.getElementById('c_storeStatus').value,InboxStatus:document.getElementById('c_inboxStatus').value,OrdersStatus:document.getElementById('c_ordersStatus').value,StampTarget:document.getElementById('c_stampTarget').value,ClientPhone:document.getElementById('c_clientPhone').value,Password:document.getElementById('c_password').value,BankDetails:document.getElementById('c_bank').value,GoogleReview:document.getElementById('c_review').value,ProfileImage:document.getElementById('c_image').value,CoverImage:document.getElementById('c_cover').value,ExpiryDate:document.getElementById('c_expiryDate').value,CustomPromoVideo:document.getElementById('c_promoVideo').value,CustomPromoImg1:document.getElementById('c_promoImg1').value,CustomPromoImg2:document.getElementById('c_promoImg2').value,CustomPromoImg3:document.getElementById('c_promoImg3').value,CustomLink1Name:document.getElementById('c_cl1_name').value,CustomLink1URL:document.getElementById('c_cl1_url').value,CustomLink2Name:document.getElementById('c_cl2_name').value,CustomLink2URL:document.getElementById('c_cl2_url').value,CustomLink3Name:document.getElementById('c_cl3_name').value,CustomLink3URL:document.getElementById('c_cl3_url').value,CustomLink4Name:document.getElementById('c_cl4_name').value,CustomLink4URL:document.getElementById('c_cl4_url').value,CustomLink5Name:document.getElementById('c_cl5_name').value,CustomLink5URL:document.getElementById('c_cl5_url').value}};
+    var payload={
+      action:"saveCustomer",
+      staffId:sessionStorage.getItem('loggedInStaff'),
+      staffName:sessionStorage.getItem('loggedInStaff'),
+      customerData:{
+        ID:id,Type:document.getElementById('c_type').value,
+        BusinessName:document.getElementById('c_name').value,
+        WhatsApp:document.getElementById('c_wa').value,
+        Maps:document.getElementById('c_maps').value,
+        Facebook:document.getElementById('c_fb').value,
+        Instagram:document.getElementById('c_ig').value,
+        TikTok:document.getElementById('c_tiktok').value,
+        Website:document.getElementById('c_web').value,
+        Email:document.getElementById('c_email').value,
+        MenuPDF:document.getElementById('c_menu').value,
+        Theme:document.getElementById('c_theme').value || 'default',
+        Status:document.getElementById('c_status').value,
+        LoyaltyStatus:document.getElementById('c_loyaltyStatus').value,
+        StoreStatus:document.getElementById('c_storeStatus').value,
+        InboxStatus:document.getElementById('c_inboxStatus').value,
+        // ✅ Saving as OrdersStatus AND OrderStatus to ensure Backend picks it up if naming differs
+        OrdersStatus:document.getElementById('c_ordersStatus').value,
+        OrderStatus:document.getElementById('c_ordersStatus').value,
+        StampTarget:document.getElementById('c_stampTarget').value,
+        ClientPhone:document.getElementById('c_clientPhone').value,
+        Password:document.getElementById('c_password').value,
+        BankDetails:document.getElementById('c_bank').value,
+        GoogleReview:document.getElementById('c_review').value,
+        ProfileImage:document.getElementById('c_image').value,
+        CoverImage:document.getElementById('c_cover').value,
+        ExpiryDate:document.getElementById('c_expiryDate').value,
+        CustomPromoVideo:document.getElementById('c_promoVideo').value,
+        CustomPromoImg1:document.getElementById('c_promoImg1').value,
+        CustomPromoImg2:document.getElementById('c_promoImg2').value,
+        CustomPromoImg3:document.getElementById('c_promoImg3').value,
+        CustomLink1Name:document.getElementById('c_cl1_name').value,CustomLink1URL:document.getElementById('c_cl1_url').value,
+        CustomLink2Name:document.getElementById('c_cl2_name').value,CustomLink2URL:document.getElementById('c_cl2_url').value,
+        CustomLink3Name:document.getElementById('c_cl3_name').value,CustomLink3URL:document.getElementById('c_cl3_url').value,
+        CustomLink4Name:document.getElementById('c_cl4_name').value,CustomLink4URL:document.getElementById('c_cl4_url').value,
+        CustomLink5Name:document.getElementById('c_cl5_name').value,CustomLink5URL:document.getElementById('c_cl5_url').value
+      }
+    };
     var msg=document.getElementById('msg');msg.style.display='block';msg.style.background='#eff6ff';msg.style.color='#1565c0';msg.innerHTML='Saving...';
     fetch(APPS_SCRIPT_URL,{method:"POST",body:JSON.stringify(payload)}).then(function(r){return r.json();}).then(function(d){alert(d.message);loadAllCustomers();msg.style.display='none';}).catch(function(){alert("Error saving.");msg.style.display='none';});
   }
@@ -807,6 +873,10 @@
     var shopId=document.getElementById('promoShopSelect').value;if(!shopId){alert("Shop select කරන්න.");return;}
     var subject=document.getElementById('promoSubject').value.trim();var body=document.getElementById('promoBody').value.trim();var replyTo=document.getElementById('promoReplyTo').value.trim();
     var vidUrl=document.getElementById('promoVideoUrl').value.trim();var imgUrl1=document.getElementById('promoImg1').value.trim();var imgUrl2=document.getElementById('promoImg2').value.trim();var imgUrl3=document.getElementById('promoImg3').value.trim();
+    
+    // ✅ AWS SES status pick up
+    var useAwsSes = document.getElementById('promoAwsSes') ? document.getElementById('promoAwsSes').checked : false;
+
     if(!subject||!body){alert("Subject සහ Message අනිවාර්යයි.");return;}
     var mediaHtml='';
     if(imgUrl1)mediaHtml+='<div style="text-align:center;margin:18px 0;"><img src="'+imgUrl1+'" style="max-width:100%;border-radius:8px;"></div>';
@@ -816,7 +886,19 @@
     var finalHtml='<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:30px;background:#fff;">'+mediaHtml+'<div style="font-size:15px;line-height:1.8;color:#333;">'+body+'</div><div style="margin-top:30px;padding-top:16px;border-top:1px solid #eee;font-size:12px;color:#aaa;text-align:center;">Powered by Mapa Solutions</div></div>';
     var btn=document.getElementById('sendPromoBtn');var msgEl=document.getElementById('promoSendMsg');
     btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending...';msgEl.style.display='none';
-    fetch(APPS_SCRIPT_URL,{method:'POST',body:JSON.stringify({action:'sendBulkEmails',shopId:shopId,clientEmail:replyTo,subject:subject,message:finalHtml})}).then(function(r){return r.json();}).then(function(d){btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane"></i> Send to All Subscribers';msgEl.style.display='inline-block';if(d.success){msgEl.className='promo-send-msg success';msgEl.innerHTML='&#10003; '+(d.message||'Sent!');}else{msgEl.className='promo-send-msg error';msgEl.innerHTML='&#10007; '+(d.error||'Error.');}}).catch(function(){btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane"></i> Send to All Subscribers';msgEl.style.display='inline-block';msgEl.className='promo-send-msg error';msgEl.innerHTML='&#10007; Network error!';});
+    
+    // ✅ useAwsSes passed in the payload payload
+    fetch(APPS_SCRIPT_URL,{
+      method:'POST',
+      body:JSON.stringify({
+        action:'sendBulkEmails',
+        shopId:shopId,
+        clientEmail:replyTo,
+        subject:subject,
+        message:finalHtml,
+        useAwsSes:useAwsSes 
+      })
+    }).then(function(r){return r.json();}).then(function(d){btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane"></i> Send to All Subscribers';msgEl.style.display='inline-block';if(d.success){msgEl.className='promo-send-msg success';msgEl.innerHTML='&#10003; '+(d.message||'Sent!');}else{msgEl.className='promo-send-msg error';msgEl.innerHTML='&#10007; '+(d.error||'Error.');}}).catch(function(){btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane"></i> Send to All Subscribers';msgEl.style.display='inline-block';msgEl.className='promo-send-msg error';msgEl.innerHTML='&#10007; Network error!';});
   }
 
   // ══ SUBSCRIBERS ══
@@ -838,14 +920,14 @@
   function buildSubscriberPDF(){var shopSel=document.getElementById('promoShopSelect');var shopName=shopSel&&shopSel.selectedIndex>=0?shopSel.options[shopSel.selectedIndex].text:'All Shops';var rows=allSubscribersData.map(function(s,i){return '<tr style="background:'+(i%2===0?'#f9f9f9':'white')+';"><td style="padding:8px 12px;border-bottom:1px solid #eee;">'+(i+1)+'</td><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#1565c0;font-weight:600;">'+(s.Email||'-')+'</td><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#555;">'+(s.ShopID||'-')+'</td><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#888;">'+(s.Date?new Date(s.Date).toLocaleDateString():'-')+'</td></tr>';}).join('');var html='<div style="padding:40px;font-family:Arial,sans-serif;"><div style="display:flex;justify-content:space-between;border-bottom:3px solid #c62828;padding-bottom:16px;margin-bottom:24px;"><div><h1 style="color:#c62828;margin:0;">Email Subscribers</h1><h3 style="margin:4px 0 0;">'+shopName+'</h3></div><div style="background:#e3f2fd;padding:14px 20px;border-radius:8px;text-align:center;"><div style="font-size:32px;font-weight:700;color:#1565c0;">'+allSubscribersData.length+'</div><div style="font-size:12px;color:#1565c0;">Total</div></div></div><table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#1565c0;color:white;"><th style="padding:10px 12px;text-align:left;font-size:12px;">#</th><th style="padding:10px 12px;text-align:left;font-size:12px;">Email</th><th style="padding:10px 12px;text-align:left;font-size:12px;">Shop ID</th><th style="padding:10px 12px;text-align:left;font-size:12px;">Date</th></tr></thead><tbody>'+rows+'</tbody></table></div>';html2pdf().set({margin:15,filename:'Subscribers_'+new Date().toISOString().slice(0,10)+'.pdf',html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(html).save();}
 
   // ══ PRODUCTS ══
-  function adminFetchProducts(){if(!APPS_SCRIPT_URL)return;var sid=document.getElementById('p_shop_id').value.trim();if(!sid)return;document.getElementById('adminProductsList').innerHTML='<i class="fas fa-spinner fa-spin"></i>';fetch(APPS_SCRIPT_URL+"?action=getProducts&shopId="+sid).then(function(r){return r.json();}).then(function(d){var h='';if(d.success&&d.data&&d.data.length>0){d.data.forEach(function(p){var pType=p.Type||'Product';var pName=p.ProductName||p.Name||'නම නැත';var pId=p.ProductID||'No-ID';var pPrice=p.Price||0;var imgs='';[p.Image1||p.Img1,p.Image2||p.Img2,p.Image3||p.Img3].forEach(function(img){if(img)imgs+='<img src="'+img+'" style="width:40px;height:40px;object-fit:cover;border-radius:4px;border:1px solid #ddd;">';});var imgH=imgs?'<div style="margin-top:6px;display:flex;gap:6px;">'+imgs+'</div>':'';h+='<div class="product-row"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;"><div><span class="badge b-'+pType+'">'+pType+'</span> <strong style="font-size:13px;">'+pName+'</strong><br><small style="color:#94a3b8;">(ID: '+pId+')</small>'+imgH+'</div><div style="display:flex;align-items:center;gap:4px;"><span style="font-weight:700;color:#777;font-size:13px;">රු.</span><input type="number" id="ad_p_'+pId+'" value="'+pPrice+'" style="padding:6px;width:90px;margin:0;font-size:13px;"><button class="btn btn-green" style="padding:6px 8px;" onclick="adminUpdatePrice(\''+pId+'\')"><i class="fas fa-check"></i></button><button class="btn btn-red" style="padding:6px 8px;" onclick="adminDeleteProduct(\''+pId+'\')"><i class="fas fa-trash-alt"></i></button></div></div></div>';});}else{h='<div style="padding:10px;color:#94a3b8;font-size:13px;">Items නෑ.</div>';}document.getElementById('adminProductsList').innerHTML=h;});}
+  function adminFetchProducts(){if(!APPS_SCRIPT_URL)return;var sid=document.getElementById('p_shop_id').value.trim();if(!sid)return;document.getElementById('adminProductsList').innerHTML='<i class="fas fa-spinner fa-spin"></i>';fetch(APPS_SCRIPT_URL+"?action=getProducts&shopId="+sid+"&t="+Date.now()).then(function(r){return r.json();}).then(function(d){var h='';if(d.success&&d.data&&d.data.length>0){d.data.forEach(function(p){var pType=p.Type||'Product';var pName=p.ProductName||p.Name||'නම නැත';var pId=p.ProductID||'No-ID';var pPrice=p.Price||0;var imgs='';[p.Image1||p.Img1,p.Image2||p.Img2,p.Image3||p.Img3].forEach(function(img){if(img)imgs+='<img src="'+img+'" style="width:40px;height:40px;object-fit:cover;border-radius:4px;border:1px solid #ddd;">';});var imgH=imgs?'<div style="margin-top:6px;display:flex;gap:6px;">'+imgs+'</div>':'';h+='<div class="product-row"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;"><div><span class="badge b-'+pType+'">'+pType+'</span> <strong style="font-size:13px;">'+pName+'</strong><br><small style="color:#94a3b8;">(ID: '+pId+')</small>'+imgH+'</div><div style="display:flex;align-items:center;gap:4px;"><span style="font-weight:700;color:#777;font-size:13px;">රු.</span><input type="number" id="ad_p_'+pId+'" value="'+pPrice+'" style="padding:6px;width:90px;margin:0;font-size:13px;"><button class="btn btn-green" style="padding:6px 8px;" onclick="adminUpdatePrice(\''+pId+'\')"><i class="fas fa-check"></i></button><button class="btn btn-red" style="padding:6px 8px;" onclick="adminDeleteProduct(\''+pId+'\')"><i class="fas fa-trash-alt"></i></button></div></div></div>';});}else{h='<div style="padding:10px;color:#94a3b8;font-size:13px;">Items නෑ.</div>';}document.getElementById('adminProductsList').innerHTML=h;});}
   function adminAddProduct(){var sid=document.getElementById('p_shop_id').value.trim();var name=document.getElementById('new_p_name').value.trim();var price=document.getElementById('new_p_price').value.trim();if(!sid||!name||!price){alert("Shop ID, නම, මිල අනිවාර්යයි.");return;}fetch(APPS_SCRIPT_URL,{method:"POST",body:JSON.stringify({action:"addProduct",shopId:sid,type:document.getElementById('new_p_type').value,name:name,price:price,img1:document.getElementById('new_p_img1').value,img2:document.getElementById('new_p_img2').value,img3:document.getElementById('new_p_img3').value})}).then(function(r){return r.json();}).then(function(d){alert(d.message);adminFetchProducts();['new_p_name','new_p_price','new_p_img1','new_p_img2','new_p_img3'].forEach(function(f){document.getElementById(f).value='';});});}
   function adminUpdatePrice(pid){var sid=document.getElementById('p_shop_id').value.trim();fetch(APPS_SCRIPT_URL,{method:"POST",body:JSON.stringify({action:"updatePrice",shopId:sid,productId:pid,price:document.getElementById('ad_p_'+pid).value})}).then(function(r){return r.json();}).then(function(d){alert(d.message);});}
   function adminDeleteProduct(pid){var sid=document.getElementById('p_shop_id').value.trim();if(!confirm("Delete?"))return;fetch(APPS_SCRIPT_URL,{method:"POST",body:JSON.stringify({action:"deleteProduct",shopId:sid,productId:pid})}).then(function(r){return r.json();}).then(function(d){alert(d.message);adminFetchProducts();});}
 
   // ══ ORDERS ══
   var adminAllOrders=[],adminOrderFilter='all';
-  function adminFetchOrders(){var sid=document.getElementById('o_shop_id').value.trim();if(!sid){alert("Shop ID ඇතුළත් කරන්න.");return;}document.getElementById('adminOrdersList').innerHTML='<i class="fas fa-spinner fa-spin"></i>';fetch(APPS_SCRIPT_URL+"?action=getOrders&shopId="+sid).then(function(r){return r.json();}).then(function(d){if(d.success){adminAllOrders=d.data||[];document.getElementById('adminOrderFilters').style.display=adminAllOrders.length>0?'flex':'none';adminRenderOrders();}else{document.getElementById('adminOrdersList').innerHTML='<p style="color:#94a3b8;padding:10px;font-size:13px;">'+(d.error||'Error')+'</p>';}});}
+  function adminFetchOrders(){var sid=document.getElementById('o_shop_id').value.trim();if(!sid){alert("Shop ID ඇතුළත් කරන්න.");return;}document.getElementById('adminOrdersList').innerHTML='<i class="fas fa-spinner fa-spin"></i>';fetch(APPS_SCRIPT_URL+"?action=getOrders&shopId="+sid+"&t="+Date.now()).then(function(r){return r.json();}).then(function(d){if(d.success){adminAllOrders=d.data||[];document.getElementById('adminOrderFilters').style.display=adminAllOrders.length>0?'flex':'none';adminRenderOrders();}else{document.getElementById('adminOrdersList').innerHTML='<p style="color:#94a3b8;padding:10px;font-size:13px;">'+(d.error||'Error')+'</p>';}});}
   function adminFilterOrders(status){adminOrderFilter=status;document.querySelectorAll('.filter-chip').forEach(function(c){c.classList.remove('active');});document.getElementById('admin-chip-'+status).classList.add('active');adminRenderOrders();}
   function adminRenderOrders(){var filtered=adminAllOrders.filter(function(o){return adminOrderFilter==='all'||(o.Status||'pending').toLowerCase()===adminOrderFilter;});filtered.sort(function(a,b){return new Date(b.Date||0)-new Date(a.Date||0);});var list=document.getElementById('adminOrdersList');if(filtered.length===0){list.innerHTML='<div style="padding:12px;color:#94a3b8;text-align:center;font-size:13px;">Orders නෑ.</div>';return;}var h='';filtered.forEach(function(o){var s=(o.Status||'pending').toLowerCase();var bc=s==='pending'?'#f59e0b':s==='confirmed'?'#22c55e':'#ef4444';var sh=s==='pending'?'<span style="background:#fff7ed;color:#c2410c;padding:2px 7px;border-radius:12px;font-size:11px;font-weight:700;">⏳ Pending</span>':s==='confirmed'?'<span style="background:#f0fdf4;color:#166534;padding:2px 7px;border-radius:12px;font-size:11px;font-weight:700;">✅ Confirmed</span>':'<span style="background:#fef2f2;color:#991b1b;padding:2px 7px;border-radius:12px;font-size:11px;font-weight:700;">❌ Cancelled</span>';var ab=s==='pending'?'<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;"><button class="btn btn-green" style="padding:5px 12px;font-size:12px;" onclick="adminUpdateOrderStatus(\''+o.OrderID+'\',\'confirmed\')">✅ Confirm</button><button class="btn btn-red" style="padding:5px 12px;font-size:12px;" onclick="adminUpdateOrderStatus(\''+o.OrderID+'\',\'cancelled\')">❌ Cancel</button></div>':'';h+='<div style="background:#fff;border-left:4px solid '+bc+';border-radius:6px;padding:12px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-weight:700;font-size:13px;">🧾 #'+(o.OrderID||'-')+'</span>'+sh+'</div><div style="font-size:13px;color:#374151;margin-bottom:4px;">'+(o.Items||'-')+'</div><div style="font-size:14px;font-weight:700;color:#e65100;">Rs. '+parseFloat(o.Total||0).toLocaleString()+'</div><div style="font-size:11px;color:#6b7280;margin-top:4px;">👤 '+(o.CustomerName||'Unknown')+' | 📞 '+(o.Phone||'-')+'<br>📦 '+(o.OrderType||'-')+(o.TableNote?' — '+o.TableNote:'')+' | 🕐 '+(o.Date?new Date(o.Date).toLocaleString():'-')+'</div>'+ab+'</div>';});list.innerHTML=h;}
   function adminUpdateOrderStatus(orderId,newStatus){var sid=document.getElementById('o_shop_id').value.trim();fetch(APPS_SCRIPT_URL,{method:'POST',body:JSON.stringify({action:'updateOrderStatus',shopId:sid,orderId:orderId,status:newStatus})}).then(function(r){return r.json();}).then(function(d){if(d.success){adminAllOrders.forEach(function(o){if((o.OrderID||'').toString()===orderId.toString())o.Status=newStatus;});adminRenderOrders();}else alert(d.error||"Error.");});}
