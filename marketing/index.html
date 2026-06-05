@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- SAVE THIS FILE AS: marketing/index.html -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa Solutions — Business Growth Ecosystem</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E8281E;
+    --dark: #0D0D0D;
+    --offwhite: #F5F2EE;
+    --mid: #1A1A1A;
+    --muted: #888;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--offwhite);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(13,13,13,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 20px;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--red); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--offwhite); }
+  .nav-cta {
+    background: var(--red); color: #fff;
+    border: none; cursor: pointer;
+    padding: 10px 24px; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500;
+    transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(232,40,30,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,40,30,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridShift 20s linear infinite;
+  }
+  @keyframes gridShift {
+    0% { background-position: 0 0; }
+    100% { background-position: 60px 60px; }
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(232,40,30,0.12);
+    border: 1px solid rgba(232,40,30,0.3);
+    color: var(--red); padding: 6px 16px;
+    border-radius: 100px; font-size: 13px;
+    font-weight: 500; width: fit-content;
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--red); border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+  .hero-headline {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    max-width: 900px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero-headline .accent { color: var(--red); }
+  .hero-sub {
+    margin-top: 28px;
+    font-size: 18px; font-weight: 300;
+    color: var(--muted); max-width: 540px;
+    line-height: 1.7;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-actions {
+    display: flex; gap: 16px; margin-top: 48px; flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .btn-primary {
+    background: var(--red); color: #fff;
+    padding: 16px 36px; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 500;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--offwhite);
+    padding: 16px 36px; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 500;
+    text-decoration: none; cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--red); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex; gap: 48px; margin-top: 72px;
+    border-top: 1px solid var(--border);
+    padding-top: 40px;
+    animation: fadeUp 0.6s 0.4s ease both;
+    flex-wrap: wrap;
+  }
+  .stat-item { }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px; font-weight: 800;
+    color: var(--offwhite);
+  }
+  .stat-num span { color: var(--red); }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* Diagonal red accent */
+  .hero-accent {
+    position: absolute; right: -100px; top: 50%;
+    transform: translateY(-50%) rotate(-15deg);
+    width: 400px; height: 600px;
+    background: linear-gradient(135deg, rgba(232,40,30,0.15), transparent);
+    border-radius: 40px;
+    pointer-events: none;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTIONS COMMON ── */
+  section { padding: 100px 48px; }
+  .section-label {
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--red); margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 800; line-height: 1.1;
+    letter-spacing: -1px;
+    max-width: 640px;
+  }
+  .section-title .accent { color: var(--red); }
+  .section-body {
+    color: var(--muted); font-size: 16px;
+    line-height: 1.8; max-width: 520px;
+    margin-top: 20px;
+  }
+
+  /* ── PROBLEM ── */
+  #problem { background: var(--mid); }
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px; margin-top: 64px;
+    align-items: start;
+  }
+  .problem-list { display: flex; flex-direction: column; gap: 20px; }
+  .problem-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 24px; border: 1px solid var(--border);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.02);
+    transition: border-color 0.3s;
+  }
+  .problem-item:hover { border-color: rgba(232,40,30,0.3); }
+  .problem-icon {
+    font-size: 22px; min-width: 32px;
+    margin-top: 2px;
+  }
+  .problem-text h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px; font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .problem-text p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+  .solution-card {
+    background: var(--red);
+    border-radius: 12px; padding: 48px;
+    height: 100%;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+  }
+  .solution-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px; font-weight: 800;
+    line-height: 1.2; margin-bottom: 20px;
+  }
+  .solution-card p { font-size: 15px; line-height: 1.7; opacity: 0.85; }
+  .solution-card .big-s {
+    font-family: 'Syne', sans-serif;
+    font-size: 120px; font-weight: 800;
+    opacity: 0.15; line-height: 1;
+    margin-top: 32px; text-align: right;
+  }
+
+  /* ── ECOSYSTEM ── */
+  #ecosystem { }
+  .eco-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-end; margin-bottom: 64px;
+    flex-wrap: wrap; gap: 24px;
+  }
+  .eco-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 2px;
+  }
+  .eco-card {
+    background: var(--mid);
+    padding: 40px; position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    cursor: default;
+  }
+  .eco-card:hover { background: #222; }
+  .eco-card.featured {
+    background: var(--red);
+    grid-row: span 1;
+  }
+  .eco-card.featured:hover { background: #d42419; }
+  .eco-card-tag {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    opacity: 0.5; margin-bottom: 12px;
+  }
+  .eco-card.featured .eco-card-tag { opacity: 0.7; }
+  .eco-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 800;
+    margin-bottom: 12px; line-height: 1.2;
+  }
+  .eco-card p { font-size: 14px; line-height: 1.7; opacity: 0.7; }
+  .eco-card-features {
+    margin-top: 24px; display: flex;
+    flex-direction: column; gap: 8px;
+  }
+  .eco-feat {
+    font-size: 13px; color: rgba(255,255,255,0.6);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .eco-feat::before {
+    content: '→'; color: var(--offwhite);
+    opacity: 0.4; font-size: 12px;
+  }
+  .eco-card.featured .eco-feat { color: rgba(255,255,255,0.75); }
+  .eco-card.featured .eco-feat::before { opacity: 0.6; }
+  .eco-card-num {
+    position: absolute; bottom: 20px; right: 24px;
+    font-family: 'Syne', sans-serif;
+    font-size: 64px; font-weight: 800;
+    opacity: 0.06; line-height: 1;
+  }
+  .eco-card.featured .eco-card-num { opacity: 0.12; }
+
+  /* ── HOW IT WORKS ── */
+  #how { background: var(--mid); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px; margin-top: 64px;
+  }
+  .step {
+    padding: 40px; background: var(--dark);
+    position: relative;
+  }
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 2px; color: var(--red);
+    margin-bottom: 20px;
+  }
+  .step h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .step p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+  .step-arrow {
+    position: absolute; top: 40px; right: -16px;
+    font-size: 24px; color: var(--red);
+    z-index: 2;
+  }
+
+  /* ── QR DEMO ── */
+  #demo { }
+  .demo-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px; margin-top: 64px;
+    align-items: center;
+  }
+  .demo-phone {
+    background: var(--mid);
+    border: 1px solid var(--border);
+    border-radius: 24px; padding: 32px;
+    position: relative; overflow: hidden;
+    min-height: 480px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 20px;
+  }
+  .demo-phone::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: var(--red);
+  }
+  .qr-mock {
+    width: 160px; height: 160px;
+    background: white; border-radius: 12px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 4px; padding: 16px;
+    box-shadow: 0 0 40px rgba(232,40,30,0.2);
+  }
+  .qr-cell {
+    border-radius: 2px;
+    background: #0D0D0D;
+  }
+  .qr-cell.w { background: white; }
+  .demo-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 700;
+    text-align: center;
+  }
+  .demo-sub { font-size: 13px; color: var(--muted); text-align: center; }
+  .demo-features { display: flex; flex-direction: column; gap: 20px; }
+  .demo-feat {
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .demo-feat-icon {
+    width: 40px; height: 40px; min-width: 40px;
+    background: rgba(232,40,30,0.1);
+    border: 1px solid rgba(232,40,30,0.2);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .demo-feat-text h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .demo-feat-text p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* ── CLIENTS ── */
+  #clients { background: var(--mid); }
+  .clients-strip {
+    margin-top: 48px;
+    display: flex; flex-wrap: wrap;
+    gap: 16px;
+  }
+  .client-chip {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    padding: 10px 20px; border-radius: 4px;
+    font-size: 13px; font-weight: 500;
+    color: var(--muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .client-chip:hover { border-color: var(--red); color: var(--offwhite); }
+
+  /* ── PRICING ── */
+  #pricing { }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px; margin-top: 64px;
+  }
+  .price-card {
+    background: var(--mid); padding: 40px;
+    position: relative; overflow: hidden;
+    transition: background 0.3s;
+  }
+  .price-card:hover { background: #222; }
+  .price-card.best {
+    background: var(--red);
+  }
+  .price-card.best:hover { background: #d42419; }
+  .price-badge {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    background: rgba(255,255,255,0.15);
+    padding: 4px 12px; border-radius: 100px;
+    display: inline-block; margin-bottom: 20px;
+  }
+  .price-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 24px; font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .price-amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 40px; font-weight: 800;
+    line-height: 1; margin: 20px 0 4px;
+  }
+  .price-amount small {
+    font-size: 16px; font-weight: 400;
+    opacity: 0.6; font-family: 'DM Sans', sans-serif;
+  }
+  .price-period { font-size: 13px; opacity: 0.6; margin-bottom: 28px; }
+  .price-divider {
+    height: 1px; background: rgba(255,255,255,0.1);
+    margin: 24px 0;
+  }
+  .price-features { display: flex; flex-direction: column; gap: 10px; }
+  .price-feat {
+    font-size: 13px; display: flex; gap: 8px;
+    align-items: center;
+    opacity: 0.8;
+  }
+  .price-feat::before { content: '✓'; color: var(--offwhite); font-weight: 700; }
+  .price-card:not(.best) .price-feat::before { color: var(--red); }
+  .price-cta {
+    display: block; margin-top: 32px;
+    padding: 14px 24px; text-align: center;
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .price-card:not(.best) .price-cta {
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--offwhite);
+  }
+  .price-card:not(.best) .price-cta:hover {
+    border-color: var(--red); background: rgba(232,40,30,0.1);
+  }
+  .price-card.best .price-cta {
+    background: var(--offwhite); color: var(--dark);
+  }
+  .price-card.best .price-cta:hover { opacity: 0.9; }
+
+  /* ── DEMO FORM ── */
+  #book { background: var(--mid); }
+  .book-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start;
+    margin-top: 64px;
+  }
+  .book-info h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 800; line-height: 1.1;
+    letter-spacing: -1px; margin-bottom: 20px;
+  }
+  .book-info h2 span { color: var(--red); }
+  .book-info p { color: var(--muted); font-size: 15px; line-height: 1.7; }
+  .book-points { margin-top: 32px; display: flex; flex-direction: column; gap: 14px; }
+  .book-point {
+    display: flex; gap: 12px; align-items: center;
+    font-size: 14px; color: var(--muted);
+  }
+  .book-point-dot {
+    width: 8px; height: 8px; min-width: 8px;
+    background: var(--red); border-radius: 50%;
+  }
+
+  .book-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-label { font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+  .form-input, .form-select, .form-textarea {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--offwhite);
+    padding: 14px 16px; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    outline: none; border-color: var(--red);
+  }
+  .form-select { appearance: none; cursor: pointer; }
+  .form-select option { background: var(--mid); }
+  .form-textarea { resize: vertical; min-height: 100px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-submit {
+    background: var(--red); color: #fff;
+    border: none; cursor: pointer;
+    padding: 16px 32px; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 500;
+    transition: opacity 0.2s;
+    margin-top: 8px;
+  }
+  .form-submit:hover { opacity: 0.85; }
+  .form-note { font-size: 12px; color: var(--muted); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 48px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: gap;
+    gap: 24px;
+  }
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 18px;
+  }
+  .footer-logo span { color: var(--red); }
+  .footer-info { font-size: 13px; color: var(--muted); line-height: 1.8; }
+  .footer-reg { font-size: 11px; color: rgba(255,255,255,0.2); margin-top: 8px; }
+
+  /* ── DIVIDER ── */
+  .red-line {
+    height: 3px; background: var(--red);
+    width: 48px; margin: 20px 0;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 72px 24px; }
+    #hero { padding: 100px 24px 60px; }
+    .problem-grid,
+    .demo-wrap,
+    .book-wrap { grid-template-columns: 1fr; }
+    .eco-grid,
+    .steps,
+    .pricing-grid { grid-template-columns: 1fr; gap: 2px; }
+    .hero-stats { gap: 28px; }
+    footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Mapa<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#ecosystem">Products</a></li>
+    <li><a href="#how">How it Works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#clients">Clients</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})">Book a Demo</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-accent"></div>
+
+  <div class="hero-badge">Sri Lanka's Business Growth Ecosystem</div>
+
+  <h1 class="hero-headline">
+    ව්‍යාපාරය<br>
+    <span class="accent">Grow</span> කරන්නේ<br>
+    System එකෙන්.
+  </h1>
+
+  <p class="hero-sub">
+    Promotions, WhatsApp, Email, Customer Retention — ඒ සියල්ල එක Dashboard එකෙන් manage කරන්න. Mapa Solutions ecosystem.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#book" class="btn-primary">Book a Demo →</a>
+    <a href="#ecosystem" class="btn-outline">Explore Products</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">20<span>+</span></div>
+      <div class="stat-label">Active Clients</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3<span>+</span></div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100<span>%</span></div>
+      <div class="stat-label">Sri Lankan Built</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">Rtn<span>.</span></div>
+      <div class="stat-label">Based in Ratnapura</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="section-label">The Problem</div>
+  <div class="problem-grid reveal">
+    <div>
+      <h2 class="section-title">ව්‍යාපාර Growth නෑ — <span class="accent">System</span> නෑ නිසා.</h2>
+      <p class="section-body">Tools ගොඩයි, results නෑ. Digital marketing alone doesn't work without a retention and automation layer underneath.</p>
+      <div class="red-line"></div>
+      <div class="problem-list">
+        <div class="problem-item">
+          <div class="problem-icon">⏰</div>
+          <div class="problem-text">
+            <h4>කාලය නැති වීම</h4>
+            <p>Social media manually manage කරන්න business operation time waste වෙනවා.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-icon">📉</div>
+          <div class="problem-text">
+            <h4>Customer Retention නෑ</h4>
+            <p>One-time buyers ආපහු ගේන system එකක් නෑ. Likes ගොඩයි, orders නෑ.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-icon">📊</div>
+          <div class="problem-text">
+            <h4>Data නෑ</h4>
+            <p>Campaign results, customer behavior — කිසිවක් measure කරන්නේ නෑ.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="solution-card reveal">
+      <div>
+        <h3>Mapa Ecosystem — ගැටළු සියල්ලට එක Solution.</h3>
+        <p>Dashboard-driven growth system. Automation, retention, promotions, WhatsApp & email — ඒ සියල්ල integrated. ව්‍යාපාරය run කරන්නේ ඔබ — system handle කරන්නේ Mapa.</p>
+      </div>
+      <div class="big-s">M</div>
+    </div>
+  </div>
+</section>
+
+<!-- ECOSYSTEM -->
+<section id="ecosystem">
+  <div class="eco-header reveal">
+    <div>
+      <div class="section-label">Our Products</div>
+      <h2 class="section-title">Ecosystem <span class="accent">Overview</span></h2>
+    </div>
+    <p style="color:var(--muted);font-size:14px;max-width:320px;text-align:right;">
+      Main product + specialized tools. Pick what your business needs.
+    </p>
+  </div>
+
+  <div class="eco-grid reveal">
+    <!-- MAIN PRODUCT -->
+    <div class="eco-card featured">
+      <div class="eco-card-tag">★ Main Product</div>
+      <h3>Mapa Dashboard</h3>
+      <p>ව්‍යාපාරය grow කරන ecosystem. Promotions, customer communication, retention — single dashboard.</p>
+      <div class="eco-card-features">
+        <div class="eco-feat">Promotion & Campaign Management</div>
+        <div class="eco-feat">WhatsApp Automation & Handling</div>
+        <div class="eco-feat">Email Marketing System</div>
+        <div class="eco-feat">Customer Database & CRM</div>
+        <div class="eco-feat">Retention & Loyalty System</div>
+        <div class="eco-feat">Analytics & Monthly Reports</div>
+      </div>
+      <div class="eco-card-num">01</div>
+    </div>
+
+    <!-- SOCIAL MAP -->
+    <div class="eco-card">
+      <div class="eco-card-tag">Tool</div>
+      <h3>Social Map</h3>
+      <p>Sri Lanka's strategic SMM agency. Content, ads, community — handled.</p>
+      <div class="eco-card-features">
+        <div class="eco-feat">Content Creation & Design</div>
+        <div class="eco-feat">Facebook / Instagram Ads</div>
+        <div class="eco-feat">Monthly Analytics Report</div>
+        <div class="eco-feat">Community Management</div>
+      </div>
+      <div class="eco-card-num">02</div>
+    </div>
+
+    <!-- SMART PROFILE -->
+    <div class="eco-card">
+      <div class="eco-card-tag">Tool</div>
+      <h3>Smart Profile</h3>
+      <p>QR-based digital business profile. Scan → instant info, menus, contact, loyalty card.</p>
+      <div class="eco-card-features">
+        <div class="eco-feat">QR Code Generation</div>
+        <div class="eco-feat">Digital Business Profile</div>
+        <div class="eco-feat">Product / Menu Showcase</div>
+        <div class="eco-feat">Loyalty Stamp Card</div>
+      </div>
+      <div class="eco-card-num">03</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-label">Process</div>
+  <h2 class="section-title reveal">How It <span class="accent">Works</span></h2>
+  <div class="steps reveal">
+    <div class="step">
+      <div class="step-num">STEP 01</div>
+      <h3>Demo & Setup</h3>
+      <p>Free demo session. ඔබේ ව්‍යාපාරයේ goals, target audience, current challenges analyze කරනවා. Custom plan propose කරනවා.</p>
+      <div class="step-arrow">→</div>
+    </div>
+    <div class="step">
+      <div class="step-num">STEP 02</div>
+      <h3>Onboard & Activate</h3>
+      <p>Dashboard setup, WhatsApp & email integration, Smart Profile QR generation — දින 3ක් ඇතුළත live.</p>
+      <div class="step-arrow">→</div>
+    </div>
+    <div class="step">
+      <div class="step-num">STEP 03</div>
+      <h3>Grow & Retain</h3>
+      <p>Monthly campaigns, automation sequences, retention flows run වෙනවා. Reports සෑම මාසයකම deliver.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QR DEMO -->
+<section id="demo">
+  <div class="section-label">Smart Profile Tool</div>
+  <div class="demo-wrap">
+    <div class="reveal">
+      <h2 class="section-title">QR Scan කරන්න — Business <span class="accent">හමුවෙනවා.</span></h2>
+      <p class="section-body">Customer එකෙක් QR scan කළ විගස — business profile, menu, contact, loyalty card ඔවුන් phone එකේ. No app needed.</p>
+      <div class="red-line"></div>
+      <div class="demo-features">
+        <div class="demo-feat">
+          <div class="demo-feat-icon">📱</div>
+          <div class="demo-feat-text">
+            <h4>Instant Digital Profile</h4>
+            <p>Business info, working hours, location — scan කළ ගමන් ready.</p>
+          </div>
+        </div>
+        <div class="demo-feat">
+          <div class="demo-feat-icon">🛒</div>
+          <div class="demo-feat-text">
+            <h4>Products & Menu</h4>
+            <p>Grid හෝ List view. Photos, prices, categories — real time update.</p>
+          </div>
+        </div>
+        <div class="demo-feat">
+          <div class="demo-feat-icon">⭐</div>
+          <div class="demo-feat-text">
+            <h4>Loyalty Stamp Card</h4>
+            <p>Digital stamp card. Customer retention effortlessly automated.</p>
+          </div>
+        </div>
+        <div class="demo-feat">
+          <div class="demo-feat-icon">🔗</div>
+          <div class="demo-feat-text">
+            <h4>All Links in One Place</h4>
+            <p>WhatsApp, Facebook, Instagram, Google Maps — single QR.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="demo-phone reveal">
+      <!-- QR Visual Mock -->
+      <div class="qr-mock">
+        <div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div>
+        <div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell w"></div>
+        <div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div>
+        <div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell w"></div>
+        <div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell"></div>
+      </div>
+      <div class="demo-label">mapabiz.com/profile/[your-business]</div>
+      <div class="demo-sub">Scan → Instant Business Profile</div>
+      <a href="#book" class="btn-primary" style="margin-top:8px;font-size:13px;padding:10px 20px;">Get Your QR →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section id="clients">
+  <div class="section-label">Trusted By</div>
+  <h2 class="section-title reveal">Our <span class="accent">Clients</span></h2>
+  <div class="clients-strip reveal">
+    <div class="client-chip">CALS</div>
+    <div class="client-chip">HD</div>
+    <div class="client-chip">DN</div>
+    <div class="client-chip">Minipura Auto</div>
+    <div class="client-chip">Paastu</div>
+    <div class="client-chip">Pearl</div>
+    <div class="client-chip">Street Food</div>
+    <div class="client-chip">Grand Yasha</div>
+    <div class="client-chip">Sathsara</div>
+    <div class="client-chip">IMS</div>
+    <div class="client-chip">Kuwanpura Titanium</div>
+    <div class="client-chip">Averest</div>
+    <div class="client-chip">Relax Breath</div>
+    <div class="client-chip">Raniya Sashana</div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-label">Investment</div>
+  <h2 class="section-title reveal">Simple, <span class="accent">Transparent</span> Pricing</h2>
+  <p class="section-body reveal" style="margin-bottom:0;">Social Map SMM packages. Mapa Dashboard pricing — custom quote after demo.</p>
+  <div class="pricing-grid reveal">
+    <div class="price-card">
+      <div class="price-badge">Starter</div>
+      <div class="price-name">Starter Package</div>
+      <p style="font-size:13px;color:var(--muted);margin-top:8px;">කුඩා ව්‍යාපාර සඳහා</p>
+      <div class="price-amount">35,000<small>/mo</small></div>
+      <div class="price-period">රු. per month</div>
+      <div class="price-divider"></div>
+      <div class="price-features">
+        <div class="price-feat">10 Artworks per month</div>
+        <div class="price-feat">2 Stories per week</div>
+        <div class="price-feat">Basic Page Setup</div>
+        <div class="price-feat">Hashtag Research</div>
+        <div class="price-feat">Support: 9am – 5pm</div>
+      </div>
+      <a href="#book" class="price-cta">Get Started →</a>
+    </div>
+
+    <div class="price-card best">
+      <div class="price-badge">★ Best Value</div>
+      <div class="price-name">Growth Package</div>
+      <p style="font-size:13px;opacity:0.75;margin-top:8px;">3 මාසයේ 20% growth target</p>
+      <div class="price-amount">65,000<small>/mo</small></div>
+      <div class="price-period">රු. per month</div>
+      <div class="price-divider"></div>
+      <div class="price-features">
+        <div class="price-feat">15 Artworks + Photos</div>
+        <div class="price-feat">4 Reels per month</div>
+        <div class="price-feat">Custom Strategy</div>
+        <div class="price-feat">FB/IG Ad Management</div>
+        <div class="price-feat">Monthly Analytics Report</div>
+      </div>
+      <a href="#book" class="price-cta">Book Demo →</a>
+    </div>
+
+    <div class="price-card">
+      <div class="price-badge">Premium</div>
+      <div class="price-name">Premium Package</div>
+      <p style="font-size:13px;color:var(--muted);margin-top:8px;">Maximum results & quality</p>
+      <div class="price-amount">110,000<small>/mo</small></div>
+      <div class="price-period">රු. per month</div>
+      <div class="price-divider"></div>
+      <div class="price-features">
+        <div class="price-feat">20+ Posts + 8 Reels</div>
+        <div class="price-feat">Daily Stories</div>
+        <div class="price-feat">Community Management</div>
+        <div class="price-feat">Monthly Photoshoot (Ratnapura)</div>
+        <div class="price-feat">Priority Support</div>
+      </div>
+      <a href="#book" class="price-cta">Get Started →</a>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK DEMO -->
+<section id="book">
+  <div class="section-label">Let's Talk</div>
+  <div class="book-wrap">
+    <div class="book-info reveal">
+      <h2>ව්‍යාපාරය <span>Next Level</span> එකට ගෙන යමු.</h2>
+      <p>Free demo session. No commitment. ඔබේ business goals හා challenges discuss කර, custom plan propose කරනවා.</p>
+      <div class="book-points">
+        <div class="book-point"><div class="book-point-dot"></div>30-minute free consultation</div>
+        <div class="book-point"><div class="book-point-dot"></div>Live dashboard demo</div>
+        <div class="book-point"><div class="book-point-dot"></div>Custom package recommendation</div>
+        <div class="book-point"><div class="book-point-dot"></div>No sales pressure</div>
+      </div>
+      <div style="margin-top:40px;padding:24px;background:rgba(232,40,30,0.08);border:1px solid rgba(232,40,30,0.2);border-radius:8px;">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:8px;">Direct Contact</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;">📞 +94 71 1300 727</div>
+        <div style="font-size:14px;color:var(--muted);margin-top:4px;">✉️ smratnapura@gmail.com</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:4px;">📍 476/C Ketaliyanpalla, Ratnapura</div>
+      </div>
+    </div>
+
+    <div class="book-form reveal">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">ඔබේ නම</label>
+          <input type="text" class="form-input" placeholder="Mahesh Pathirana">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input type="tel" class="form-input" placeholder="+94 7X XXX XXXX">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">ව්‍යාපාරය</label>
+        <input type="text" class="form-input" placeholder="ව්‍යාපාරයේ නම">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Interested In</label>
+        <select class="form-select form-input">
+          <option value="">Select a product...</option>
+          <option>Mapa Dashboard (Main Ecosystem)</option>
+          <option>Social Map (SMM Agency)</option>
+          <option>Smart Profile (QR System)</option>
+          <option>Full Ecosystem</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message (Optional)</label>
+        <textarea class="form-textarea form-input" placeholder="ඔබේ ව්‍යාපාරය ගැන කෙටියෙන්..."></textarea>
+      </div>
+      <button class="form-submit" onclick="handleSubmit(this)">Book Free Demo →</button>
+      <div class="form-note">* Form submit කළ විට WhatsApp/email හරහා confirm කරනවා. දින 3ක් ඇතුළත respond කරනවා.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Mapa<span>.</span></div>
+    <div class="footer-info" style="margin-top:12px;">
+      476/C, Ketaliyanpalla, Newtown, Ratnapura, Sri Lanka<br>
+      +94 71 1300 727 · smratnapura@gmail.com · mapabiz.com
+    </div>
+    <div class="footer-reg">Reg No: RPDS/ADM/RC/01/BGR/05376</div>
+  </div>
+  <div style="text-align:right;">
+    <div style="font-size:13px;color:var(--muted);">A division of</div>
+    <div style="font-family:'Syne',sans-serif;font-weight:700;margin-top:4px;">Mapa Solutions</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:8px;">Social Map · Smart Profile · Event Management</div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.2);margin-top:16px;">© 2025 Mapa Solutions. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(r => observer.observe(r));
+
+// Form submit
+function handleSubmit(btn) {
+  const form = btn.closest('.book-form');
+  const name = form.querySelector('input[type="text"]').value;
+  const phone = form.querySelector('input[type="tel"]').value;
+  const product = form.querySelector('select').value;
+
+  if (!name || !phone) {
+    btn.textContent = '⚠️ නම සහ Phone දෙන්න';
+    btn.style.background = '#666';
+    setTimeout(() => {
+      btn.textContent = 'Book Free Demo →';
+      btn.style.background = '';
+    }, 2000);
+    return;
+  }
+
+  const msg = encodeURIComponent(
+    `*Mapa Solutions — Book a Demo*\n\nනම: ${name}\nPhone: ${phone}\nProduct: ${product || 'Not specified'}\n\nmapabiz.com හරහා`
+  );
+  window.open(`https://wa.me/94711300727?text=${msg}`, '_blank');
+  btn.textContent = '✓ WhatsApp Opened!';
+  btn.style.background = '#2d7a2d';
+}
+</script>
+
+</body>
+</html>
