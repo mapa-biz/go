@@ -153,6 +153,54 @@
     .lightbox-close { position: fixed; top: 20px; right: 25px; color: white; font-size: 32px; cursor: pointer; font-weight: bold; z-index: 10000; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
     .force-logout-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); z-index: 9998; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); }
     .force-logout-box { background: white; padding: 32px 24px; border-radius: 20px; width: 100%; max-width: 360px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+
+    /* ══ FEEDBACK IMAGE STYLES ══ */
+    .feedback-img-wrap {
+      margin-top: 12px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #f1f5f9;
+      cursor: pointer;
+      position: relative;
+      max-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .feedback-img-wrap img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      display: block;
+      border-radius: 12px;
+      transition: 0.3s;
+    }
+    .feedback-img-wrap:hover img { transform: scale(1.02); }
+    .feedback-img-overlay {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(0,0,0,0.55);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      pointer-events: none;
+    }
+    .feedback-img-error {
+      padding: 14px;
+      background: #fef2f2;
+      border: 1px dashed #fca5a5;
+      border-radius: 10px;
+      color: #b91c1c;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
   </style>
 </head>
 <body>
@@ -173,7 +221,17 @@
 
   <!-- ══ LOGIN ══ -->
   <div class="container" id="loginBox">
-    <img src="https://via.placeholder.com/90/d32f2f/ffffff?text=SM" style="border-radius:20px;margin-bottom:16px;box-shadow:0 8px 20px rgba(211,47,47,0.2);">
+    <!-- Profile image: shows business logo after login, SVG fallback before -->
+    <div id="loginLogoWrap" style="width:90px;height:90px;border-radius:20px;margin:0 auto 16px;box-shadow:0 8px 20px rgba(211,47,47,0.25);background:linear-gradient(135deg,#d32f2f,#b71c1c);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;">
+      <svg id="loginLogoSvg" width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M26 4C18.82 4 13 9.82 13 17c0 9.75 13 27 13 27s13-17.25 13-27c0-7.18-5.82-13-13-13z" fill="white" opacity="0.95"/>
+        <circle cx="26" cy="17" r="5" fill="#d32f2f"/>
+        <text x="26" y="45" text-anchor="middle" font-family="Segoe UI,system-ui,sans-serif" font-size="11" font-weight="800" fill="white" opacity="0.9">SM</text>
+      </svg>
+      <img id="loginLogoImg" src="" alt="Business Logo"
+        style="display:none;width:90px;height:90px;object-fit:cover;border-radius:20px;position:absolute;inset:0;"
+        onerror="this.style.display='none';document.getElementById('loginLogoSvg').style.display='block';">
+    </div>
     <h2 style="margin:0 0 8px;color:var(--text-dark);font-weight:800;">Business Portal</h2>
     <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px;">Secure login for Social Map partners</p>
     <input type="tel" id="uPhone" placeholder="Phone Number (07XXXXXXXX)">
@@ -186,9 +244,18 @@
   <div class="container" id="mainApp" style="display:none; padding-top:20px;">
 
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid #f1f5f9;">
-      <div style="text-align:left;">
-        <h3 id="shopName" style="margin:0;color:var(--text-dark);font-weight:800;font-size:18px;">Shop Name</h3>
-        <p style="margin:4px 0 0;font-size:12px;color:#64748b;font-weight:600;" id="shopIdDisplay">ID: --</p>
+      <div style="display:flex;align-items:center;gap:12px;text-align:left;">
+        <!-- Avatar: profile image or fallback initials -->
+        <div id="appAvatarWrap" style="width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#d32f2f,#b71c1c);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;box-shadow:0 4px 10px rgba(211,47,47,0.2);position:relative;">
+          <span id="appAvatarInitials" style="color:white;font-weight:800;font-size:16px;">SM</span>
+          <img id="appAvatarImg" src="" alt=""
+            style="display:none;width:46px;height:46px;object-fit:cover;position:absolute;inset:0;border-radius:12px;"
+            onerror="this.style.display='none';document.getElementById('appAvatarInitials').style.display='block';">
+        </div>
+        <div>
+          <h3 id="shopName" style="margin:0;color:var(--text-dark);font-weight:800;font-size:18px;">Shop Name</h3>
+          <p style="margin:4px 0 0;font-size:12px;color:#64748b;font-weight:600;" id="shopIdDisplay">ID: --</p>
+        </div>
       </div>
       <button onclick="logout()" style="background:#f1f5f9;border:none;color:#475569;cursor:pointer;font-size:12px;font-weight:700;padding:8px 12px;border-radius:8px;transition:0.2s;"><i class="fas fa-sign-out-alt"></i> Logout</button>
     </div>
@@ -199,7 +266,6 @@
       <div class="tab"        id="tab-products" onclick="switchTab('products')">📦 Store</div>
       <div class="tab"        id="tab-orders"   onclick="switchTab('orders')">🛒 Orders<span id="newOrderBadge" style="display:none;" class="new-order-badge">0</span></div>
       <div class="tab"        id="tab-feedback" onclick="switchTab('feedback')">📝 Inbox</div>
-      <!-- BUG FIXED: Removed space in id="tab-promo" -->
       <div class="tab"        id="tab-promo"    onclick="switchTab('promo')">📣 Promo</div>
     </div>
 
@@ -237,10 +303,8 @@
       <button class="btn" style="background:#475569;padding:14px;margin-top:10px;" onclick="fetchStats()"><i class="fas fa-sync-alt"></i> Refresh Data</button>
     </div>
 
-    <!-- ══ POINTS / CASHIER VIEW (REDESIGNED) ══ -->
+    <!-- ══ POINTS / CASHIER VIEW ══ -->
     <div id="view-cashier" style="display:none;">
-
-      <!-- Info Banner -->
       <div class="points-mode-info">
         <i class="fas fa-star"></i>
         <div>
@@ -248,15 +312,11 @@
           <div class="pm-sub">Rs. 1,500 = 1.5 Points &nbsp;|&nbsp; Rs. 1,000 = 1 Point</div>
         </div>
       </div>
-
-      <!-- Customer Phone -->
       <span class="input-label">Customer Phone Number</span>
       <div style="display:flex;gap:10px;margin-bottom:8px;">
         <input type="tel" id="cPhone" placeholder="07XXXXXXXX" maxlength="10" style="margin:0;flex:1;" oninput="resetPointsPreview()">
         <button class="btn" style="background:#3b82f6;margin:0;width:auto;padding:0 20px;border-radius:12px;" onclick="checkCustomerLoyalty()"><i class="fas fa-search"></i></button>
       </div>
-
-      <!-- Customer Info Card (hidden until search) -->
       <div id="customerInfoCard" style="display:none;" class="customer-info-card">
         <div class="ci-name" id="ciNameDisplay">👤 Customer</div>
         <div class="ci-points-big">
@@ -274,15 +334,11 @@
           </div>
         </div>
       </div>
-
-      <!-- Bill Amount Input with Live Points Preview -->
       <span class="input-label" style="margin-top:16px;">Bill Amount (Rs.)</span>
       <div class="amount-input-wrap">
         <span class="rs-prefix">Rs.</span>
         <input type="number" id="cBillAmount" placeholder="e.g. 4500" min="0" oninput="calcPointsPreview()">
       </div>
-
-      <!-- Live Points Preview -->
       <div class="points-preview" id="pointsPreview" style="display:none;">
         <div>
           <div class="pp-label">🌟 Points to Add</div>
@@ -293,7 +349,6 @@
           <div class="pp-sub">pts</div>
         </div>
       </div>
-
       <button class="btn" style="background:#10b981;margin-top:4px;" onclick="processPointsAdd()">
         <i class="fas fa-plus-circle"></i> Add Points
       </button>
@@ -385,10 +440,6 @@
   <script>
     // ══ CONFIG ══
     var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzm1PUscMJdzuwq3LECRw0dsRQmUFAlU0fI3DKola5qqYJA45C5oP70MDYAkzLOmD06/exec";
-
-    // ★★ PROFILE URL — Apps Script login response එකෙන් auto ගනී ★★
-    // login කරද්දී data.profileUrl return කරනවා නම් ඒකම use කරයි.
-    // නැතිනම් FALLBACK_PROFILE_URL use කරයි.
     var FALLBACK_PROFILE_URL = "https://mapabiz.com/mapa-main/profile/index.html";
 
     var liveCheckInterval;
@@ -397,12 +448,11 @@
     var currentFilter = 'all';
 
     // ══ POINTS CALCULATION ══
-    // Rs. 1000 = 1.0 point (so Rs. 1500 = 1.5 points, Rs. 750 = 0.75 pts etc.)
-    var POINTS_PER_1000 = 1.0; // change this if rate changes
+    var POINTS_PER_1000 = 1.0;
 
     function calcPoints(amount) {
       var pts = (parseFloat(amount) / 1000) * POINTS_PER_1000;
-      return Math.round(pts * 100) / 100; // round to 2 decimal places
+      return Math.round(pts * 100) / 100;
     }
 
     function calcPointsPreview() {
@@ -428,8 +478,7 @@
       d.value = new Date().toISOString().split('T')[0];
     });
 
-    // ══ PROFILE SHARE URL BUILDER ══
-    // Reads profileUrl saved at login. Falls back to FALLBACK + shopId.
+    // ══ PROFILE SHARE URL ══
     function getProfileShareLink() {
       var saved = localStorage.getItem('profileUrl');
       if (saved && saved.trim() !== '') return saved;
@@ -438,7 +487,6 @@
     }
 
     // ══ WHATSAPP SHARE ══
-    // context: 'video' | 'image' | 'general'
     function sharePromoProfile(context) {
       var profileLink = getProfileShareLink();
       var shopName    = localStorage.getItem('bName') || 'අපේ Shop';
@@ -470,11 +518,9 @@
             localStorage.setItem('storeStatus',   data.storeStatus    || 'Active');
             localStorage.setItem('inboxStatus',   data.inboxStatus    || 'Active');
             localStorage.setItem('ordersStatus',  data.ordersStatus   || 'Active');
-            // ★ Auto-save profile URL if Apps Script returns it
             if (data.profileUrl && data.profileUrl.trim() !== '') {
               localStorage.setItem('profileUrl', data.profileUrl.trim());
             } else {
-              // Build it from shopId + fallback base
               localStorage.setItem('profileUrl', FALLBACK_PROFILE_URL + '?id=' + data.shopId);
             }
             initApp();
@@ -499,7 +545,6 @@
       document.getElementById('mainApp').style.display   = 'block';
       document.getElementById('shopName').innerText      = localStorage.getItem('bName');
       document.getElementById('shopIdDisplay').innerText = "ID: " + localStorage.getItem('shopId');
-      switchTab('stats'); // BUG FIXED: Always load 'stats' first to prevent blank screen
       fetchLiveStatusThenInit();
     }
 
@@ -514,7 +559,6 @@
             localStorage.setItem('storeStatus',   data.storeStatus   || 'Active');
             localStorage.setItem('inboxStatus',   data.inboxStatus   || 'Active');
             localStorage.setItem('ordersStatus',  data.ordersStatus  || 'Active');
-            // Update profile URL if returned by checkStatus too
             if (data.profileUrl && data.profileUrl.trim() !== '') {
               localStorage.setItem('profileUrl', data.profileUrl.trim());
             }
@@ -555,29 +599,20 @@
 
     function applyTabStyles() {
       ['cashier','products','orders','feedback'].forEach(function(t) {
-        var tb = document.getElementById('tab-' + t);
-        if (tb) tb.classList.remove('disabled');
+        document.getElementById('tab-' + t).classList.remove('disabled');
       });
       if (localStorage.getItem('loyaltyStatus') === 'Inactive') {
-        var tc = document.getElementById('tab-cashier');
-        if (tc) tc.classList.add('disabled');
+        document.getElementById('tab-cashier').classList.add('disabled');
         document.getElementById('dashLoyaltyStats').style.display  = 'none';
         document.getElementById('dashLoyaltyLocked').style.display = 'flex';
       } else {
         document.getElementById('dashLoyaltyStats').style.display  = 'block';
         document.getElementById('dashLoyaltyLocked').style.display = 'none';
       }
-      if (localStorage.getItem('storeStatus')  === 'Inactive') {
-        var tp = document.getElementById('tab-products');
-        if (tp) tp.classList.add('disabled');
-      }
-      if (localStorage.getItem('inboxStatus')  === 'Inactive') {
-        var tf = document.getElementById('tab-feedback');
-        if (tf) tf.classList.add('disabled');
-      }
+      if (localStorage.getItem('storeStatus')  === 'Inactive') document.getElementById('tab-products').classList.add('disabled');
+      if (localStorage.getItem('inboxStatus')  === 'Inactive') document.getElementById('tab-feedback').classList.add('disabled');
       if (localStorage.getItem('ordersStatus') === 'Inactive') {
-        var to = document.getElementById('tab-orders');
-        if (to) to.classList.add('disabled');
+        document.getElementById('tab-orders').classList.add('disabled');
       } else {
         document.getElementById('dashOrderStats').style.display = 'block';
       }
@@ -585,7 +620,7 @@
 
     if (localStorage.getItem('shopId')) initApp();
 
-    // ══ SWITCH TAB (BUG FIXED: Added null checks to prevent crashing) ══
+    // ══ SWITCH TAB ══
     function switchTab(tab) {
       var statuses = {
         cashier:  localStorage.getItem('loyaltyStatus') || 'Inactive',
@@ -594,37 +629,20 @@
         feedback: localStorage.getItem('inboxStatus')   || 'Active',
         promo:    'Active'
       };
-      
-      // Hide all tabs safely
       ['stats','cashier','products','orders','feedback','promo'].forEach(function(t) {
-        var tabEl = document.getElementById('tab-' + t);
-        if (tabEl) tabEl.classList.remove('active');
-        
-        var viewEl = document.getElementById('view-' + t);
-        if (viewEl) viewEl.style.display = 'none';
+        document.getElementById('tab-' + t).classList.remove('active');
+        var v = document.getElementById('view-' + t);
+        if (v) v.style.display = 'none';
       });
-      
       document.getElementById('view-upgrade').style.display = 'none';
-      
-      // Check if upgrade is needed
       if (tab !== 'stats' && tab !== 'promo' && statuses[tab] === 'Inactive') {
-        var targetTab = document.getElementById('tab-' + tab);
-        if (targetTab) targetTab.classList.add('active');
+        document.getElementById('tab-' + tab).classList.add('active');
         document.getElementById('view-upgrade').style.display = 'block';
         return;
       }
-      
-      // Make new tab active
-      var activeTab = document.getElementById('tab-' + tab);
-      if (activeTab) activeTab.classList.add('active');
-      
-      var activeView = document.getElementById('view-' + tab);
-      if (activeView) activeView.style.display = 'block';
-      
-      if (tab === 'orders') {
-        var badge = document.getElementById('newOrderBadge');
-        if (badge) badge.style.display = 'none';
-      }
+      document.getElementById('tab-' + tab).classList.add('active');
+      document.getElementById('view-' + tab).style.display = 'block';
+      if (tab === 'orders') document.getElementById('newOrderBadge').style.display = 'none';
     }
 
     // ══ STATS ══
@@ -659,8 +677,6 @@
     }
 
     // ══ LOYALTY / POINTS ══
-
-    // Check customer — shows info card
     function checkCustomerLoyalty() {
       var shopId = localStorage.getItem('shopId');
       var phone  = document.getElementById('cPhone').value;
@@ -672,7 +688,6 @@
         .then(function(r) { return r.json(); })
         .then(function(data) {
           if (data.success) {
-            // Show customer info card
             document.getElementById('ciNameDisplay').innerText      = '👤 ' + (data.name || phone);
             document.getElementById('ciPointsDisplay').innerText    = data.stamps   || '0';
             document.getElementById('ciRedeemedDisplay').innerText  = data.redeemed || '0';
@@ -686,7 +701,6 @@
         }).catch(function() { showMsg('actionMsg', "Network Error", false); });
     }
 
-    // Add Points — calculates from bill amount
     function processPointsAdd() {
       var shopId = localStorage.getItem('shopId');
       var phone  = document.getElementById('cPhone').value;
@@ -698,15 +712,14 @@
       var msgBox = document.getElementById('actionMsg');
       msgBox.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding ' + pts + ' points...';
       msgBox.style.display = "block"; msgBox.style.background = "#f1f5f9"; msgBox.style.color = "#334155";
-      // ★ stampCount = calculated points (decimal allowed), billAmount for record
       fetch(APPS_SCRIPT_URL, {
         method: 'POST',
         body: JSON.stringify({
           action:     'loyaltyAddStamp',
           shopId:     shopId,
           phone:      phone,
-          stampCount: pts,        // ← points value (e.g. 1.5)
-          billAmount: amt         // ← original bill amount for log
+          stampCount: pts,
+          billAmount: amt
         })
       })
         .then(function(r) { return r.json(); })
@@ -722,7 +735,6 @@
         }).catch(function() { showMsg('actionMsg', "Network Error!", false); });
     }
 
-    // Redeem & Reset PIN — still use phone directly
     function processAction(actionType) {
       var shopId = localStorage.getItem('shopId');
       var phone  = document.getElementById('cPhone').value;
@@ -898,35 +910,56 @@
     }
 
     // ══ FEEDBACK (BUG FIXED) ══
+    // Helper: check if a value is a valid image URL
+    function isValidImageUrl(val) {
+      if (!val) return false;
+      var s = val.toString().trim();
+      if (s === '') return false;
+      if (s === 'No Image') return false;
+      if (s === 'Image Upload Error') return false;
+      if (s === 'N/A' || s === 'null' || s === 'undefined') return false;
+      // Must start with http to be a real URL
+      if (!s.startsWith('http')) return false;
+      return true;
+    }
+
     function fetchFeedback() {
       fetch(APPS_SCRIPT_URL + "?action=getFeedback&shopId=" + localStorage.getItem('shopId'))
         .then(function(r) { return r.json(); })
         .then(function(data) {
-          var list = document.getElementById('feedbackList'); list.innerHTML = "";
+          var list = document.getElementById('feedbackList');
+          list.innerHTML = "";
           if (data.success && data.data.length > 0) {
-            data.data.reverse().forEach(function(f) {
-              // Extract the image regardless of the exact key returned by Apps Script
-              var rawImg = f.ImageURL || f.Image || f.image || f.ImageUrl || "";
-              var finalImg = rawImg;
-              
-              // Google Drive Links require direct access URL format
-              if (rawImg.includes("drive.google.com/file/d/")) {
-                var match = rawImg.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-                if (match) finalImg = "https://drive.google.com/uc?id=" + match[1];
-              } else if (rawImg.includes("drive.google.com/open?id=")) {
-                var match = rawImg.match(/id=([a-zA-Z0-9_-]+)/);
-                if (match) finalImg = "https://drive.google.com/uc?id=" + match[1];
+            data.data.slice().reverse().forEach(function(f) {
+
+              // ════════════════════════════════════════
+              // BUG FIX: Proper image URL validation
+              // Previously only checked !== "No Image" and
+              // !== "Image Upload Error", missing empty/null/
+              // non-http values which caused broken img tags.
+              // ════════════════════════════════════════
+              var imgHtml = '';
+              if (isValidImageUrl(f.ImageURL)) {
+                var safeUrl = f.ImageURL.toString().trim();
+                // Escape single quotes in URL for onclick safety
+                var escapedUrl = safeUrl.replace(/'/g, "\\'");
+                imgHtml =
+                  '<div class="feedback-img-wrap" onclick="openLightbox(\'' + escapedUrl + '\')">' +
+                    '<img src="' + safeUrl + '" alt="Feedback Photo" ' +
+                      'onerror="this.parentElement.innerHTML=\'<div class=\\\"feedback-img-error\\\"><i class=\\\"fas fa-image\\\"></i> Image load failed</div>\'">' +
+                    '<div class="feedback-img-overlay"><i class="fas fa-expand-alt"></i> Tap to view</div>' +
+                  '</div>';
               }
-              
-              // Add a nice thumbnail image directly inside the feedback box instead of just a button
-              var imgHtml = (rawImg && rawImg !== "No Image" && rawImg !== "Image Upload Error")
-                ? '<div style="margin-top:12px;"><img src="' + finalImg + '" onerror="this.style.display=\'none\';" onclick="openLightbox(\'' + finalImg + '\')" style="width:80px;height:80px;object-fit:cover;border-radius:8px;cursor:pointer;border:1px solid #e2e8f0;box-shadow:var(--shadow-sm);transition:0.2s;" onmouseover="this.style.transform=\'scale(1.05)\'" onmouseout="this.style.transform=\'scale(1)\'" alt="Feedback Photo"></div>' : '';
 
               list.innerHTML +=
                 '<div style="background:var(--card-bg);border:1px solid #f1f5f9;padding:16px;border-radius:14px;margin-bottom:14px;text-align:left;box-shadow:var(--shadow-sm);">' +
-                  '<div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-weight:800;color:var(--text-dark);font-size:15px;">👤 ' + (f.CustomerName||'Anonymous') + '</div><div style="font-size:11px;color:#94a3b8;font-weight:600;">📅 ' + new Date(f.Date).toLocaleDateString() + '</div></div>' +
-                  '<div style="font-size:12px;color:#64748b;margin-bottom:10px;margin-left:22px;">📞 ' + (f.Phone||'-') + '</div>' +
-                  '<div style="color:#334155;font-size:14px;background:#f8fafc;padding:14px;border-radius:10px;border-left:3px solid #cbd5e1;line-height:1.5;">💬 ' + f.Message + '</div>' + imgHtml +
+                  '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+                    '<div style="font-weight:800;color:var(--text-dark);font-size:15px;">👤 ' + (f.CustomerName || 'Anonymous') + '</div>' +
+                    '<div style="font-size:11px;color:#94a3b8;font-weight:600;">📅 ' + new Date(f.Date).toLocaleDateString() + '</div>' +
+                  '</div>' +
+                  '<div style="font-size:12px;color:#64748b;margin-bottom:10px;margin-left:22px;">📞 ' + (f.Phone || '-') + '</div>' +
+                  '<div style="color:#334155;font-size:14px;background:#f8fafc;padding:14px;border-radius:10px;border-left:3px solid #cbd5e1;line-height:1.5;">💬 ' + f.Message + '</div>' +
+                  imgHtml +
                 '</div>';
             });
           } else {
