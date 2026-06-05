@@ -171,6 +171,7 @@
     </div>
   </div>
 
+  <!-- ══ LOGIN ══ -->
   <div class="container" id="loginBox">
     <img src="https://via.placeholder.com/90/d32f2f/ffffff?text=SM" style="border-radius:20px;margin-bottom:16px;box-shadow:0 8px 20px rgba(211,47,47,0.2);">
     <h2 style="margin:0 0 8px;color:var(--text-dark);font-weight:800;">Business Portal</h2>
@@ -181,6 +182,7 @@
     <p id="loginMsg" style="color:#ef4444;font-size:14px;font-weight:600;display:none;margin-top:10px;"></p>
   </div>
 
+  <!-- ══ MAIN APP ══ -->
   <div class="container" id="mainApp" style="display:none; padding-top:20px;">
 
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid #f1f5f9;">
@@ -197,9 +199,11 @@
       <div class="tab"        id="tab-products" onclick="switchTab('products')">📦 Store</div>
       <div class="tab"        id="tab-orders"   onclick="switchTab('orders')">🛒 Orders<span id="newOrderBadge" style="display:none;" class="new-order-badge">0</span></div>
       <div class="tab"        id="tab-feedback" onclick="switchTab('feedback')">📝 Inbox</div>
-      <div class="tab"        id="tab- promo"    onclick="switchTab('promo')">📣 Promo</div>
+      <!-- BUG FIXED: Removed space in id="tab-promo" -->
+      <div class="tab"        id="tab-promo"    onclick="switchTab('promo')">📣 Promo</div>
     </div>
 
+    <!-- UPGRADE VIEW -->
     <div id="view-upgrade" style="display:none;">
       <div class="upgrade-box">
         <i class="fas fa-lock"></i>
@@ -212,6 +216,7 @@
       </div>
     </div>
 
+    <!-- STATS VIEW -->
     <div id="view-stats">
       <div class="stat-card"><div class="stat-label">Scans (This Month)</div><div class="stat-number" id="scans">...</div></div>
       <div id="dashScanDetails" style="display:none;">
@@ -232,8 +237,10 @@
       <button class="btn" style="background:#475569;padding:14px;margin-top:10px;" onclick="fetchStats()"><i class="fas fa-sync-alt"></i> Refresh Data</button>
     </div>
 
+    <!-- ══ POINTS / CASHIER VIEW (REDESIGNED) ══ -->
     <div id="view-cashier" style="display:none;">
 
+      <!-- Info Banner -->
       <div class="points-mode-info">
         <i class="fas fa-star"></i>
         <div>
@@ -242,12 +249,14 @@
         </div>
       </div>
 
+      <!-- Customer Phone -->
       <span class="input-label">Customer Phone Number</span>
       <div style="display:flex;gap:10px;margin-bottom:8px;">
         <input type="tel" id="cPhone" placeholder="07XXXXXXXX" maxlength="10" style="margin:0;flex:1;" oninput="resetPointsPreview()">
         <button class="btn" style="background:#3b82f6;margin:0;width:auto;padding:0 20px;border-radius:12px;" onclick="checkCustomerLoyalty()"><i class="fas fa-search"></i></button>
       </div>
 
+      <!-- Customer Info Card (hidden until search) -->
       <div id="customerInfoCard" style="display:none;" class="customer-info-card">
         <div class="ci-name" id="ciNameDisplay">👤 Customer</div>
         <div class="ci-points-big">
@@ -266,12 +275,14 @@
         </div>
       </div>
 
+      <!-- Bill Amount Input with Live Points Preview -->
       <span class="input-label" style="margin-top:16px;">Bill Amount (Rs.)</span>
       <div class="amount-input-wrap">
         <span class="rs-prefix">Rs.</span>
         <input type="number" id="cBillAmount" placeholder="e.g. 4500" min="0" oninput="calcPointsPreview()">
       </div>
 
+      <!-- Live Points Preview -->
       <div class="points-preview" id="pointsPreview" style="display:none;">
         <div>
           <div class="pp-label">🌟 Points to Add</div>
@@ -295,6 +306,7 @@
       <div id="actionMsg" class="msg"></div>
     </div>
 
+    <!-- PRODUCTS VIEW -->
     <div id="view-products" style="display:none;">
       <div style="background:#f8fafc;padding:18px;border-radius:14px;margin-bottom:20px;border:1px dashed #cbd5e1;">
         <h4 style="margin:0 0 12px;color:#3b82f6;font-size:15px;font-weight:800;">➕ Add New Item</h4>
@@ -313,6 +325,7 @@
       </div>
     </div>
 
+    <!-- ORDERS VIEW -->
     <div id="view-orders" style="display:none;">
       <div class="date-filter-box">
         <label style="font-size:13px;font-weight:800;color:#475569;display:flex;align-items:center;gap:6px;">
@@ -332,6 +345,7 @@
       </div>
     </div>
 
+    <!-- FEEDBACK VIEW -->
     <div id="view-feedback" style="display:none;">
       <h4 style="text-align:left;color:#334155;margin-top:0;font-size:16px;font-weight:800;">Customer Feedback</h4>
       <div id="feedbackList">
@@ -339,6 +353,7 @@
       </div>
     </div>
 
+    <!-- PROMO VIEW -->
     <div id="view-promo" style="display:none;">
       <div id="promo-loading" class="order-empty">
         <i class="fas fa-spinner fa-spin" style="font-size:28px;margin-bottom:12px;display:block;color:#cbd5e1;"></i>
@@ -365,7 +380,9 @@
       <button class="btn" style="background:#475569;padding:12px;margin-top:10px;font-size:14px;" onclick="fetchPromos()"><i class="fas fa-sync"></i> Refresh Promos</button>
     </div>
 
-  </div><script>
+  </div><!-- /mainApp -->
+
+  <script>
     // ══ CONFIG ══
     var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzm1PUscMJdzuwq3LECRw0dsRQmUFAlU0fI3DKola5qqYJA45C5oP70MDYAkzLOmD06/exec";
 
@@ -482,6 +499,7 @@
       document.getElementById('mainApp').style.display   = 'block';
       document.getElementById('shopName').innerText      = localStorage.getItem('bName');
       document.getElementById('shopIdDisplay').innerText = "ID: " + localStorage.getItem('shopId');
+      switchTab('stats'); // BUG FIXED: Always load 'stats' first to prevent blank screen
       fetchLiveStatusThenInit();
     }
 
@@ -537,20 +555,29 @@
 
     function applyTabStyles() {
       ['cashier','products','orders','feedback'].forEach(function(t) {
-        document.getElementById('tab-' + t).classList.remove('disabled');
+        var tb = document.getElementById('tab-' + t);
+        if (tb) tb.classList.remove('disabled');
       });
       if (localStorage.getItem('loyaltyStatus') === 'Inactive') {
-        document.getElementById('tab-cashier').classList.add('disabled');
+        var tc = document.getElementById('tab-cashier');
+        if (tc) tc.classList.add('disabled');
         document.getElementById('dashLoyaltyStats').style.display  = 'none';
         document.getElementById('dashLoyaltyLocked').style.display = 'flex';
       } else {
         document.getElementById('dashLoyaltyStats').style.display  = 'block';
         document.getElementById('dashLoyaltyLocked').style.display = 'none';
       }
-      if (localStorage.getItem('storeStatus')  === 'Inactive') document.getElementById('tab-products').classList.add('disabled');
-      if (localStorage.getItem('inboxStatus')  === 'Inactive') document.getElementById('tab-feedback').classList.add('disabled');
+      if (localStorage.getItem('storeStatus')  === 'Inactive') {
+        var tp = document.getElementById('tab-products');
+        if (tp) tp.classList.add('disabled');
+      }
+      if (localStorage.getItem('inboxStatus')  === 'Inactive') {
+        var tf = document.getElementById('tab-feedback');
+        if (tf) tf.classList.add('disabled');
+      }
       if (localStorage.getItem('ordersStatus') === 'Inactive') {
-        document.getElementById('tab-orders').classList.add('disabled');
+        var to = document.getElementById('tab-orders');
+        if (to) to.classList.add('disabled');
       } else {
         document.getElementById('dashOrderStats').style.display = 'block';
       }
@@ -558,7 +585,7 @@
 
     if (localStorage.getItem('shopId')) initApp();
 
-    // ══ SWITCH TAB ══
+    // ══ SWITCH TAB (BUG FIXED: Added null checks to prevent crashing) ══
     function switchTab(tab) {
       var statuses = {
         cashier:  localStorage.getItem('loyaltyStatus') || 'Inactive',
@@ -567,20 +594,37 @@
         feedback: localStorage.getItem('inboxStatus')   || 'Active',
         promo:    'Active'
       };
+      
+      // Hide all tabs safely
       ['stats','cashier','products','orders','feedback','promo'].forEach(function(t) {
-        document.getElementById('tab-' + t).classList.remove('active');
-        var v = document.getElementById('view-' + t);
-        if (v) v.style.display = 'none';
+        var tabEl = document.getElementById('tab-' + t);
+        if (tabEl) tabEl.classList.remove('active');
+        
+        var viewEl = document.getElementById('view-' + t);
+        if (viewEl) viewEl.style.display = 'none';
       });
+      
       document.getElementById('view-upgrade').style.display = 'none';
+      
+      // Check if upgrade is needed
       if (tab !== 'stats' && tab !== 'promo' && statuses[tab] === 'Inactive') {
-        document.getElementById('tab-' + tab).classList.add('active');
+        var targetTab = document.getElementById('tab-' + tab);
+        if (targetTab) targetTab.classList.add('active');
         document.getElementById('view-upgrade').style.display = 'block';
         return;
       }
-      document.getElementById('tab-' + tab).classList.add('active');
-      document.getElementById('view-' + tab).style.display = 'block';
-      if (tab === 'orders') document.getElementById('newOrderBadge').style.display = 'none';
+      
+      // Make new tab active
+      var activeTab = document.getElementById('tab-' + tab);
+      if (activeTab) activeTab.classList.add('active');
+      
+      var activeView = document.getElementById('view-' + tab);
+      if (activeView) activeView.style.display = 'block';
+      
+      if (tab === 'orders') {
+        var badge = document.getElementById('newOrderBadge');
+        if (badge) badge.style.display = 'none';
+      }
     }
 
     // ══ STATS ══
