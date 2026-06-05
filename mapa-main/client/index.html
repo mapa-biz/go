@@ -162,14 +162,14 @@
       background: #f1f5f9;
       cursor: pointer;
       position: relative;
-      max-height: 200px;
+      max-height: 220px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .feedback-img-wrap img {
       width: 100%;
-      max-height: 200px;
+      max-height: 220px;
       object-fit: cover;
       display: block;
       border-radius: 12px;
@@ -221,7 +221,6 @@
 
   <!-- ══ LOGIN ══ -->
   <div class="container" id="loginBox">
-    <!-- Profile image: shows business logo after login, SVG fallback before -->
     <div id="loginLogoWrap" style="width:90px;height:90px;border-radius:20px;margin:0 auto 16px;box-shadow:0 8px 20px rgba(211,47,47,0.25);background:linear-gradient(135deg,#d32f2f,#b71c1c);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;">
       <svg id="loginLogoSvg" width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M26 4C18.82 4 13 9.82 13 17c0 9.75 13 27 13 27s13-17.25 13-27c0-7.18-5.82-13-13-13z" fill="white" opacity="0.95"/>
@@ -245,7 +244,6 @@
 
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid #f1f5f9;">
       <div style="display:flex;align-items:center;gap:12px;text-align:left;">
-        <!-- Avatar: profile image or fallback initials -->
         <div id="appAvatarWrap" style="width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#d32f2f,#b71c1c);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;box-shadow:0 4px 10px rgba(211,47,47,0.2);position:relative;">
           <span id="appAvatarInitials" style="color:white;font-weight:800;font-size:16px;">SM</span>
           <img id="appAvatarImg" src="" alt=""
@@ -909,18 +907,82 @@
         }).catch(function() { alert("Network error!"); });
     }
 
-    // ══ FEEDBACK (BUG FIXED) ══
-    // Helper: check if a value is a valid image URL
-    function isValidImageUrl(val) {
-      if (!val) return false;
-      var s = val.toString().trim();
+    // ══════════════════════════════════════════════════
+    // FEEDBACK — FIXED VERSION
+    // Bug 1: ImageURL value may arrive with surrounding
+    //         quote characters (e.g. '"https://..."')
+    //         from Google Sheets, breaking the src attr.
+    // Bug 2: onerror handler used inline escaped HTML
+    //         which broke in some browsers and also left
+    //         a dangling '">' visible in the DOM.
+    // Fix:   sanitizeImageUrl() strips surrounding quotes
+    //        and whitespace. buildFeedbackImageEl() creates
+    //        the image element via JS DOM APIs instead of
+    //        innerHTML concatenation, completely avoiding
+    //        HTML injection and escaping issues.
+    // ══════════════════════════════════════════════════
+
+    /**
+     * Strip surrounding whitespace AND any wrapping
+     * quote characters that Google Sheets sometimes
+     * includes in cell values returned via JSON.
+     */
+    function sanitizeImageUrl(raw) {
+      if (!raw) return '';
+      var s = String(raw).trim();
+      // Remove surrounding double or single quotes
+      if ((s.charAt(0) === '"' && s.charAt(s.length - 1) === '"') ||
+          (s.charAt(0) === "'" && s.charAt(s.length - 1) === "'")) {
+        s = s.slice(1, -1).trim();
+      }
+      return s;
+    }
+
+    /**
+     * Returns true only for a clean http(s) URL that is
+     * not one of the known placeholder strings.
+     */
+    function isValidImageUrl(raw) {
+      var s = sanitizeImageUrl(raw);
       if (s === '') return false;
-      if (s === 'No Image') return false;
-      if (s === 'Image Upload Error') return false;
-      if (s === 'N/A' || s === 'null' || s === 'undefined') return false;
-      // Must start with http to be a real URL
-      if (!s.startsWith('http')) return false;
-      return true;
+      var BAD = ['No Image', 'Image Upload Error', 'N/A', 'null', 'undefined', 'none'];
+      for (var i = 0; i < BAD.length; i++) {
+        if (s.toLowerCase() === BAD[i].toLowerCase()) return false;
+      }
+      return s.indexOf('http') === 0;
+    }
+
+    /**
+     * Build the feedback image block using DOM APIs so
+     * that no quote-escaping issues can arise in HTML.
+     * Returns an HTMLElement or null.
+     */
+    function buildFeedbackImageEl(rawUrl) {
+      if (!isValidImageUrl(rawUrl)) return null;
+      var cleanUrl = sanitizeImageUrl(rawUrl);
+
+      var wrap = document.createElement('div');
+      wrap.className = 'feedback-img-wrap';
+      wrap.addEventListener('click', function() { openLightbox(cleanUrl); });
+
+      var img = document.createElement('img');
+      img.src = cleanUrl;
+      img.alt = 'Feedback Photo';
+      img.addEventListener('error', function() {
+        // Replace the whole wrap with a tidy error notice
+        var errDiv = document.createElement('div');
+        errDiv.className = 'feedback-img-error';
+        errDiv.innerHTML = '<i class="fas fa-image"></i> Image load failed';
+        if (wrap.parentNode) wrap.parentNode.replaceChild(errDiv, wrap);
+      });
+
+      var overlay = document.createElement('div');
+      overlay.className = 'feedback-img-overlay';
+      overlay.innerHTML = '<i class="fas fa-expand-alt"></i> Tap to view';
+
+      wrap.appendChild(img);
+      wrap.appendChild(overlay);
+      return wrap;
     }
 
     function fetchFeedback() {
@@ -929,38 +991,45 @@
         .then(function(data) {
           var list = document.getElementById('feedbackList');
           list.innerHTML = "";
+
           if (data.success && data.data.length > 0) {
             data.data.slice().reverse().forEach(function(f) {
 
-              // ════════════════════════════════════════
-              // BUG FIX: Proper image URL validation
-              // Previously only checked !== "No Image" and
-              // !== "Image Upload Error", missing empty/null/
-              // non-http values which caused broken img tags.
-              // ════════════════════════════════════════
-              var imgHtml = '';
-              if (isValidImageUrl(f.ImageURL)) {
-                var safeUrl = f.ImageURL.toString().trim();
-                // Escape single quotes in URL for onclick safety
-                var escapedUrl = safeUrl.replace(/'/g, "\\'");
-                imgHtml =
-                  '<div class="feedback-img-wrap" onclick="openLightbox(\'' + escapedUrl + '\')">' +
-                    '<img src="' + safeUrl + '" alt="Feedback Photo" ' +
-                      'onerror="this.parentElement.innerHTML=\'<div class=\\\"feedback-img-error\\\"><i class=\\\"fas fa-image\\\"></i> Image load failed</div>\'">' +
-                    '<div class="feedback-img-overlay"><i class="fas fa-expand-alt"></i> Tap to view</div>' +
-                  '</div>';
-              }
+              // ── Outer card ──
+              var card = document.createElement('div');
+              card.style.cssText = 'background:var(--card-bg);border:1px solid #f1f5f9;padding:16px;border-radius:14px;margin-bottom:14px;text-align:left;box-shadow:var(--shadow-sm);';
 
-              list.innerHTML +=
-                '<div style="background:var(--card-bg);border:1px solid #f1f5f9;padding:16px;border-radius:14px;margin-bottom:14px;text-align:left;box-shadow:var(--shadow-sm);">' +
-                  '<div style="display:flex;justify-content:space-between;align-items:center;">' +
-                    '<div style="font-weight:800;color:var(--text-dark);font-size:15px;">👤 ' + (f.CustomerName || 'Anonymous') + '</div>' +
-                    '<div style="font-size:11px;color:#94a3b8;font-weight:600;">📅 ' + new Date(f.Date).toLocaleDateString() + '</div>' +
-                  '</div>' +
-                  '<div style="font-size:12px;color:#64748b;margin-bottom:10px;margin-left:22px;">📞 ' + (f.Phone || '-') + '</div>' +
-                  '<div style="color:#334155;font-size:14px;background:#f8fafc;padding:14px;border-radius:10px;border-left:3px solid #cbd5e1;line-height:1.5;">💬 ' + f.Message + '</div>' +
-                  imgHtml +
-                '</div>';
+              // Header row
+              var header = document.createElement('div');
+              header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;';
+              var nameEl = document.createElement('div');
+              nameEl.style.cssText = 'font-weight:800;color:var(--text-dark);font-size:15px;';
+              nameEl.textContent = '👤 ' + (f.CustomerName || 'Anonymous');
+              var dateEl = document.createElement('div');
+              dateEl.style.cssText = 'font-size:11px;color:#94a3b8;font-weight:600;';
+              dateEl.textContent = '📅 ' + new Date(f.Date).toLocaleDateString();
+              header.appendChild(nameEl);
+              header.appendChild(dateEl);
+
+              // Phone
+              var phoneEl = document.createElement('div');
+              phoneEl.style.cssText = 'font-size:12px;color:#64748b;margin-bottom:10px;margin-left:22px;';
+              phoneEl.textContent = '📞 ' + (f.Phone || '-');
+
+              // Message bubble
+              var msgEl = document.createElement('div');
+              msgEl.style.cssText = 'color:#334155;font-size:14px;background:#f8fafc;padding:14px;border-radius:10px;border-left:3px solid #cbd5e1;line-height:1.5;';
+              msgEl.textContent = '💬 ' + (f.Message || '');
+
+              card.appendChild(header);
+              card.appendChild(phoneEl);
+              card.appendChild(msgEl);
+
+              // Image (safe DOM build)
+              var imgEl = buildFeedbackImageEl(f.ImageURL);
+              if (imgEl) card.appendChild(imgEl);
+
+              list.appendChild(card);
             });
           } else {
             list.innerHTML = '<div class="order-empty"><i class="fas fa-envelope-open-text" style="font-size:36px;color:#cbd5e1;margin-bottom:15px;display:block;"></i>No feedback yet.</div>';
