@@ -388,7 +388,7 @@
     // ★★ PROFILE URL — Apps Script login response එකෙන් auto ගනී ★★
     // login කරද්දී data.profileUrl return කරනවා නම් ඒකම use කරයි.
     // නැතිනම් FALLBACK_PROFILE_URL use කරයි.
-    var FALLBACK_PROFILE_URL = "https://socialmap-go.github.io/test/profile/index.html";
+    var FALLBACK_PROFILE_URL = "https://mapabiz.com/mapa-main/profile/index.html";
 
     var liveCheckInterval;
     var orderCheckInterval;
@@ -443,11 +443,11 @@
       var shopName    = localStorage.getItem('bName') || 'අපේ Shop';
       var msg = '';
       if (context === 'video') {
-        msg = '🎬 *' + shopName + '* ගේ නවතම Video බලන්න!\n\nඅපේ සම්පූර්ණ menu, services සහ offers:\n👉 ' + profileLink + '\n\n✨ Powered by Social Map';
+        msg = '🎬 *' + shopName + '*අපේ නවතම Video බලන්න!\n\nඅපේ සම්පූර්ණ menu, services සහ offers:\n👉 ' + profileLink + '\n\n✨ Powered by Social Map';
       } else if (context === 'image') {
-        msg = '🖼️ *' + shopName + '* ගේ නවතම Promotion!\n\nඅපේ සම්පූර්ණ menu, services සහ offers:\n👉 ' + profileLink + '\n\n✨ Powered by Social Map';
+        msg = '🖼️ *' + shopName + '* අපේ නවතම Promotion!\n\nඅපේ සම්පූර්ණ menu, services සහ offers:\n👉 ' + profileLink + '\n\n✨ Powered by Social Map';
       } else {
-        msg = '🔥 *' + shopName + '* ගේ Special Update!\n\nඅපේ Smart Profile:\n👉 ' + profileLink + '\n\n✨ Powered by Social Map';
+        msg = '🔥 *' + shopName + '* අපේ Special Update!\n\nඅපේ Smart Profile:\n👉 ' + profileLink + '\n\n✨ Powered by Social Map';
       }
       window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
     }
