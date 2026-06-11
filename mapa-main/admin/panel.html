@@ -76,7 +76,7 @@
     .section-box.purple h4{color:#6b21a8;}
     .section-box.blue h4{color:#1e40af;}
     .section-box.orange h4{color:#9a3412;}
-    .theme-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-top:8px;}
+    .theme-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:8px;} /* Updated columns to 6 */
     .theme-opt{border:2px solid transparent;border-radius:6px;overflow:hidden;cursor:pointer;}
     .theme-opt:hover{border-color:#94a3b8;}
     .theme-opt.active{border-color:#c62828;}
@@ -85,6 +85,14 @@
     .th-logo{width:12px;height:12px;border-radius:50%;border:1px solid #fff;margin-top:-7px;margin-bottom:2px;}
     .th-btn{height:4px;border-radius:2px;}
     .th-label{font-size:9px;font-weight:700;text-align:center;padding:2px 0 0;color:#555;}
+    
+    /* New Patterned Themes */
+    .topt-royalwood .th-cover{background-color:#8b5a2b; background-image:url('YOUR_ROYAL_WOOD_IMAGE_LINK'); background-size:cover; background-position:center;} .topt-royalwood .th-body{background:#fdf5e6;} .topt-royalwood .th-logo{background:#8b4513;} .topt-royalwood .th-btn{background:#8b4513;}
+    .topt-darkwood .th-cover{background-color:#3e2723; background-image:url('YOUR_DARK_WOOD_IMAGE_LINK'); background-size:cover; background-position:center;} .topt-darkwood .th-body{background:#2c1e16;} .topt-darkwood .th-logo{background:#5c4033;} .topt-darkwood .th-btn{background:#d4a373;}
+    .topt-carbon .th-cover{background-color:#1a1a1a; background-image:url('YOUR_CARBON_IMAGE_LINK'); background-size:cover; background-position:center;} .topt-carbon .th-body{background:#121212;} .topt-carbon .th-logo{background:#ff0000;} .topt-carbon .th-btn{background:#ff0000;}
+    .topt-marble .th-cover{background-color:#f5f7fa; background-image:url('YOUR_MARBLE_IMAGE_LINK'); background-size:cover; background-position:center;} .topt-marble .th-body{background:#fafafa;} .topt-marble .th-logo{background:#333;} .topt-marble .th-btn{background:#d4af37;}
+
+    /* Existing Themes */
     .topt-default .th-cover{background:#d32f2f;} .topt-default .th-body{background:#fff;} .topt-default .th-logo{background:#d32f2f;} .topt-default .th-btn{background:#25D366;}
     .topt-dark .th-cover{background:#0f0f0f;} .topt-dark .th-body{background:#1a1a1a;} .topt-dark .th-logo{background:#333;} .topt-dark .th-btn{background:#2d2d2d;}
     .topt-ocean .th-cover{background:#0077b6;} .topt-ocean .th-body{background:#f0f8ff;} .topt-ocean .th-logo{background:#0077b6;} .topt-ocean .th-btn{background:#0077b6;}
@@ -93,6 +101,7 @@
     .topt-minimal .th-cover{background:#f5f5f5;border-bottom:1px solid #ddd;} .topt-minimal .th-body{background:#fff;} .topt-minimal .th-logo{background:#222;} .topt-minimal .th-btn{background:#222;}
     .topt-tech .th-cover{background:#1a0533;} .topt-tech .th-body{background:#120228;} .topt-tech .th-logo{background:#7c3aed;} .topt-tech .th-btn{background:#7c3aed;}
     .topt-food .th-cover{background:#111;} .topt-food .th-body{background:#1a1a1a;} .topt-food .th-logo{background:#ff6b00;} .topt-food .th-btn{background:#ff6b00;}
+    
     .stat-box{background:#eff6ff;padding:12px;border-radius:6px;text-align:center;}
     .stat-box h2{font-size:26px;color:#1565c0;font-weight:800;}
     .stat-box small{font-size:11px;color:#475569;}
@@ -328,6 +337,11 @@
             <div style="font-size:12px;font-weight:700;color:#475569;margin-bottom:6px;"><i class="fas fa-palette"></i> Profile Theme</div>
             <input type="hidden" id="c_theme" value="default">
             <div class="theme-grid" id="themeGrid">
+              <div class="theme-opt topt-royalwood" onclick="selectTheme('royalwood',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Royal Wood</div></div>
+              <div class="theme-opt topt-darkwood" onclick="selectTheme('darkwood',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Dark Wood</div></div>
+              <div class="theme-opt topt-carbon" onclick="selectTheme('carbon',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Carbon</div></div>
+              <div class="theme-opt topt-marble" onclick="selectTheme('marble',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Marble</div></div>
+              
               <div class="theme-opt topt-default active" onclick="selectTheme('default',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Default</div></div>
               <div class="theme-opt topt-dark" onclick="selectTheme('dark',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Dark</div></div>
               <div class="theme-opt topt-ocean" onclick="selectTheme('ocean',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Ocean</div></div>
