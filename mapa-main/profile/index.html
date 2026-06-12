@@ -904,7 +904,7 @@
       var actionBtnHtml = '';
       if (actionType === 'WhatsApp') {
         // WhatsApp inquiry — send product name + price
-        var waMsg = encodeURIComponent("සලාම් 🙏\nමට *" + nm + "* (රු." + price.toFixed(0) + ") ගැන දැනගන්න ආශාවක් ඇත.");
+        var waMsg = encodeURIComponent("Hello..\nමට *" + nm + "* (රු." + price.toFixed(0) + ") ගැන වැඩි විස්තර දැනගන්න පුලුවන්ද?.");
         var waLink = waNumber
           ? "https://wa.me/" + waNumber.replace(/[^0-9]/g, '') + "?text=" + waMsg
           : "https://api.whatsapp.com/send?text=" + waMsg;
