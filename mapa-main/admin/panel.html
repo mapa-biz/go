@@ -76,7 +76,7 @@
     .section-box.purple h4{color:#6b21a8;}
     .section-box.blue h4{color:#1e40af;}
     .section-box.orange h4{color:#9a3412;}
-    .theme-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:8px;} /* Updated columns to 6 */
+    .theme-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:8px;} 
     .theme-opt{border:2px solid transparent;border-radius:6px;overflow:hidden;cursor:pointer;}
     .theme-opt:hover{border-color:#94a3b8;}
     .theme-opt.active{border-color:#c62828;}
@@ -86,13 +86,11 @@
     .th-btn{height:4px;border-radius:2px;}
     .th-label{font-size:9px;font-weight:700;text-align:center;padding:2px 0 0;color:#555;}
     
-    /* New Patterned Themes */
     .topt-royalwood .th-cover{background-color:#8b5a2b; background-image:url('https://i.postimg.cc/W3gfXSp7/1.png'); background-size:cover; background-position:center;} .topt-royalwood .th-body{background:#fdf5e6;} .topt-royalwood .th-logo{background:#8b4513;} .topt-royalwood .th-btn{background:#8b4513;}
     .topt-darkwood .th-cover{background-color:#3e2723; background-image:url('https://i.postimg.cc/159YrGxh/2.png'); background-size:cover; background-position:center;} .topt-darkwood .th-body{background:#2c1e16;} .topt-darkwood .th-logo{background:#5c4033;} .topt-darkwood .th-btn{background:#d4a373;}
     .topt-carbon .th-cover{background-color:#1a1a1a; background-image:url('YOUR_CARBON_IMAGE_LINK'); background-size:cover; background-position:center;} .topt-carbon .th-body{background:#121212;} .topt-carbon .th-logo{background:#ff0000;} .topt-carbon .th-btn{background:#ff0000;}
     .topt-marble .th-cover{background-color:#f5f7fa; background-image:url('YOUR_MARBLE_IMAGE_LINK'); background-size:cover; background-position:center;} .topt-marble .th-body{background:#fafafa;} .topt-marble .th-logo{background:#333;} .topt-marble .th-btn{background:#d4af37;}
 
-    /* Existing Themes */
     .topt-default .th-cover{background:#d32f2f;} .topt-default .th-body{background:#fff;} .topt-default .th-logo{background:#d32f2f;} .topt-default .th-btn{background:#25D366;}
     .topt-dark .th-cover{background:#0f0f0f;} .topt-dark .th-body{background:#1a1a1a;} .topt-dark .th-logo{background:#333;} .topt-dark .th-btn{background:#2d2d2d;}
     .topt-ocean .th-cover{background:#0077b6;} .topt-ocean .th-body{background:#f0f8ff;} .topt-ocean .th-logo{background:#0077b6;} .topt-ocean .th-btn{background:#0077b6;}
@@ -225,7 +223,7 @@
     <div class="tab-panel active" id="tab-overview">
       <div class="g4" style="margin-bottom:14px;">
         <div class="stat-card"><div class="stat-icon" style="background:#fef2f2;color:#c62828;"><i class="fas fa-eye"></i></div><div><div class="stat-val" id="ov_scans">—</div><div class="stat-lbl">Total Scans</div></div></div>
-        <div class="stat-card"><div class="stat-icon" style="background:#f0fdf4;color:#2e7d32;"><i class="fas fa-envelope"></i></div><div><div class="stat-val" id="ov_emails">—</div><div class="stat-lbl">Email Subscribers</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:#f0fdf4;color:#2e7d32;"><i class="fas fa-envelope"></i></div><div><div class="stat-val" id="ov_emails">—</div><div class="stat-lbl">Subscribers</div></div></div>
         <div class="stat-card"><div class="stat-icon" style="background:#eff6ff;color:#1565c0;"><i class="fas fa-users"></i></div><div><div class="stat-val" id="ov_shops">—</div><div class="stat-lbl">Total Shops</div></div></div>
         <div class="stat-card"><div class="stat-icon" style="background:#fff7ed;color:#e65100;"><i class="fas fa-shopping-bag"></i></div><div><div class="stat-val" id="ov_orders">—</div><div class="stat-lbl">Total Orders</div></div></div>
       </div>
@@ -240,7 +238,7 @@
           <button class="btn btn-dark btn-full" style="margin-bottom:10px;" onclick="downloadPDF()"><i class="fas fa-file-pdf" style="color:#f87171;"></i> PDF Report</button>
           <div class="g2" style="margin-bottom:10px;">
             <div class="stat-box"><h2 id="a_scans">0</h2><small>Total Scans</small></div>
-            <div class="stat-box" style="background:#f0fdf4;"><h2 id="a_emails" style="color:#2e7d32;">0</h2><small>Email Subscribers</small></div>
+            <div class="stat-box" style="background:#f0fdf4;"><h2 id="a_emails" style="color:#2e7d32;">0</h2><small>Subscribers</small></div>
           </div>
           <div style="background:#fff7ed;padding:12px;border-radius:6px;">
             <div style="font-size:12px;font-weight:700;color:#9a3412;margin-bottom:8px;"><i class="fas fa-link"></i> Scan Destinations</div>
@@ -420,14 +418,14 @@
         </div>
       </div>
       <div class="card">
-        <div class="card-title"><i class="fas fa-envelope-open-text" style="color:#1565c0;"></i> Email Subscribers</div>
+        <div class="card-title"><i class="fas fa-envelope-open-text" style="color:#1565c0;"></i> Email & WhatsApp Subscribers</div>
         <div style="display:flex;gap:8px;align-items:flex-end;margin-bottom:12px;flex-wrap:wrap;">
           <div style="flex:1;min-width:160px;"><label>Shop</label><select id="subShopFilter"><option value="ALL">All Shops</option></select></div>
           <button class="btn btn-blue" onclick="loadSubscribers()"><i class="fas fa-sync"></i> Load</button>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px;">
           <span id="subCountBadge" class="email-count-badge">0 subscribers</span>
-          <input type="text" id="subSearchInput" placeholder="Email සොයන්න..." oninput="filterSubscribers()" style="width:180px;margin:0;padding:7px 10px;font-size:12px;">
+          <input type="text" id="subSearchInput" placeholder="Email හෝ Phone සොයන්න..." oninput="filterSubscribers()" style="width:180px;margin:0;padding:7px 10px;font-size:12px;">
         </div>
         <div id="subscriberList" style="border:1px solid #e2e8f0;border-radius:6px;max-height:300px;overflow-y:auto;">
           <div style="padding:16px;text-align:center;color:#94a3b8;font-size:13px;">Load කරන්න.</div>
@@ -444,8 +442,9 @@
         </div>
         <div style="border:1px dashed #cbd5e1;padding:12px;border-radius:6px;margin-bottom:12px;">
           <div style="font-size:12px;font-weight:700;color:#475569;margin-bottom:8px;">➕ නව Item</div>
-          <div class="g2">
+          <div class="g3">
             <div><label>වර්ගය</label><select id="new_p_type"><option value="Product">🍽️ Product</option><option value="Room">🛏️ Room</option><option value="Package">🎁 Package</option></select></div>
+            <div><label>Action (Click)</label><select id="new_p_action"><option value="Cart">🛒 Add to Cart</option><option value="WhatsApp">💬 WhatsApp Inquiry</option><option value="ViewOnly">👁️ View Only</option></select></div>
             <div><label>නම</label><input type="text" id="new_p_name"></div>
           </div>
           <div><label>මිල (රු.)</label><input type="number" id="new_p_price"></div>
@@ -764,14 +763,17 @@
 
   function downloadPDF(){var shopSelect=document.getElementById('analyticsShopId');var shopName=shopSelect.options[shopSelect.selectedIndex].text;var start=document.getElementById('statStartDate').value;var end=document.getElementById('statEndDate').value;var dateText=(start||end)?'Date Range: '+(start||'All')+' → '+(end||'All'):'Date Range: All Time';var scans=document.getElementById('a_scans').innerText;var emails=document.getElementById('a_emails').innerText;var linksHtml=document.getElementById('linkStatsContainer').innerHTML;var htmlContent='<div style="padding:40px;font-family:Arial,sans-serif;background:#fff;color:#333;"><div style="text-align:center;border-bottom:2px solid #c62828;padding-bottom:20px;margin-bottom:30px;"><h1 style="color:#c62828;font-size:32px;margin:0;">'+shopName+'</h1><h3 style="color:#333;margin:10px 0 5px 0;">Analytics Report</h3><p style="color:#555;">'+dateText+'</p></div><div style="display:flex;justify-content:space-between;margin-bottom:40px;"><div style="flex:1;background:#e3f2fd;padding:25px;border-radius:10px;text-align:center;margin-right:15px;"><h2 style="color:#1976d2;font-size:36px;margin:0;">'+scans+'</h2><p style="color:#1565c0;font-weight:bold;">Total Scans</p></div><div style="flex:1;background:#e8f5e9;padding:25px;border-radius:10px;text-align:center;margin-left:15px;"><h2 style="color:#2e7d32;font-size:36px;margin:0;">'+emails+'</h2><p style="color:#1b5e20;font-weight:bold;">Email Subscribers</p></div></div><div style="background:#fff3e0;padding:20px;border-radius:10px;"><h3 style="color:#e65100;margin-top:0;">Scan Destinations</h3>'+linksHtml+'</div></div>';html2pdf().set({margin:15,filename:'Analytics_'+shopName.replace(/[^a-zA-Z0-9]/g,'_')+'.pdf',html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(htmlContent).save();}
 
-  // ══ QR — FIXED: short URLs use mapabiz.com/shopId pattern ══
+  // ══ QR Dynamic Generator (Updated) ══
   function generateQRs(){
     var shopId=document.getElementById('qrShopSelect').value;
     if(!shopId){document.getElementById('qrDisplayArea').style.display='none';return;}
     document.getElementById('qrDisplayArea').style.display='grid';
-    setQrBox('Main','https://mapabiz.com/'+shopId);
-    setQrBox('Client','https://mapabiz.com/'+shopId+'-mgr');
-    setQrBox('Cashier','https://mapabiz.com/'+shopId+'-cashier');
+    var baseUrl = document.getElementById('sysBaseUrl').value.trim();
+    if(!baseUrl) baseUrl = 'https://mapabiz.com/';
+    if(!baseUrl.endsWith('/')) baseUrl += '/';
+    setQrBox('Main', baseUrl + shopId);
+    setQrBox('Client', baseUrl + shopId + '-mgr');
+    setQrBox('Cashier', baseUrl + shopId + '-cashier');
   }
   function setQrBox(type,url){var qr='https://api.qrserver.com/v1/create-qr-code/?size=500x500&data='+encodeURIComponent(url)+'&margin=10';document.getElementById('link'+type).value=url;document.getElementById('img'+type+'Qr').src=qr;document.getElementById('dl'+type+'Qr').href=qr;}
   function copyLink(id){var el=document.getElementById(id);el.select();navigator.clipboard.writeText(el.value);alert("Copied!");}
@@ -805,15 +807,72 @@
     document.getElementById('subscriberList').innerHTML='<div style="padding:16px;text-align:center;color:#94a3b8;font-size:13px;"><i class="fas fa-spinner fa-spin"></i></div>';
     fetch(APPS_SCRIPT_URL+"?action=getSubscribers&shopId="+shopId).then(function(r){return r.json();}).then(function(d){if(d.success&&d.data&&d.data.length>0){allSubscribersData=d.data;renderSubscribers(allSubscribersData);}else{allSubscribersData=[];renderSubscribers([]);}}).catch(function(){document.getElementById('subscriberList').innerHTML='<div style="padding:16px;text-align:center;color:red;font-size:13px;">Error.</div>';});
   }
-  function renderSubscribers(list){document.getElementById('subCountBadge').innerText=list.length+' subscribers';var c=document.getElementById('subscriberList');if(list.length===0){c.innerHTML='<div style="padding:16px;text-align:center;color:#94a3b8;font-size:13px;">Subscribers නෑ.</div>';return;}var h='';list.forEach(function(s){var email=s.Email||s.email||'-';var sid=s.ShopID||'-';var date=s.Date?new Date(s.Date).toLocaleDateString():'-';h+='<div class="email-sub-row"><div><span class="es-email">'+email+'</span><span style="font-size:10px;color:#94a3b8;margin-left:8px;">'+sid+'</span></div><span style="font-size:11px;color:#94a3b8;">'+date+'</span></div>';});c.innerHTML=h;}
-  function filterSubscribers(){var term=document.getElementById('subSearchInput').value.toLowerCase();var filtered=term?allSubscribersData.filter(function(s){return(s.Email||'').toLowerCase().includes(term);}):allSubscribersData;renderSubscribers(filtered);}
-  function exportSubscribersCSV(){if(allSubscribersData.length===0){alert("Load subscribers first.");return;}var rows=['"ShopID","Email","Date"'];allSubscribersData.forEach(function(s){rows.push('"'+(s.ShopID||'')+'","'+(s.Email||'')+'","'+(s.Date?new Date(s.Date).toLocaleDateString():'')+'\"');});var blob=new Blob([rows.join('\n')],{type:'text/csv;charset=utf-8;'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='subscribers_'+new Date().toISOString().slice(0,10)+'.csv';a.click();}
+  
+  function renderSubscribers(list){
+    document.getElementById('subCountBadge').innerText=list.length+' subscribers';
+    var c=document.getElementById('subscriberList');
+    if(list.length===0){c.innerHTML='<div style="padding:16px;text-align:center;color:#94a3b8;font-size:13px;">Subscribers නෑ.</div>';return;}
+    var h='';
+    list.forEach(function(s){
+      var email=s.Email||s.email||'-';
+      var phone=s.Phone||s.phone||'-';
+      var sid=s.ShopID||'-';
+      var date=s.Date?new Date(s.Date).toLocaleDateString():'-';
+      h+='<div class="email-sub-row"><div><span class="es-email">'+email+'</span> <span style="font-size:11px;color:#166534;margin-left:6px;"><i class="fab fa-whatsapp"></i> '+phone+'</span><span style="font-size:10px;color:#94a3b8;margin-left:8px;">'+sid+'</span></div><span style="font-size:11px;color:#94a3b8;">'+date+'</span></div>';
+    });
+    c.innerHTML=h;
+  }
+  
+  function filterSubscribers(){var term=document.getElementById('subSearchInput').value.toLowerCase();var filtered=term?allSubscribersData.filter(function(s){return(s.Email||'').toLowerCase().includes(term)||(s.Phone||'').toLowerCase().includes(term);}):allSubscribersData;renderSubscribers(filtered);}
+  
+  function exportSubscribersCSV(){
+    if(allSubscribersData.length===0){alert("Load subscribers first.");return;}
+    var rows=['"ShopID","Email","Phone","Date"'];
+    allSubscribersData.forEach(function(s){rows.push('"'+(s.ShopID||'')+'","'+(s.Email||'')+'","'+(s.Phone||'')+'","'+(s.Date?new Date(s.Date).toLocaleDateString():'')+'\"');});
+    var blob=new Blob([rows.join('\n')],{type:'text/csv;charset=utf-8;'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='subscribers_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+  }
+  
   function exportSubscribersPDF(){if(allSubscribersData&&allSubscribersData.length>0){buildSubscriberPDF();return;}var shopId=document.getElementById('promoShopSelect').value||document.getElementById('subShopFilter').value;if(!shopId||!APPS_SCRIPT_URL){alert("Shop select කරලා Load කරන්න.");return;}fetch(APPS_SCRIPT_URL+"?action=getSubscribers&shopId="+shopId).then(function(r){return r.json();}).then(function(d){if(d.success&&d.data&&d.data.length>0){allSubscribersData=d.data;buildSubscriberPDF();}else{buildSubscriberPDFCountOnly(shopId,0);}}).catch(function(){buildSubscriberPDFCountOnly(shopId,0);});}
   function buildSubscriberPDFCountOnly(shopId,count){var shopSel=document.getElementById('promoShopSelect');var shopName=shopSel&&shopSel.value?shopSel.options[shopSel.selectedIndex].text:shopId;var html='<div style="padding:40px;font-family:Arial,sans-serif;"><h1 style="color:#c62828;">Email Subscribers</h1><h3>'+shopName+'</h3><p>Generated: '+new Date().toLocaleDateString()+'</p><div style="background:#e3f2fd;padding:20px;border-radius:8px;text-align:center;"><div style="font-size:36px;font-weight:700;color:#1565c0;">'+count+'</div><div>Total Subscribers</div></div></div>';html2pdf().set({margin:15,filename:'Subscribers.pdf',html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(html).save();}
-  function buildSubscriberPDF(){var shopSel=document.getElementById('promoShopSelect');var shopName=shopSel&&shopSel.selectedIndex>=0?shopSel.options[shopSel.selectedIndex].text:'All Shops';var rows=allSubscribersData.map(function(s,i){return '<tr style="background:'+(i%2===0?'#f9f9f9':'white')+';"><td style="padding:8px 12px;border-bottom:1px solid #eee;">'+(i+1)+'</td><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#1565c0;font-weight:600;">'+(s.Email||'-')+'</td><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#555;">'+(s.ShopID||'-')+'</td><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#888;">'+(s.Date?new Date(s.Date).toLocaleDateString():'-')+'</td></tr>';}).join('');var html='<div style="padding:40px;font-family:Arial,sans-serif;"><div style="display:flex;justify-content:space-between;border-bottom:3px solid #c62828;padding-bottom:16px;margin-bottom:24px;"><div><h1 style="color:#c62828;margin:0;">Email Subscribers</h1><h3 style="margin:4px 0 0;">'+shopName+'</h3></div><div style="background:#e3f2fd;padding:14px 20px;border-radius:8px;text-align:center;"><div style="font-size:32px;font-weight:700;color:#1565c0;">'+allSubscribersData.length+'</div><div style="font-size:12px;color:#1565c0;">Total</div></div></div><table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#1565c0;color:white;"><th style="padding:10px 12px;text-align:left;font-size:12px;">#</th><th style="padding:10px 12px;text-align:left;font-size:12px;">Email</th><th style="padding:10px 12px;text-align:left;font-size:12px;">Shop ID</th><th style="padding:10px 12px;text-align:left;font-size:12px;">Date</th></tr></thead><tbody>'+rows+'</tbody></table></div>';html2pdf().set({margin:15,filename:'Subscribers_'+new Date().toISOString().slice(0,10)+'.pdf',html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(html).save();}
+  
+  function buildSubscriberPDF(){
+    var shopSel=document.getElementById('subShopFilter');
+    var shopName=shopSel&&shopSel.selectedIndex>=0?shopSel.options[shopSel.selectedIndex].text:'All Shops';
+    var rows=allSubscribersData.map(function(s,i){
+      return '<tr style="background:'+(i%2===0?'#f9f9f9':'white')+';"><td style="padding:8px 12px;border-bottom:1px solid #eee;">'+(i+1)+'</td><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#1565c0;font-weight:600;">'+(s.Email||'-')+'</td><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#166534;font-weight:600;">'+(s.Phone||'-')+'</td><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#555;">'+(s.ShopID||'-')+'</td><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#888;">'+(s.Date?new Date(s.Date).toLocaleDateString():'-')+'</td></tr>';
+    }).join('');
+    var html='<div style="padding:40px;font-family:Arial,sans-serif;"><div style="display:flex;justify-content:space-between;border-bottom:3px solid #c62828;padding-bottom:16px;margin-bottom:24px;"><div><h1 style="color:#c62828;margin:0;">Email & WhatsApp Subscribers</h1><h3 style="margin:4px 0 0;">'+shopName+'</h3></div><div style="background:#e3f2fd;padding:14px 20px;border-radius:8px;text-align:center;"><div style="font-size:32px;font-weight:700;color:#1565c0;">'+allSubscribersData.length+'</div><div style="font-size:12px;color:#1565c0;">Total</div></div></div><table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#1565c0;color:white;"><th style="padding:10px 12px;text-align:left;font-size:12px;">#</th><th style="padding:10px 12px;text-align:left;font-size:12px;">Email</th><th style="padding:10px 12px;text-align:left;font-size:12px;">Phone</th><th style="padding:10px 12px;text-align:left;font-size:12px;">Shop ID</th><th style="padding:10px 12px;text-align:left;font-size:12px;">Date</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+    html2pdf().set({margin:15,filename:'Subscribers_'+new Date().toISOString().slice(0,10)+'.pdf',html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(html).save();
+  }
 
-  function adminFetchProducts(){if(!APPS_SCRIPT_URL)return;var sid=document.getElementById('p_shop_id').value.trim();if(!sid)return;document.getElementById('adminProductsList').innerHTML='<i class="fas fa-spinner fa-spin"></i>';fetch(APPS_SCRIPT_URL+"?action=getProducts&shopId="+sid+"&t="+Date.now()).then(function(r){return r.json();}).then(function(d){var h='';if(d.success&&d.data&&d.data.length>0){d.data.forEach(function(p){var pType=p.Type||'Product';var pName=p.ProductName||p.Name||'නම නැත';var pId=p.ProductID||'No-ID';var pPrice=p.Price||0;var imgs='';[p.Image1||p.Img1,p.Image2||p.Img2,p.Image3||p.Img3].forEach(function(img){if(img)imgs+='<img src="'+img+'" style="width:40px;height:40px;object-fit:cover;border-radius:4px;border:1px solid #ddd;">';});var imgH=imgs?'<div style="margin-top:6px;display:flex;gap:6px;">'+imgs+'</div>':'';h+='<div class="product-row"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;"><div><span class="badge b-'+pType+'">'+pType+'</span> <strong style="font-size:13px;">'+pName+'</strong><br><small style="color:#94a3b8;">(ID: '+pId+')</small>'+imgH+'</div><div style="display:flex;align-items:center;gap:4px;"><span style="font-weight:700;color:#777;font-size:13px;">රු.</span><input type="number" id="ad_p_'+pId+'" value="'+pPrice+'" style="padding:6px;width:90px;margin:0;font-size:13px;"><button class="btn btn-green" style="padding:6px 8px;" onclick="adminUpdatePrice(\''+pId+'\')"><i class="fas fa-check"></i></button><button class="btn btn-red" style="padding:6px 8px;" onclick="adminDeleteProduct(\''+pId+'\')"><i class="fas fa-trash-alt"></i></button></div></div></div>';});}else{h='<div style="padding:10px;color:#94a3b8;font-size:13px;">Items නෑ.</div>';}document.getElementById('adminProductsList').innerHTML=h;});}
-  function adminAddProduct(){var sid=document.getElementById('p_shop_id').value.trim();var name=document.getElementById('new_p_name').value.trim();var price=document.getElementById('new_p_price').value.trim();if(!sid||!name||!price){alert("Shop ID, නම, මිල අනිවාර්යයි.");return;}fetch(APPS_SCRIPT_URL,{method:"POST",body:JSON.stringify({action:"addProduct",shopId:sid,type:document.getElementById('new_p_type').value,name:name,price:price,img1:document.getElementById('new_p_img1').value,img2:document.getElementById('new_p_img2').value,img3:document.getElementById('new_p_img3').value})}).then(function(r){return r.json();}).then(function(d){alert(d.message);adminFetchProducts();['new_p_name','new_p_price','new_p_img1','new_p_img2','new_p_img3'].forEach(function(f){document.getElementById(f).value='';});});}
+  function adminFetchProducts(){
+    if(!APPS_SCRIPT_URL)return;var sid=document.getElementById('p_shop_id').value.trim();if(!sid)return;document.getElementById('adminProductsList').innerHTML='<i class="fas fa-spinner fa-spin"></i>';
+    fetch(APPS_SCRIPT_URL+"?action=getProducts&shopId="+sid+"&t="+Date.now()).then(function(r){return r.json();}).then(function(d){
+      var h='';if(d.success&&d.data&&d.data.length>0){d.data.forEach(function(p){
+        var pType=p.Type||'Product';var pAction=p.ActionType||'Cart';var pName=p.ProductName||p.Name||'නම නැත';var pId=p.ProductID||'No-ID';var pPrice=p.Price||0;
+        var imgs='';[p.Image1||p.Img1,p.Image2||p.Img2,p.Image3||p.Img3].forEach(function(img){if(img)imgs+='<img src="'+img+'" style="width:40px;height:40px;object-fit:cover;border-radius:4px;border:1px solid #ddd;">';});
+        var imgH=imgs?'<div style="margin-top:6px;display:flex;gap:6px;">'+imgs+'</div>':'';
+        h+='<div class="product-row"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;"><div><span class="badge b-'+pType+'">'+pType+'</span> <span class="badge badge-gray" style="background:#475569;color:#fff;">'+pAction+'</span> <strong style="font-size:13px;">'+pName+'</strong><br><small style="color:#94a3b8;">(ID: '+pId+')</small>'+imgH+'</div><div style="display:flex;align-items:center;gap:4px;"><span style="font-weight:700;color:#777;font-size:13px;">රු.</span><input type="number" id="ad_p_'+pId+'" value="'+pPrice+'" style="padding:6px;width:90px;margin:0;font-size:13px;"><button class="btn btn-green" style="padding:6px 8px;" onclick="adminUpdatePrice(\''+pId+'\')"><i class="fas fa-check"></i></button><button class="btn btn-red" style="padding:6px 8px;" onclick="adminDeleteProduct(\''+pId+'\')"><i class="fas fa-trash-alt"></i></button></div></div></div>';
+      });}else{h='<div style="padding:10px;color:#94a3b8;font-size:13px;">Items නෑ.</div>';}
+      document.getElementById('adminProductsList').innerHTML=h;
+    });
+  }
+  
+  function adminAddProduct(){
+    var sid=document.getElementById('p_shop_id').value.trim();var name=document.getElementById('new_p_name').value.trim();var price=document.getElementById('new_p_price').value.trim();
+    if(!sid||!name||!price){alert("Shop ID, නම, මිල අනිවාර්යයි.");return;}
+    fetch(APPS_SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      action:"addProduct",shopId:sid,
+      type:document.getElementById('new_p_type').value,
+      actionType:document.getElementById('new_p_action').value,
+      name:name,price:price,
+      img1:document.getElementById('new_p_img1').value,
+      img2:document.getElementById('new_p_img2').value,
+      img3:document.getElementById('new_p_img3').value
+    })}).then(function(r){return r.json();}).then(function(d){alert(d.message);adminFetchProducts();['new_p_name','new_p_price','new_p_img1','new_p_img2','new_p_img3'].forEach(function(f){document.getElementById(f).value='';});});
+  }
+  
   function adminUpdatePrice(pid){var sid=document.getElementById('p_shop_id').value.trim();fetch(APPS_SCRIPT_URL,{method:"POST",body:JSON.stringify({action:"updatePrice",shopId:sid,productId:pid,price:document.getElementById('ad_p_'+pid).value})}).then(function(r){return r.json();}).then(function(d){alert(d.message);});}
   function adminDeleteProduct(pid){var sid=document.getElementById('p_shop_id').value.trim();if(!confirm("Delete?"))return;fetch(APPS_SCRIPT_URL,{method:"POST",body:JSON.stringify({action:"deleteProduct",shopId:sid,productId:pid})}).then(function(r){return r.json();}).then(function(d){alert(d.message);adminFetchProducts();});}
 
