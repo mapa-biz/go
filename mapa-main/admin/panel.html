@@ -76,7 +76,7 @@
     .section-box.purple h4{color:#6b21a8;}
     .section-box.blue h4{color:#1e40af;}
     .section-box.orange h4{color:#9a3412;}
-    .theme-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:8px;} 
+    .theme-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:8px;}
     .theme-opt{border:2px solid transparent;border-radius:6px;overflow:hidden;cursor:pointer;}
     .theme-opt:hover{border-color:#94a3b8;}
     .theme-opt.active{border-color:#c62828;}
@@ -85,12 +85,14 @@
     .th-logo{width:12px;height:12px;border-radius:50%;border:1px solid #fff;margin-top:-7px;margin-bottom:2px;}
     .th-btn{height:4px;border-radius:2px;}
     .th-label{font-size:9px;font-weight:700;text-align:center;padding:2px 0 0;color:#555;}
-    
-    .topt-royalwood .th-cover{background-color:#8b5a2b; background-image:url('https://i.postimg.cc/W3gfXSp7/1.png'); background-size:cover; background-position:center;} .topt-royalwood .th-body{background:#fdf5e6;} .topt-royalwood .th-logo{background:#8b4513;} .topt-royalwood .th-btn{background:#8b4513;}
-    .topt-darkwood .th-cover{background-color:#3e2723; background-image:url('https://i.postimg.cc/159YrGxh/2.png'); background-size:cover; background-position:center;} .topt-darkwood .th-body{background:#2c1e16;} .topt-darkwood .th-logo{background:#5c4033;} .topt-darkwood .th-btn{background:#d4a373;}
-    .topt-carbon .th-cover{background-color:#1a1a1a; background-image:url('YOUR_CARBON_IMAGE_LINK'); background-size:cover; background-position:center;} .topt-carbon .th-body{background:#121212;} .topt-carbon .th-logo{background:#ff0000;} .topt-carbon .th-btn{background:#ff0000;}
-    .topt-marble .th-cover{background-color:#f5f7fa; background-image:url('YOUR_MARBLE_IMAGE_LINK'); background-size:cover; background-position:center;} .topt-marble .th-body{background:#fafafa;} .topt-marble .th-logo{background:#333;} .topt-marble .th-btn{background:#d4af37;}
 
+    /* New Patterned Themes */
+    .topt-royalwood .th-cover{background-color:#8b5a2b;background-image:url('https://i.postimg.cc/W3gfXSp7/1.png');background-size:cover;background-position:center;} .topt-royalwood .th-body{background:#fdf5e6;} .topt-royalwood .th-logo{background:#8b4513;} .topt-royalwood .th-btn{background:#8b4513;}
+    .topt-darkwood .th-cover{background-color:#3e2723;background-image:url('https://i.postimg.cc/159YrGxh/2.png');background-size:cover;background-position:center;} .topt-darkwood .th-body{background:#2c1e16;} .topt-darkwood .th-logo{background:#5c4033;} .topt-darkwood .th-btn{background:#d4a373;}
+    .topt-carbon .th-cover{background-color:#1a1a1a;background-image:url('YOUR_CARBON_IMAGE_LINK');background-size:cover;background-position:center;} .topt-carbon .th-body{background:#121212;} .topt-carbon .th-logo{background:#ff0000;} .topt-carbon .th-btn{background:#ff0000;}
+    .topt-marble .th-cover{background-color:#f5f7fa;background-image:url('YOUR_MARBLE_IMAGE_LINK');background-size:cover;background-position:center;} .topt-marble .th-body{background:#fafafa;} .topt-marble .th-logo{background:#333;} .topt-marble .th-btn{background:#d4af37;}
+
+    /* Existing Themes */
     .topt-default .th-cover{background:#d32f2f;} .topt-default .th-body{background:#fff;} .topt-default .th-logo{background:#d32f2f;} .topt-default .th-btn{background:#25D366;}
     .topt-dark .th-cover{background:#0f0f0f;} .topt-dark .th-body{background:#1a1a1a;} .topt-dark .th-logo{background:#333;} .topt-dark .th-btn{background:#2d2d2d;}
     .topt-ocean .th-cover{background:#0077b6;} .topt-ocean .th-body{background:#f0f8ff;} .topt-ocean .th-logo{background:#0077b6;} .topt-ocean .th-btn{background:#0077b6;}
@@ -99,7 +101,7 @@
     .topt-minimal .th-cover{background:#f5f5f5;border-bottom:1px solid #ddd;} .topt-minimal .th-body{background:#fff;} .topt-minimal .th-logo{background:#222;} .topt-minimal .th-btn{background:#222;}
     .topt-tech .th-cover{background:#1a0533;} .topt-tech .th-body{background:#120228;} .topt-tech .th-logo{background:#7c3aed;} .topt-tech .th-btn{background:#7c3aed;}
     .topt-food .th-cover{background:#111;} .topt-food .th-body{background:#1a1a1a;} .topt-food .th-logo{background:#ff6b00;} .topt-food .th-btn{background:#ff6b00;}
-    
+
     .stat-box{background:#eff6ff;padding:12px;border-radius:6px;text-align:center;}
     .stat-box h2{font-size:26px;color:#1565c0;font-weight:800;}
     .stat-box small{font-size:11px;color:#475569;}
@@ -220,6 +222,7 @@
 
   <div class="main">
 
+    <!-- OVERVIEW TAB -->
     <div class="tab-panel active" id="tab-overview">
       <div class="g4" style="margin-bottom:14px;">
         <div class="stat-card"><div class="stat-icon" style="background:#fef2f2;color:#c62828;"><i class="fas fa-eye"></i></div><div><div class="stat-val" id="ov_scans">—</div><div class="stat-lbl">Total Scans</div></div></div>
@@ -252,6 +255,7 @@
       </div>
     </div>
 
+    <!-- CUSTOMERS TAB -->
     <div class="tab-panel" id="tab-customers">
       <div class="g2">
         <div class="card">
@@ -339,7 +343,6 @@
               <div class="theme-opt topt-darkwood" onclick="selectTheme('darkwood',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Dark Wood</div></div>
               <div class="theme-opt topt-carbon" onclick="selectTheme('carbon',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Carbon</div></div>
               <div class="theme-opt topt-marble" onclick="selectTheme('marble',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Marble</div></div>
-              
               <div class="theme-opt topt-default active" onclick="selectTheme('default',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Default</div></div>
               <div class="theme-opt topt-dark" onclick="selectTheme('dark',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Dark</div></div>
               <div class="theme-opt topt-ocean" onclick="selectTheme('ocean',this)"><div class="th-cover"></div><div class="th-body"><div class="th-logo"></div><div class="th-btn"></div></div><div class="th-label">Ocean</div></div>
@@ -358,6 +361,7 @@
       </div>
     </div>
 
+    <!-- EMAIL TAB -->
     <div class="tab-panel" id="tab-email">
       <div class="promo-section">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
@@ -376,9 +380,9 @@
         </div>
         <div class="promo-input-group"><label><i class="fas fa-heading"></i> Subject</label><input type="text" id="promoSubject" placeholder="Special Offer! 🎉" oninput="updatePromoPreview()"></div>
         <div class="promo-input-group"><label><i class="fas fa-align-left"></i> Message</label><textarea id="promoBody" rows="4" placeholder="Promotion message..." oninput="updatePromoPreview()"></textarea></div>
-        <div class="promo-input-group" style="background:#1e3a5f; padding:10px; border-radius:6px; border:1px solid #2d5080; display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" id="promoAwsSes" style="width:auto; margin:0; cursor:pointer;">
-          <label for="promoAwsSes" style="color:#e2e8f0; font-size:12px; margin:0; text-transform:none; letter-spacing:normal; cursor:pointer;"><i class="fab fa-aws" style="color:#ff9900;"></i> AWS SES හරහා යවන්න (High Deliverability)</label>
+        <div class="promo-input-group" style="background:#1e3a5f;padding:10px;border-radius:6px;border:1px solid #2d5080;display:flex;align-items:center;gap:8px;">
+          <input type="checkbox" id="promoAwsSes" style="width:auto;margin:0;cursor:pointer;">
+          <label for="promoAwsSes" style="color:#e2e8f0;font-size:12px;margin:0;text-transform:none;letter-spacing:normal;cursor:pointer;"><i class="fab fa-aws" style="color:#ff9900;"></i> AWS SES හරහා යවන්න (High Deliverability)</label>
         </div>
         <div style="background:#0d1b35;border:1px solid #1e3a5f;border-radius:8px;padding:12px;margin-bottom:12px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
@@ -425,7 +429,7 @@
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px;">
           <span id="subCountBadge" class="email-count-badge">0 subscribers</span>
-          <input type="text" id="subSearchInput" placeholder="Email හෝ Phone සොයන්න..." oninput="filterSubscribers()" style="width:180px;margin:0;padding:7px 10px;font-size:12px;">
+          <input type="text" id="subSearchInput" placeholder="Email හෝ Phone සොයන්න..." oninput="filterSubscribers()" style="width:200px;margin:0;padding:7px 10px;font-size:12px;">
         </div>
         <div id="subscriberList" style="border:1px solid #e2e8f0;border-radius:6px;max-height:300px;overflow-y:auto;">
           <div style="padding:16px;text-align:center;color:#94a3b8;font-size:13px;">Load කරන්න.</div>
@@ -433,6 +437,7 @@
       </div>
     </div>
 
+    <!-- PRODUCTS TAB -->
     <div class="tab-panel" id="tab-products">
       <div class="card">
         <div class="card-title"><i class="fas fa-box-open"></i> Products, Rooms & Packages</div>
@@ -459,6 +464,7 @@
       </div>
     </div>
 
+    <!-- ORDERS TAB -->
     <div class="tab-panel" id="tab-orders">
       <div class="card">
         <div class="card-title"><i class="fas fa-shopping-bag" style="color:#e65100;"></i> Orders Management</div>
@@ -477,6 +483,7 @@
       </div>
     </div>
 
+    <!-- FEEDBACK TAB -->
     <div class="tab-panel" id="tab-feedback">
       <div class="card">
         <div class="card-title"><i class="fas fa-comment-alt" style="color:#607d8b;"></i> Customer Feedbacks</div>
@@ -488,6 +495,7 @@
       </div>
     </div>
 
+    <!-- QR TAB — v1 logic (hardcoded mapabiz.com) preserved -->
     <div class="tab-panel" id="tab-qr">
       <div class="card">
         <div class="card-title"><i class="fas fa-qrcode"></i> QR Generator</div>
@@ -500,6 +508,7 @@
       </div>
     </div>
 
+    <!-- BACKUP TAB -->
     <div class="tab-panel" id="tab-backup">
       <div class="card">
         <div class="card-title"><i class="fas fa-database" style="color:#7b1fa2;"></i> Data Backup</div>
@@ -511,6 +520,7 @@
       </div>
     </div>
 
+    <!-- CONFIG TAB -->
     <div class="tab-panel" id="tab-config">
       <div class="card">
         <div class="card-title"><i class="fas fa-cogs"></i> System Configuration</div>
@@ -522,85 +532,53 @@
       </div>
     </div>
 
-  </div></div><script>
+  </div>
+</div>
+
+<script>
   let APPS_SCRIPT_URL = localStorage.getItem('sysScriptUrl') || "https://script.google.com/macros/s/AKfycbzm1PUscMJdzuwq3LECRw0dsRQmUFAlU0fI3DKola5qqYJA45C5oP70MDYAkzLOmD06/exec";
   let allCustomersData = [], currentSelectedId = "", allSubscribersData = [];
 
-  function toggleSidebar() {
-    document.getElementById('mainSidebar').classList.toggle('open');
-    document.getElementById('sidebarOverlay').classList.toggle('open');
-  }
-  function closeSidebar() {
-    document.getElementById('mainSidebar').classList.remove('open');
-    document.getElementById('sidebarOverlay').classList.remove('open');
-  }
+  function toggleSidebar(){document.getElementById('mainSidebar').classList.toggle('open');document.getElementById('sidebarOverlay').classList.toggle('open');}
+  function closeSidebar(){document.getElementById('mainSidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('open');}
 
-  function showTab(name) {
+  function showTab(name){
     document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
     document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});
     document.getElementById('tab-'+name).classList.add('active');
     document.getElementById('nav-'+name).classList.add('active');
-    if (window.innerWidth <= 768) closeSidebar();
+    if(window.innerWidth<=768)closeSidebar();
   }
 
-  window.onload = function() {
-    var staffName = sessionStorage.getItem('loggedInStaff');
-    if (!staffName) { window.location.href = "index.html"; return; }
-    document.getElementById('staffNameDisplay').innerText = staffName;
-    var savedBase = localStorage.getItem('sysBaseUrl');
-    if (savedBase) document.getElementById('sysBaseUrl').value = savedBase;
-    var savedScript = localStorage.getItem('sysScriptUrl');
-    if (savedScript) document.getElementById('sysScriptUrl').value = savedScript;
-    checkAppScriptUrl();
-    loadAllCustomers();
-    loadAnalytics();
-    updatePromoPreview();
+  window.onload=function(){
+    var staffName=sessionStorage.getItem('loggedInStaff');
+    if(!staffName){window.location.href="index.html";return;}
+    document.getElementById('staffNameDisplay').innerText=staffName;
+    var savedBase=localStorage.getItem('sysBaseUrl');if(savedBase)document.getElementById('sysBaseUrl').value=savedBase;
+    var savedScript=localStorage.getItem('sysScriptUrl');if(savedScript)document.getElementById('sysScriptUrl').value=savedScript;
+    checkAppScriptUrl();loadAllCustomers();loadAnalytics();updatePromoPreview();
   };
 
-  function saveSystemUrls() {
-    var baseUrl = document.getElementById('sysBaseUrl').value.trim();
-    var scriptUrl = document.getElementById('sysScriptUrl').value.trim();
-    if (baseUrl && !baseUrl.endsWith('/')) baseUrl += '/';
-    localStorage.setItem('sysBaseUrl', baseUrl);
-    localStorage.setItem('sysScriptUrl', scriptUrl);
-    document.getElementById('sysBaseUrl').value = baseUrl;
-    document.getElementById('sysScriptUrl').value = scriptUrl;
-    if (scriptUrl) APPS_SCRIPT_URL = scriptUrl;
-    checkAppScriptUrl();
-    alert("Saved!");
-    generateQRs();
-    loadAllCustomers();
+  function saveSystemUrls(){
+    var baseUrl=document.getElementById('sysBaseUrl').value.trim();
+    var scriptUrl=document.getElementById('sysScriptUrl').value.trim();
+    if(baseUrl&&!baseUrl.endsWith('/'))baseUrl+='/';
+    localStorage.setItem('sysBaseUrl',baseUrl);localStorage.setItem('sysScriptUrl',scriptUrl);
+    document.getElementById('sysBaseUrl').value=baseUrl;document.getElementById('sysScriptUrl').value=scriptUrl;
+    if(scriptUrl)APPS_SCRIPT_URL=scriptUrl;
+    checkAppScriptUrl();alert("Saved!");generateQRs();loadAllCustomers();
   }
 
-  function logout() { sessionStorage.clear(); window.location.href = "index.html"; }
+  function logout(){sessionStorage.clear();window.location.href="index.html";}
 
-  function showAppScriptWarning(message) {
-    var el = document.getElementById('warningBanner');
-    if (!el) return;
-    el.innerText = message || 'Warning: Configure your Apps Script URL in Config first, otherwise admin data will not load.';
-    el.style.display = 'block';
-  }
+  function showAppScriptWarning(message){var el=document.getElementById('warningBanner');if(!el)return;el.innerText=message||'Warning: Configure your Apps Script URL in Config first.';el.style.display='block';}
+  function hideAppScriptWarning(){var el=document.getElementById('warningBanner');if(!el)return;el.style.display='none';}
 
-  function hideAppScriptWarning() {
-    var el = document.getElementById('warningBanner');
-    if (!el) return;
-    el.style.display = 'none';
-  }
-
-  function checkAppScriptUrl() {
-    var url = document.getElementById('sysScriptUrl').value.trim();
-    if (!url) {
-      showAppScriptWarning('Using the built-in Apps Script demo endpoint. Save your own Apps Script URL in Config to load your own live admin data.');
-      APPS_SCRIPT_URL = localStorage.getItem('sysScriptUrl') || APPS_SCRIPT_URL;
-      return true;
-    }
-    if (url.indexOf('AKfycbzm1PUscMJdzuwq3LECRw0dsRQmUFAlU0fI3DKola5qqYJA45C5oP70MDYAkzLOmD06/exec') !== -1) {
-      showAppScriptWarning('Please set your own Google Apps Script URL in Config to use your live data.');
-      return false;
-    }
-    APPS_SCRIPT_URL = url;
-    hideAppScriptWarning();
-    return true;
+  function checkAppScriptUrl(){
+    var url=document.getElementById('sysScriptUrl').value.trim();
+    if(!url){showAppScriptWarning('Using the built-in Apps Script demo endpoint. Save your own Apps Script URL in Config to load your own live admin data.');APPS_SCRIPT_URL=localStorage.getItem('sysScriptUrl')||APPS_SCRIPT_URL;return true;}
+    if(url.indexOf('AKfycbzm1PUscMJdzuwq3LECRw0dsRQmUFAlU0fI3DKola5qqYJA45C5oP70MDYAkzLOmD06/exec')!==-1){showAppScriptWarning('Please set your own Google Apps Script URL in Config to use your live data.');return false;}
+    APPS_SCRIPT_URL=url;hideAppScriptWarning();return true;
   }
 
   function getField(obj,keys){if(!obj)return '';for(var i=0;i<keys.length;i++){var k=keys[i];if(obj[k]!==undefined&&obj[k]!==null&&obj[k]!=='')return obj[k].toString();}return '';}
@@ -685,54 +663,27 @@
     currentSelectedId='';document.getElementById('formTitle').innerHTML='<i class="fas fa-plus-circle"></i> New Shop';
     ['c_id','c_name','c_wa','c_maps','c_fb','c_ig','c_tiktok','c_web','c_email','c_menu','c_review','c_image','c_cover','c_bank','c_theme','c_promoVideo','c_promoImg1','c_promoImg2','c_promoImg3','c_clientPhone','c_password','c_expiryDate','c_cl1_name','c_cl1_url','c_cl2_name','c_cl2_url','c_cl3_name','c_cl3_url','c_cl4_name','c_cl4_url','c_cl5_name','c_cl5_url'].forEach(function(f){var el=document.getElementById(f);if(el)el.value='';});
     document.getElementById('c_type').value='profile';document.getElementById('c_loyaltyStatus').value='Inactive';document.getElementById('c_storeStatus').value='Active';document.getElementById('c_inboxStatus').value='Active';document.getElementById('c_ordersStatus').value='Active';document.getElementById('c_stampTarget').value='10';document.getElementById('c_status').value='Active';
-    document.getElementById('c_theme').value='default';
-    applyThemeUI('default');
+    document.getElementById('c_theme').value='default';applyThemeUI('default');
   }
 
   function saveCustomerData(){
     if(!APPS_SCRIPT_URL){alert("Apps Script URL configure කරන්න.");return;}
     var id=document.getElementById('c_id').value.trim();if(!id){alert("Shop ID අනිවාර්යයි.");return;}
-    var payload={
-      action:"saveCustomer",
-      staffId:sessionStorage.getItem('loggedInStaff'),
-      staffName:sessionStorage.getItem('loggedInStaff'),
-      customerData:{
-        ID:id,Type:document.getElementById('c_type').value,
-        BusinessName:document.getElementById('c_name').value,
-        WhatsApp:document.getElementById('c_wa').value,
-        Maps:document.getElementById('c_maps').value,
-        Facebook:document.getElementById('c_fb').value,
-        Instagram:document.getElementById('c_ig').value,
-        TikTok:document.getElementById('c_tiktok').value,
-        Website:document.getElementById('c_web').value,
-        Email:document.getElementById('c_email').value,
-        MenuPDF:document.getElementById('c_menu').value,
-        Theme:document.getElementById('c_theme').value || 'default',
-        Status:document.getElementById('c_status').value,
-        LoyaltyStatus:document.getElementById('c_loyaltyStatus').value,
-        StoreStatus:document.getElementById('c_storeStatus').value,
-        InboxStatus:document.getElementById('c_inboxStatus').value,
-        OrdersStatus:document.getElementById('c_ordersStatus').value,
-        OrderStatus:document.getElementById('c_ordersStatus').value,
-        StampTarget:document.getElementById('c_stampTarget').value,
-        ClientPhone:document.getElementById('c_clientPhone').value,
-        Password:document.getElementById('c_password').value,
-        BankDetails:document.getElementById('c_bank').value,
-        GoogleReview:document.getElementById('c_review').value,
-        ProfileImage:document.getElementById('c_image').value,
-        CoverImage:document.getElementById('c_cover').value,
-        ExpiryDate:document.getElementById('c_expiryDate').value,
-        CustomPromoVideo:document.getElementById('c_promoVideo').value,
-        CustomPromoImg1:document.getElementById('c_promoImg1').value,
-        CustomPromoImg2:document.getElementById('c_promoImg2').value,
-        CustomPromoImg3:document.getElementById('c_promoImg3').value,
-        CustomLink1Name:document.getElementById('c_cl1_name').value,CustomLink1URL:document.getElementById('c_cl1_url').value,
-        CustomLink2Name:document.getElementById('c_cl2_name').value,CustomLink2URL:document.getElementById('c_cl2_url').value,
-        CustomLink3Name:document.getElementById('c_cl3_name').value,CustomLink3URL:document.getElementById('c_cl3_url').value,
-        CustomLink4Name:document.getElementById('c_cl4_name').value,CustomLink4URL:document.getElementById('c_cl4_url').value,
-        CustomLink5Name:document.getElementById('c_cl5_name').value,CustomLink5URL:document.getElementById('c_cl5_url').value
-      }
-    };
+    var payload={action:"saveCustomer",staffId:sessionStorage.getItem('loggedInStaff'),staffName:sessionStorage.getItem('loggedInStaff'),customerData:{
+      ID:id,Type:document.getElementById('c_type').value,BusinessName:document.getElementById('c_name').value,
+      WhatsApp:document.getElementById('c_wa').value,Maps:document.getElementById('c_maps').value,Facebook:document.getElementById('c_fb').value,
+      Instagram:document.getElementById('c_ig').value,TikTok:document.getElementById('c_tiktok').value,Website:document.getElementById('c_web').value,
+      Email:document.getElementById('c_email').value,MenuPDF:document.getElementById('c_menu').value,Theme:document.getElementById('c_theme').value||'default',
+      Status:document.getElementById('c_status').value,LoyaltyStatus:document.getElementById('c_loyaltyStatus').value,StoreStatus:document.getElementById('c_storeStatus').value,
+      InboxStatus:document.getElementById('c_inboxStatus').value,OrdersStatus:document.getElementById('c_ordersStatus').value,OrderStatus:document.getElementById('c_ordersStatus').value,
+      StampTarget:document.getElementById('c_stampTarget').value,ClientPhone:document.getElementById('c_clientPhone').value,Password:document.getElementById('c_password').value,
+      BankDetails:document.getElementById('c_bank').value,GoogleReview:document.getElementById('c_review').value,ProfileImage:document.getElementById('c_image').value,
+      CoverImage:document.getElementById('c_cover').value,ExpiryDate:document.getElementById('c_expiryDate').value,
+      CustomPromoVideo:document.getElementById('c_promoVideo').value,CustomPromoImg1:document.getElementById('c_promoImg1').value,CustomPromoImg2:document.getElementById('c_promoImg2').value,CustomPromoImg3:document.getElementById('c_promoImg3').value,
+      CustomLink1Name:document.getElementById('c_cl1_name').value,CustomLink1URL:document.getElementById('c_cl1_url').value,CustomLink2Name:document.getElementById('c_cl2_name').value,CustomLink2URL:document.getElementById('c_cl2_url').value,
+      CustomLink3Name:document.getElementById('c_cl3_name').value,CustomLink3URL:document.getElementById('c_cl3_url').value,CustomLink4Name:document.getElementById('c_cl4_name').value,CustomLink4URL:document.getElementById('c_cl4_url').value,
+      CustomLink5Name:document.getElementById('c_cl5_name').value,CustomLink5URL:document.getElementById('c_cl5_url').value
+    }};
     var msg=document.getElementById('msg');msg.style.display='block';msg.style.background='#eff6ff';msg.style.color='#1565c0';msg.innerHTML='Saving...';
     fetch(APPS_SCRIPT_URL,{method:"POST",body:JSON.stringify(payload)}).then(function(r){return r.json();}).then(function(d){alert(d.message);loadAllCustomers();msg.style.display='none';}).catch(function(){alert("Error saving.");msg.style.display='none';});
   }
@@ -763,17 +714,14 @@
 
   function downloadPDF(){var shopSelect=document.getElementById('analyticsShopId');var shopName=shopSelect.options[shopSelect.selectedIndex].text;var start=document.getElementById('statStartDate').value;var end=document.getElementById('statEndDate').value;var dateText=(start||end)?'Date Range: '+(start||'All')+' → '+(end||'All'):'Date Range: All Time';var scans=document.getElementById('a_scans').innerText;var emails=document.getElementById('a_emails').innerText;var linksHtml=document.getElementById('linkStatsContainer').innerHTML;var htmlContent='<div style="padding:40px;font-family:Arial,sans-serif;background:#fff;color:#333;"><div style="text-align:center;border-bottom:2px solid #c62828;padding-bottom:20px;margin-bottom:30px;"><h1 style="color:#c62828;font-size:32px;margin:0;">'+shopName+'</h1><h3 style="color:#333;margin:10px 0 5px 0;">Analytics Report</h3><p style="color:#555;">'+dateText+'</p></div><div style="display:flex;justify-content:space-between;margin-bottom:40px;"><div style="flex:1;background:#e3f2fd;padding:25px;border-radius:10px;text-align:center;margin-right:15px;"><h2 style="color:#1976d2;font-size:36px;margin:0;">'+scans+'</h2><p style="color:#1565c0;font-weight:bold;">Total Scans</p></div><div style="flex:1;background:#e8f5e9;padding:25px;border-radius:10px;text-align:center;margin-left:15px;"><h2 style="color:#2e7d32;font-size:36px;margin:0;">'+emails+'</h2><p style="color:#1b5e20;font-weight:bold;">Email Subscribers</p></div></div><div style="background:#fff3e0;padding:20px;border-radius:10px;"><h3 style="color:#e65100;margin-top:0;">Scan Destinations</h3>'+linksHtml+'</div></div>';html2pdf().set({margin:15,filename:'Analytics_'+shopName.replace(/[^a-zA-Z0-9]/g,'_')+'.pdf',html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(htmlContent).save();}
 
-  // ══ QR Dynamic Generator (Updated) ══
+  // ══ QR Generator — v1 logic: always uses mapabiz.com/shopId (no profile redirect) ══
   function generateQRs(){
     var shopId=document.getElementById('qrShopSelect').value;
     if(!shopId){document.getElementById('qrDisplayArea').style.display='none';return;}
     document.getElementById('qrDisplayArea').style.display='grid';
-    var baseUrl = document.getElementById('sysBaseUrl').value.trim();
-    if(!baseUrl) baseUrl = 'https://mapabiz.com/';
-    if(!baseUrl.endsWith('/')) baseUrl += '/';
-    setQrBox('Main', baseUrl + shopId);
-    setQrBox('Client', baseUrl + shopId + '-mgr');
-    setQrBox('Cashier', baseUrl + shopId + '-cashier');
+    setQrBox('Main','https://mapabiz.com/'+shopId);
+    setQrBox('Client','https://mapabiz.com/'+shopId+'-mgr');
+    setQrBox('Cashier','https://mapabiz.com/'+shopId+'-cashier');
   }
   function setQrBox(type,url){var qr='https://api.qrserver.com/v1/create-qr-code/?size=500x500&data='+encodeURIComponent(url)+'&margin=10';document.getElementById('link'+type).value=url;document.getElementById('img'+type+'Qr').src=qr;document.getElementById('dl'+type+'Qr').href=qr;}
   function copyLink(id){var el=document.getElementById(id);el.select();navigator.clipboard.writeText(el.value);alert("Copied!");}
@@ -807,7 +755,7 @@
     document.getElementById('subscriberList').innerHTML='<div style="padding:16px;text-align:center;color:#94a3b8;font-size:13px;"><i class="fas fa-spinner fa-spin"></i></div>';
     fetch(APPS_SCRIPT_URL+"?action=getSubscribers&shopId="+shopId).then(function(r){return r.json();}).then(function(d){if(d.success&&d.data&&d.data.length>0){allSubscribersData=d.data;renderSubscribers(allSubscribersData);}else{allSubscribersData=[];renderSubscribers([]);}}).catch(function(){document.getElementById('subscriberList').innerHTML='<div style="padding:16px;text-align:center;color:red;font-size:13px;">Error.</div>';});
   }
-  
+
   function renderSubscribers(list){
     document.getElementById('subCountBadge').innerText=list.length+' subscribers';
     var c=document.getElementById('subscriberList');
@@ -822,20 +770,19 @@
     });
     c.innerHTML=h;
   }
-  
+
   function filterSubscribers(){var term=document.getElementById('subSearchInput').value.toLowerCase();var filtered=term?allSubscribersData.filter(function(s){return(s.Email||'').toLowerCase().includes(term)||(s.Phone||'').toLowerCase().includes(term);}):allSubscribersData;renderSubscribers(filtered);}
-  
+
   function exportSubscribersCSV(){
     if(allSubscribersData.length===0){alert("Load subscribers first.");return;}
     var rows=['"ShopID","Email","Phone","Date"'];
     allSubscribersData.forEach(function(s){rows.push('"'+(s.ShopID||'')+'","'+(s.Email||'')+'","'+(s.Phone||'')+'","'+(s.Date?new Date(s.Date).toLocaleDateString():'')+'\"');});
-    var blob=new Blob([rows.join('\n')],{type:'text/csv;charset=utf-8;'});
-    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='subscribers_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+    var blob=new Blob([rows.join('\n')],{type:'text/csv;charset=utf-8;'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='subscribers_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
   }
-  
+
   function exportSubscribersPDF(){if(allSubscribersData&&allSubscribersData.length>0){buildSubscriberPDF();return;}var shopId=document.getElementById('promoShopSelect').value||document.getElementById('subShopFilter').value;if(!shopId||!APPS_SCRIPT_URL){alert("Shop select කරලා Load කරන්න.");return;}fetch(APPS_SCRIPT_URL+"?action=getSubscribers&shopId="+shopId).then(function(r){return r.json();}).then(function(d){if(d.success&&d.data&&d.data.length>0){allSubscribersData=d.data;buildSubscriberPDF();}else{buildSubscriberPDFCountOnly(shopId,0);}}).catch(function(){buildSubscriberPDFCountOnly(shopId,0);});}
   function buildSubscriberPDFCountOnly(shopId,count){var shopSel=document.getElementById('promoShopSelect');var shopName=shopSel&&shopSel.value?shopSel.options[shopSel.selectedIndex].text:shopId;var html='<div style="padding:40px;font-family:Arial,sans-serif;"><h1 style="color:#c62828;">Email Subscribers</h1><h3>'+shopName+'</h3><p>Generated: '+new Date().toLocaleDateString()+'</p><div style="background:#e3f2fd;padding:20px;border-radius:8px;text-align:center;"><div style="font-size:36px;font-weight:700;color:#1565c0;">'+count+'</div><div>Total Subscribers</div></div></div>';html2pdf().set({margin:15,filename:'Subscribers.pdf',html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(html).save();}
-  
+
   function buildSubscriberPDF(){
     var shopSel=document.getElementById('subShopFilter');
     var shopName=shopSel&&shopSel.selectedIndex>=0?shopSel.options[shopSel.selectedIndex].text:'All Shops';
@@ -858,21 +805,18 @@
       document.getElementById('adminProductsList').innerHTML=h;
     });
   }
-  
+
   function adminAddProduct(){
     var sid=document.getElementById('p_shop_id').value.trim();var name=document.getElementById('new_p_name').value.trim();var price=document.getElementById('new_p_price').value.trim();
     if(!sid||!name||!price){alert("Shop ID, නම, මිල අනිවාර්යයි.");return;}
     fetch(APPS_SCRIPT_URL,{method:"POST",body:JSON.stringify({
-      action:"addProduct",shopId:sid,
-      type:document.getElementById('new_p_type').value,
+      action:"addProduct",shopId:sid,type:document.getElementById('new_p_type').value,
       actionType:document.getElementById('new_p_action').value,
       name:name,price:price,
-      img1:document.getElementById('new_p_img1').value,
-      img2:document.getElementById('new_p_img2').value,
-      img3:document.getElementById('new_p_img3').value
+      img1:document.getElementById('new_p_img1').value,img2:document.getElementById('new_p_img2').value,img3:document.getElementById('new_p_img3').value
     })}).then(function(r){return r.json();}).then(function(d){alert(d.message);adminFetchProducts();['new_p_name','new_p_price','new_p_img1','new_p_img2','new_p_img3'].forEach(function(f){document.getElementById(f).value='';});});
   }
-  
+
   function adminUpdatePrice(pid){var sid=document.getElementById('p_shop_id').value.trim();fetch(APPS_SCRIPT_URL,{method:"POST",body:JSON.stringify({action:"updatePrice",shopId:sid,productId:pid,price:document.getElementById('ad_p_'+pid).value})}).then(function(r){return r.json();}).then(function(d){alert(d.message);});}
   function adminDeleteProduct(pid){var sid=document.getElementById('p_shop_id').value.trim();if(!confirm("Delete?"))return;fetch(APPS_SCRIPT_URL,{method:"POST",body:JSON.stringify({action:"deleteProduct",shopId:sid,productId:pid})}).then(function(r){return r.json();}).then(function(d){alert(d.message);adminFetchProducts();});}
 
