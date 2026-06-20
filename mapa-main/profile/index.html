@@ -1024,7 +1024,7 @@
   }
 
   function selfRedeemReward() {
-     var userConfirm = confirm("අවධානයට: කරුණාකර මෙය Cashier ඉදිරිපිටදී පමණක් Redeem කරන්න.\nඔබට Redeem කිරීමට අවශ්‍ය බව විශ්වාසද?");
+     var userConfirm = confirm("අවධානයට: කරුණාකර මෙය Cashier ඉදිරිපිටදී පමණක් Redeem කරන්න.\nඔබට Redeem කිරීමට අවශ්‍යද?");
      if(!userConfirm) return;
 
      var ph = document.getElementById('lPhone').value;
@@ -1037,7 +1037,7 @@
      .then(function(d) {
        btn.disabled = false;
        if(d.success) {
-          alert("සාර්ථකව Redeem කරන ලදී! කරුණාකර ඔබේ තෑග්ග Cashier ගෙන් ලබාගන්න.");
+          alert("සාර්ථකව Redeem කරන ලදී!");
           checkLoyalty(); 
        } else {
           showLMsg('redeemMsg', d.error);
